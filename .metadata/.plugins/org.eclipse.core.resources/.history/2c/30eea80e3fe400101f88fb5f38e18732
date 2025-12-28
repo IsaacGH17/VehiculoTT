@@ -26,7 +26,6 @@
 #include <math.h>
 #include <stdlib.h>
 #include "LCD_I2C.h"
-#include "MPU9250.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,8 +67,8 @@ void I2C_Scan(void)
         if (HAL_I2C_IsDeviceReady(&hi2c1, (i << 1), 1, 20) == HAL_OK)
         {
             sprintf(msg, "0x%02X", i);
-            LCD_CLEAR();
-            LCD_CADENA(msg);
+            lcd_clear();
+            lcd_send_string(msg);
             HAL_Delay(1500);
         }
     }
@@ -119,7 +118,7 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  LCD_init();
+  lcd_init();
   MPU9250_Init();
    while (1)
    {
@@ -129,18 +128,18 @@ int main(void)
 	   Az = az / 16384.0;
 	   roll = atan2(Ay, Az) * 180 / M_PI;
 	   pitch = atan2(-Ax, sqrt(Ay*Ay + Az*Az)) * 180 / M_PI;
-	       LCD_CLEAR();
+	       lcd_clear();
 	       char buf[18];
-	       char buf2[20];
+	       char buf2[19];
 	       int roll_i = (int)(roll * 100);
 	       int pitch_i = (int)(pitch * 100);
-	       LCD_CLEAR();
-	       LCD_CURSOR(0, 0);
+	       lcd_clear();
+	       lcd_put_cur(0, 0);
 	       sprintf(buf, "Roll:%d.%02d", roll_i/100, abs(roll_i%100));
-	       LCD_CADENA(buf);
-	       LCD_CURSOR(1, 0);
+	       lcd_send_string(buf);
+	       lcd_put_cur(1, 0);
 	       sprintf(buf2, "Pitch :%d.%02d", pitch_i/100, abs(pitch_i%100));
-	       LCD_CADENA(buf2);
+	       lcd_send_string(buf2);
 	       HAL_Delay(1000);
    }
   /* USER CODE END 3 */

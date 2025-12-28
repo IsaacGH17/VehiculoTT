@@ -131,7 +131,7 @@ int main(void)
 	   pitch = atan2(-Ax, sqrt(Ay*Ay + Az*Az)) * 180 / M_PI;
 	       LCD_CLEAR();
 	       char buf[18];
-	       char buf2[20];
+	       char buf2[19];
 	       int roll_i = (int)(roll * 100);
 	       int pitch_i = (int)(pitch * 100);
 	       LCD_CLEAR();
