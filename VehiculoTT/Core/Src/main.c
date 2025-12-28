@@ -21,7 +21,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "string.h"
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,7 +34,16 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define MPU_ADDR 0x68 << 1
+#define WHO_AM_I_REG 0x75
+#define WHO_AM_I_REG    0x75
+#define PWR_MGMT_1      0x6B
+#define SMPLRT_DIV      0x19
+#define CONFIG          0x1A
+#define GYRO_CONFIG     0x1B
+#define ACCEL_CONFIG    0x1C
+#define ACCEL_XOUT_H    0x3B
+#define GYRO_XOUT_H     0x43
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -51,6 +63,136 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
 /* USER CODE BEGIN PFP */
+void lcd_send_cmd (char cmd)
+{
+    char data_u, data_l;
+    data_u = (cmd & 0xF0);
+    data_l = ((cmd << 4) & 0xF0);
+    uint8_t data_t[4];
+    data_t[0] = data_u | 0x0C;
+    data_t[1] = data_u | 0x08;
+    data_t[2] = data_l | 0x0C;
+    data_t[3] = data_l | 0x08;
+
+    HAL_I2C_Master_Transmit(&hi2c1, 0x4E, (uint8_t *) data_t, 4, 100);
+}
+void lcd_send_data (char data)
+{
+	char data_u, data_l;
+	uint8_t data_t[4];
+	data_u = (data&0xf0);
+	data_l = ((data<<4)&0xf0);
+	data_t[0] = data_u|0x0D;
+	data_t[1] = data_u|0x09;
+	data_t[2] = data_l|0x0D;
+	data_t[3] = data_l|0x09;
+	HAL_I2C_Master_Transmit (&hi2c1, 0x4E,(uint8_t *) data_t, 4, 100);
+}
+void lcd_clear(void)
+{
+    lcd_send_cmd(0x01);
+    HAL_Delay(2);
+}
+
+void lcd_init (void)
+{
+
+  HAL_Delay(50);
+  lcd_send_cmd (0x30);
+  HAL_Delay(5);
+  lcd_send_cmd (0x30);
+  HAL_Delay(1);
+  lcd_send_cmd (0x30);
+  HAL_Delay(10);
+  lcd_send_cmd (0x20);
+  HAL_Delay(10);
+
+  lcd_send_cmd (0x28);
+  HAL_Delay(1);
+  lcd_send_cmd (0x08);
+  HAL_Delay(1);
+  lcd_send_cmd (0x01);
+  HAL_Delay(2);
+  lcd_send_cmd (0x06);
+  HAL_Delay(1);
+  lcd_send_cmd (0x0C);
+}
+void lcd_send_string (char *str)
+{
+  while (*str) lcd_send_data (*str++);
+}
+void lcd_put_cur(int row, int col)
+{
+    switch (row)
+    {
+        case 0:
+            col |= 0x80;
+            break;
+        case 1:
+            col |= 0xC0;
+            break;
+    }
+    lcd_send_cmd (col);
+}
+void MPU9250_Init(void)
+{
+    uint8_t data;
+    uint8_t id;
+    HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, WHO_AM_I_REG, I2C_MEMADD_SIZE_8BIT, &id, 1, 200);
+    lcd_clear();
+    char buf[16];
+    sprintf(buf, "MPU ID:%02X", id);
+    lcd_send_string(buf);
+    HAL_Delay(1000);
+
+    data = 0x00;
+    HAL_I2C_Mem_Write(&hi2c1, MPU_ADDR, PWR_MGMT_1, I2C_MEMADD_SIZE_8BIT, &data, 1, 200);
+    HAL_Delay(100);
+    data = 0x00;
+    HAL_I2C_Mem_Write(&hi2c1, MPU_ADDR, SMPLRT_DIV, I2C_MEMADD_SIZE_8BIT, &data, 1, 200);
+    data = 0x03;
+    HAL_I2C_Mem_Write(&hi2c1, MPU_ADDR, CONFIG, I2C_MEMADD_SIZE_8BIT, &data, 1, 200);
+    data = 0x00;
+    HAL_I2C_Mem_Write(&hi2c1, MPU_ADDR, GYRO_CONFIG, I2C_MEMADD_SIZE_8BIT, &data, 1, 200);
+    data = 0x00;
+    HAL_I2C_Mem_Write(&hi2c1, MPU_ADDR, ACCEL_CONFIG, I2C_MEMADD_SIZE_8BIT, &data, 1, 200);
+    lcd_clear();
+    lcd_send_string("MPU READY");
+    HAL_Delay(500);
+}
+void MPU9250_Read(int16_t *ax, int16_t *ay, int16_t *az,
+                  int16_t *gx, int16_t *gy, int16_t *gz)
+{
+    uint8_t raw[14];
+
+    HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR,
+                     ACCEL_XOUT_H,
+                     I2C_MEMADD_SIZE_8BIT,
+                     raw, 14, 200);
+
+    *ax = (raw[0] << 8) | raw[1];
+    *ay = (raw[2] << 8) | raw[3];
+    *az = (raw[4] << 8) | raw[5];
+
+    *gx = (raw[8] << 8) | raw[9];
+    *gy = (raw[10] << 8) | raw[11];
+    *gz = (raw[12] << 8) | raw[13];
+}
+void I2C_Scan(void)
+{
+    char msg[16];
+
+    for (uint8_t i = 1; i < 128; i++)
+    {
+        if (HAL_I2C_IsDeviceReady(&hi2c1, (i << 1), 1, 20) == HAL_OK)
+        {
+            sprintf(msg, "0x%02X", i);
+            lcd_clear();
+            lcd_send_string(msg);
+            HAL_Delay(1500);
+        }
+    }
+}
 
 /* USER CODE END PFP */
 
@@ -67,6 +209,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+	int16_t ax, ay, az, gx, gy, gz;
 
   /* USER CODE END 1 */
 
@@ -76,6 +219,11 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+  float Ax = 0;
+  float Ay = 0;
+  float Az = 0;
+  float roll  = 0;
+  float pitch = 0;
 
   /* USER CODE END Init */
 
@@ -90,19 +238,44 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-  }
+  lcd_init();
+  MPU9250_Init();
+   while (1)
+   {
+	   MPU9250_Read(&ax, &ay, &az, &gx, &gy, &gz);
+	   Ax = ax / 16384.0;
+	   Ay = ay / 16384.0;
+	   Az = az / 16384.0;
+	   roll = atan2(Ay, Az) * 180 / M_PI;
+	   pitch = atan2(-Ax, sqrt(Ay*Ay + Az*Az)) * 180 / M_PI;
+	       lcd_clear();
+	       char buf[18];
+	       char buf2[19];
+	       int roll_i = (int)(roll * 100);
+	       int pitch_i = (int)(pitch * 100);
+	       lcd_clear();
+	       lcd_put_cur(0, 0);
+	       sprintf(buf, "Roll:%d.%02d", roll_i/100, abs(roll_i%100));
+	       lcd_send_string(buf);
+	       lcd_put_cur(1, 0);
+	       sprintf(buf2, "Pitch:%d.%02d", pitch_i/100, abs(pitch_i%100));
+	       lcd_send_string(buf2);
+	       HAL_Delay(1000);
+   }
   /* USER CODE END 3 */
 }
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
 
 /**
   * @brief System Clock Configuration
