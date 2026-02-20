@@ -6,9 +6,10 @@
 ../Core/Inc/LCD_I2C.h:61:6:LCD_CURSOR	3
 ../Core/Inc/MPU9250.h:13:6:MPU9250_Init	1
 ../Core/Inc/MPU9250.h:32:6:MPU9250_Read	1
-../Core/Src/main.c:62:6:I2C_Scan	3
-../Core/Src/main.c:89:5:main	1
-../Core/Src/main.c:165:6:SystemClock_Config	3
-../Core/Src/main.c:212:13:MX_I2C1_Init	2
-../Core/Src/main.c:246:13:MX_GPIO_Init	1
-../Core/Src/main.c:268:6:Error_Handler	1
+../Core/Src/main.c:65:6:I2C_Scan	3
+../Core/Src/main.c:93:5:main	1
+../Core/Src/main.c:169:6:SystemClock_Config	3
+../Core/Src/main.c:216:13:MX_I2C1_Init	2
+../Core/Src/main.c:250:13:MX_USART1_UART_Init	2
+../Core/Src/main.c:283:13:MX_GPIO_Init	1
+../Core/Src/main.c:305:6:Error_Handler	1
