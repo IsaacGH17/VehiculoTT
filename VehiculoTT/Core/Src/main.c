@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -47,6 +48,22 @@
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c1;
 
+UART_HandleTypeDef huart1;
+
+/* Definitions for defaultTask */
+osThreadId_t defaultTaskHandle;
+const osThreadAttr_t defaultTask_attributes = {
+  .name = "defaultTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for parserTask */
+osThreadId_t parserTaskHandle;
+const osThreadAttr_t parserTask_attributes = {
+  .name = "parserTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityAboveNormal,
+};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -55,6 +72,10 @@ I2C_HandleTypeDef hi2c1;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
+static void MX_USART1_UART_Init(void);
+void StartDefaultTask(void *argument);
+void StartTask02(void *argument);
+
 /* USER CODE BEGIN PFP */
 
 
@@ -75,6 +96,7 @@ void I2C_Scan(void)
     }
 }
 
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -90,7 +112,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	int16_t ax, ay, az, gx, gy, gz;
+	//int16_t ax, ay, az, gx, gy, gz;
 
   /* USER CODE END 1 */
 
@@ -100,11 +122,11 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  float Ax = 0;
+  /*float Ax = 0;
   float Ay = 0;
   float Az = 0;
   float roll  = 0;
-  float pitch = 0;
+  float pitch = 0;*/
 
   /* USER CODE END Init */
 
@@ -118,45 +140,84 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_I2C1_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  LCD_init();
-  MPU9250_Init();
-   while (1)
-   {
-	   MPU9250_Read(&ax, &ay, &az, &gx, &gy, &gz);
-	   Ax = ax / 16384.0;
-	   Ay = ay / 16384.0;
-	   Az = az / 16384.0;
-	   roll = atan2(Ay, Az) * 180 / M_PI;
-	   pitch = atan2(-Ax, sqrt(Ay*Ay + Az*Az)) * 180 / M_PI;
-	       LCD_CLEAR();
-	       char buf[18];
-	       char buf2[20];
-	       int roll_i = (int)(roll * 100);
-	       int pitch_i = (int)(pitch * 100);
-	       LCD_CLEAR();
-	       LCD_CURSOR(0, 0);
-	       sprintf(buf, "Roll:%d.%02d", roll_i/100, abs(roll_i%100));
-	       LCD_CADENA(buf);
-	       LCD_CURSOR(1, 0);
-	       sprintf(buf2, "Pitch :%d.%02d", pitch_i/100, abs(pitch_i%100));
-	       LCD_CADENA(buf2);
-	       HAL_Delay(1000);
-   }
+  /*LCD_init();
+    MPU9250_Init();*/
+  /* USER CODE END 2 */
+
+  /* Init scheduler */
+  osKernelInitialize();
+
+  /* USER CODE BEGIN RTOS_MUTEX */
+  /* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+  /* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+  /* add queues, ... */
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+  /* creation of defaultTask */
+  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+
+  /* creation of parserTask */
+  parserTaskHandle = osThreadNew(StartTask02, NULL, &parserTask_attributes);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+  /* add threads, ... */
+  /* USER CODE END RTOS_THREADS */
+
+  /* USER CODE BEGIN RTOS_EVENTS */
+  /* add events, ... */
+  /* USER CODE END RTOS_EVENTS */
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+	  char msg[] = "Prueba larga\r\n";
+	    HAL_UART_Transmit(&huart1, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+	    HAL_Delay(1000);
+/*
+	  MPU9250_Read(&ax, &ay, &az, &gx, &gy, &gz);
+	  	   Ax = ax / 16384.0;
+	  	   Ay = ay / 16384.0;
+	  	   Az = az / 16384.0;
+	  	   roll = atan2(Ay, Az) * 180 / M_PI;
+	  	   pitch = atan2(-Ax, sqrt(Ay*Ay + Az*Az)) * 180 / M_PI;
+	  	       LCD_CLEAR();
+	  	       char buf[18];
+	  	       char buf2[20];
+	  	       int roll_i = (int)(roll * 100);
+	  	       int pitch_i = (int)(pitch * 100);
+	  	       LCD_CLEAR();
+	  	       LCD_CURSOR(0, 0);
+	  	       sprintf(buf, "Roll:%d.%02d", roll_i/100, abs(roll_i%100));
+	  	       LCD_CADENA(buf);
+	  	       LCD_CURSOR(1, 0);
+	  	       sprintf(buf2, "Pitch :%d.%02d", pitch_i/100, abs(pitch_i%100));
+	  	       LCD_CADENA(buf2);
+	  	       HAL_Delay(1000);*/
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+  }
   /* USER CODE END 3 */
 }
-
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
 
 /**
   * @brief System Clock Configuration
@@ -239,6 +300,39 @@ static void MX_I2C1_Init(void)
 }
 
 /**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART1_Init 0 */
+
+  /* USER CODE END USART1_Init 0 */
+
+  /* USER CODE BEGIN USART1_Init 1 */
+
+  /* USER CODE END USART1_Init 1 */
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 9600;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART1_Init 2 */
+
+  /* USER CODE END USART1_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -260,6 +354,63 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+/* USER CODE BEGIN Header_StartDefaultTask */
+/**
+  * @brief  Function implementing the defaultTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_StartDefaultTask */
+void StartDefaultTask(void *argument)
+{
+  /* USER CODE BEGIN 5 */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_StartTask02 */
+/**
+* @brief Function implementing the parserTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTask02 */
+void StartTask02(void *argument)
+{
+  /* USER CODE BEGIN StartTask02 */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartTask02 */
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM9 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM9) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
