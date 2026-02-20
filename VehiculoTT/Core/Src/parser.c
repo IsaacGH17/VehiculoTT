@@ -1,4 +1,5 @@
 #include "protocolo.h"
+#include "motor_control.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include "main.h"
@@ -54,25 +55,48 @@ bool parse_byte(uint8_t byte, Packet_t *pkt, ParserCtx_t *ctx) {
 }
 
 void execute_command(Packet_t *pkt) {
-    printf("Ejecutando Comando: 0x%02X -> ", pkt->command);
-    
     switch (pkt->command) {
+
         case CMD_MODO_OP:
-            if (pkt->payload[0] == PARAM_MANUAL) printf("Cambiando a Modo MANUAL\n");
-            else printf("Cambiando a Modo SEMIAUTO\n");
+        if (pkt->payload[0] == SM_MANUAL) {
+                Motor_SetAllPulse(0);
+            } else if (pkt->payload[0] == SM_SEMIAUTO) {
+                Motor_SetAllPulse(MOTOR_SPEED_STEP);
+            }
             break;
-            
-        case CMD_PARO_EMERG:
-            printf("!!! PARO DE EMERGENCIA ACTIVADO !!!\n");
+
+        case CMD_VELOCIDAD:
+            if (pkt->payload[0] == PARAM_VEL_INC) {
+                Motor_SpeedInc();
+            } else if (pkt->payload[0] == PARAM_VEL_DEC) {
+                Motor_SpeedDec();
+            }
             break;
-            
+
         case CMD_AVANCE_CTRL:
-            if (pkt->payload[0] == PARAM_FORWARD) printf("Veh�culo AVANZANDO\n");
-            else printf("Veh�culo RETROCEDIENDO\n");
+            if (Motor_GetCurrentPulse() == 0) {
+                Motor_SetAllPulse(MOTOR_SPEED_STEP);
+            }
+            break;
+
+        case CMD_PARO_EMERG:
+            Motor_Stop();
+            break;
+
+        case CMD_PARO:
+            Motor_Stop();
+            break;
+
+        case CMD_PINZAS:
+            break;
+
+        case CMD_PINON:
+            break;
+
+        case CMD_ACOPLE_RUEDAS:
             break;
 
         default:
-            printf("Comando no reconocido\n");
             break;
     }
 }
