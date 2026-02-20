@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include "LCD_I2C.h"
 #include "MPU9250.h"
+#include "protocolo.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,7 +38,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define DMA_RX_BUF_SIZE 64
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -49,6 +50,7 @@
 I2C_HandleTypeDef hi2c1;
 
 UART_HandleTypeDef huart1;
+DMA_HandleTypeDef hdma_usart1_rx;
 
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -65,16 +67,19 @@ const osThreadAttr_t parserTask_attributes = {
   .priority = (osPriority_t) osPriorityAboveNormal,
 };
 /* USER CODE BEGIN PV */
-
+uint8_t dma_rx_buf[DMA_RX_BUF_SIZE];
+volatile uint16_t dma_read_idx = 0;
+osSemaphoreId_t uartRxSemHandle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_USART1_UART_Init(void);
 void StartDefaultTask(void *argument);
-void StartTask02(void *argument);
+void ParserTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -139,11 +144,22 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_I2C1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   /*LCD_init();
     MPU9250_Init();*/
+
+  /* Iniciar DMA circular para UART RX */
+  HAL_UART_Receive_DMA(&huart1, dma_rx_buf, DMA_RX_BUF_SIZE);
+
+  /* Habilitar interrupcion IDLE para detectar fin de trama */
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+
+  /* Habilitar NVIC para USART1 (necesario para que entre el IRQHandler) */
+  HAL_NVIC_SetPriority(USART1_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -154,7 +170,8 @@ int main(void)
   /* USER CODE END RTOS_MUTEX */
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
+  const osSemaphoreAttr_t uartRxSem_attr = { .name = "uartRxSem" };
+  uartRxSemHandle = osSemaphoreNew(1, 0, &uartRxSem_attr);
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
@@ -170,7 +187,7 @@ int main(void)
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* creation of parserTask */
-  parserTaskHandle = osThreadNew(StartTask02, NULL, &parserTask_attributes);
+  parserTaskHandle = osThreadNew(ParserTask, NULL, &parserTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -333,6 +350,22 @@ static void MX_USART1_UART_Init(void)
 }
 
 /**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA2_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA2_Stream2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -373,22 +406,39 @@ void StartDefaultTask(void *argument)
   /* USER CODE END 5 */
 }
 
-/* USER CODE BEGIN Header_StartTask02 */
+/* USER CODE BEGIN Header_ParserTask */
 /**
 * @brief Function implementing the parserTask thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartTask02 */
-void StartTask02(void *argument)
+/* USER CODE END Header_ParserTask */
+void ParserTask(void *argument)
 {
-  /* USER CODE BEGIN StartTask02 */
-  /* Infinite loop */
+  /* USER CODE BEGIN ParserTask */
+  Packet_t pkt;
+  ParserCtx_t ctx = {0};
+
   for(;;)
   {
-    osDelay(1);
+    /* Dormir hasta que la ISR de IDLE nos despierte */
+    osSemaphoreAcquire(uartRxSemHandle, osWaitForever);
+
+    /* Calcular posicion de escritura del DMA */
+    uint16_t dma_write_idx = DMA_RX_BUF_SIZE
+        - __HAL_DMA_GET_COUNTER(huart1.hdmarx);
+
+    /* Procesar todos los bytes nuevos del buffer circular */
+    while (dma_read_idx != dma_write_idx) {
+      uint8_t byte = dma_rx_buf[dma_read_idx];
+      dma_read_idx = (dma_read_idx + 1) % DMA_RX_BUF_SIZE;
+
+      if (parse_byte(byte, &pkt, &ctx)) {
+        execute_command(&pkt);
+      }
+    }
   }
-  /* USER CODE END StartTask02 */
+  /* USER CODE END ParserTask */
 }
 
 /**
