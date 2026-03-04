@@ -58,9 +58,9 @@ void execute_command(Packet_t *pkt) {
     switch (pkt->command) {
 
         case CMD_MODO_OP:
-        if (pkt->payload[0] == SM_MANUAL) {
+        if (pkt->payload[0] == PARAM_MANUAL) {
                 Motor_SetAllPulse(0);
-            } else if (pkt->payload[0] == SM_SEMIAUTO) {
+            } else if (pkt->payload[0] == PARAM_SEMIAUTO) {
                 Motor_SetAllPulse(MOTOR_SPEED_STEP);
             }
             break;

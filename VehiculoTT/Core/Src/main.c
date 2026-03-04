@@ -159,6 +159,7 @@ int main(void)
   /*LCD_init();
     MPU9250_Init();*/
   Motor_Init();
+  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 2098 );
   HAL_UART_Receive_DMA(&huart1, dma_rx_buf, DMA_RX_BUF_SIZE);
   __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
   HAL_NVIC_SetPriority(USART1_IRQn, 6, 0);
@@ -209,9 +210,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  char msg[] = "Prueba larga\r\n";
-	    HAL_UART_Transmit(&huart1, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-	    HAL_Delay(1000);
 /*
 	  MPU9250_Read(&ax, &ay, &az, &gx, &gy, &gz);
 	  	   Ax = ax / 16384.0;
