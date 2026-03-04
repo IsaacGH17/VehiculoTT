@@ -562,12 +562,18 @@ void ParserTask(void *argument)
 
   for(;;)
   {
+    /* Dormir hasta que la ISR de IDLE nos despierte */
     osSemaphoreAcquire(uartRxSemHandle, osWaitForever);
+
+    /* Calcular posicion de escritura del DMA */
     uint16_t dma_write_idx = DMA_RX_BUF_SIZE
         - __HAL_DMA_GET_COUNTER(huart1.hdmarx);
+
+    /* Procesar todos los bytes nuevos del buffer circular */
     while (dma_read_idx != dma_write_idx) {
       uint8_t byte = dma_rx_buf[dma_read_idx];
       dma_read_idx = (dma_read_idx + 1) % DMA_RX_BUF_SIZE;
+
       if (parse_byte(byte, &pkt, &ctx)) {
         execute_command(&pkt);
       }
@@ -586,20 +592,11 @@ void ParserTask(void *argument)
 void StartTelemetriaTask(void *argument)
 {
   /* USER CODE BEGIN StartTelemetriaTask */
-	TickType_t xLastWakeTime;
-	  const TickType_t xFrequency = pdMS_TO_TICKS(200);
-	  static uint8_t tx_buffer[20];
-	  uint8_t sensor_data = 0x10;
-	  uint16_t packet_size = 0;
-	  xLastWakeTime = xTaskGetTickCount();
-	  for(;;)
-	  {
-	      packet_size = build_packet(tx_buffer, 0x27, &sensor_data, 1);
-	      if (huart1.gState == HAL_UART_STATE_READY) {
-	          HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
-	      }
-	      vTaskDelayUntil(&xLastWakeTime, xFrequency);
-	  }
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
   /* USER CODE END StartTelemetriaTask */
 }
 
