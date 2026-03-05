@@ -78,7 +78,7 @@ const osThreadAttr_t parserTask_attributes = {
 osThreadId_t sendTelemetriaHandle;
 const osThreadAttr_t sendTelemetria_attributes = {
   .name = "sendTelemetria",
-  .stack_size = 512 * 4,    /* aumentado: VL53L0X API usa mucho stack */
+  .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
@@ -186,33 +186,43 @@ int main(void)
   __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
   HAL_NVIC_SetPriority(USART1_IRQn, 6, 0);
   HAL_NVIC_EnableIRQ(USART1_IRQn);
+
+  /* ---- Inicialización VL53L0X ---- */
   {
     uint32_t refSpadCount;
     uint8_t  isApertureSpads;
     uint8_t  VhvSettings, PhaseCal;
-    VL53L0X_Error vl_status = -7;
+    VL53L0X_Error vl_status;
 
     vl53l0x_dev.I2cDevAddr      = VL53L0X_DEFAULT_ADDR;
     vl53l0x_dev.comms_speed_khz = 100;
     vl53l0x_dev.comms_type      = 1;
 
     vl_status = VL53L0X_DataInit(&vl53l0x_dev);
-    vl53_init_status = vl_status;
+    vl53_init_status = vl_status;   /* ver en debugger */
     if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
+
     vl_status = VL53L0X_StaticInit(&vl53l0x_dev);
     vl53_init_status = vl_status;
     if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
-    vl_status = VL53L0X_PerformRefCalibration(&vl53l0x_dev, &VhvSettings, &PhaseCal);
-    vl53_init_status = vl_status;
-    if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
-    vl_status = VL53L0X_PerformRefSpadManagement(&vl53l0x_dev, &refSpadCount, &isApertureSpads);
-    vl53_init_status = vl_status;
-    if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
-    vl_status = VL53L0X_SetDeviceMode(&vl53l0x_dev, VL53L0X_DEVICEMODE_SINGLE_RANGING);
-    vl53_init_status = vl_status;
-    vl53_init_fail:;
-  }
 
+    vl_status = VL53L0X_PerformRefCalibration(
+                    &vl53l0x_dev, &VhvSettings, &PhaseCal);
+    vl53_init_status = vl_status;
+    if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
+
+    vl_status = VL53L0X_PerformRefSpadManagement(
+                    &vl53l0x_dev, &refSpadCount, &isApertureSpads);
+    vl53_init_status = vl_status;
+    if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
+
+    vl_status = VL53L0X_SetDeviceMode(
+                    &vl53l0x_dev, VL53L0X_DEVICEMODE_SINGLE_RANGING);
+    vl53_init_status = vl_status;
+
+    vl53_init_fail:;  /* si falla, vl53_init_status <> 0, sensor desactivado */
+  }
+  /* ---- Fin inicialización VL53L0X ---- */
   /* USER CODE END 2 */
 
   /* Init scheduler */

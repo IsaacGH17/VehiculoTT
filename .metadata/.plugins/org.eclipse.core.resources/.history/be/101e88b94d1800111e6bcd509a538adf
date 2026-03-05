@@ -186,6 +186,8 @@ int main(void)
   __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
   HAL_NVIC_SetPriority(USART1_IRQn, 6, 0);
   HAL_NVIC_EnableIRQ(USART1_IRQn);
+
+  /* ---- Inicialización VL53L0X ---- */
   {
     uint32_t refSpadCount;
     uint8_t  isApertureSpads;
@@ -197,22 +199,30 @@ int main(void)
     vl53l0x_dev.comms_type      = 1;
 
     vl_status = VL53L0X_DataInit(&vl53l0x_dev);
-    vl53_init_status = vl_status;
+    vl53_init_status = vl_status;   /* ver en debugger */
     if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
+
     vl_status = VL53L0X_StaticInit(&vl53l0x_dev);
     vl53_init_status = vl_status;
     if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
-    vl_status = VL53L0X_PerformRefCalibration(&vl53l0x_dev, &VhvSettings, &PhaseCal);
-    vl53_init_status = vl_status;
-    if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
-    vl_status = VL53L0X_PerformRefSpadManagement(&vl53l0x_dev, &refSpadCount, &isApertureSpads);
-    vl53_init_status = vl_status;
-    if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
-    vl_status = VL53L0X_SetDeviceMode(&vl53l0x_dev, VL53L0X_DEVICEMODE_SINGLE_RANGING);
-    vl53_init_status = vl_status;
-    vl53_init_fail:;
-  }
 
+    vl_status = VL53L0X_PerformRefCalibration(
+                    &vl53l0x_dev, &VhvSettings, &PhaseCal);
+    vl53_init_status = vl_status;
+    if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
+
+    vl_status = VL53L0X_PerformRefSpadManagement(
+                    &vl53l0x_dev, &refSpadCount, &isApertureSpads);
+    vl53_init_status = vl_status;
+    if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
+
+    vl_status = VL53L0X_SetDeviceMode(
+                    &vl53l0x_dev, VL53L0X_DEVICEMODE_SINGLE_RANGING);
+    vl53_init_status = vl_status;
+
+    vl53_init_fail:;  /* si falla, vl53_init_status <> 0, sensor desactivado */
+  }
+  /* ---- Fin inicialización VL53L0X ---- */
   /* USER CODE END 2 */
 
   /* Init scheduler */
