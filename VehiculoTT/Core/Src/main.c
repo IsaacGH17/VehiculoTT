@@ -31,6 +31,7 @@
 #include "protocolo.h"
 #include "motor_control.h"
 #include "vl53l0x_platform.h"
+#include "vl53l0x_api.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -684,28 +685,18 @@ void StartTelemetriaTask(void *argument)
 
   for(;;)
   {
-      /* --- Leer distancia del VL53L0X --- */
-      VL53L0X_Error vl_status = VL53L0X_PerformSingleRangingMeasurement(
-                                     &vl53l0x_dev, &vl53l0x_meas);
-
-      if (vl_status == VL53L0X_ERROR_NONE &&
-          vl53l0x_meas.RangeStatus == 0)          /* 0 = medicion valida */
-      {
+      VL53L0X_Error vl_status = VL53L0X_PerformSingleRangingMeasurement(&vl53l0x_dev, &vl53l0x_meas);
+      if (vl_status == VL53L0X_ERROR_NONE && vl53l0x_meas.RangeStatus == 0){
           distancia_mm = vl53l0x_meas.RangeMilliMeter;
       }
-
-      /* Empaquetar los 2 bytes de distancia (Big-Endian) */
       uint8_t dist_bytes[2] = {
           (uint8_t)(distancia_mm >> 8),
           (uint8_t)(distancia_mm & 0xFF)
       };
-
       packet_size = build_packet(tx_buffer, 0x27, dist_bytes, 2);
-
       if (huart1.gState == HAL_UART_STATE_READY) {
           HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
       }
-
       vTaskDelayUntil(&xLastWakeTime, xFrequency);
   }
   /* USER CODE END StartTelemetriaTask */

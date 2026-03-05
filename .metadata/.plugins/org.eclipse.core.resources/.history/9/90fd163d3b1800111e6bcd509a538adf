@@ -1,0 +1,13 @@
+/*
+ * vl53l0x_types.h
+ *
+ *  Created on: Mar 4, 2026
+ *      Author: USER
+ */
+
+#ifndef INC_VL53L0X_TYPES_H_
+#define INC_VL53L0X_TYPES_H_
+
+
+
+#endif /* INC_VL53L0X_TYPES_H_ */
