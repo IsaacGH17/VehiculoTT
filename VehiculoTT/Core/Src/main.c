@@ -30,6 +30,7 @@
 #include "MPU9250.h"
 #include "protocolo.h"
 #include "motor_control.h"
+#include "vl53l0x_platform.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,7 +55,9 @@ TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 
 UART_HandleTypeDef huart1;
+UART_HandleTypeDef huart2;
 DMA_HandleTypeDef hdma_usart1_rx;
+DMA_HandleTypeDef hdma_usart1_tx;
 
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -81,6 +84,11 @@ const osThreadAttr_t sendTelemetria_attributes = {
 uint8_t dma_rx_buf[DMA_RX_BUF_SIZE];
 volatile uint16_t dma_read_idx = 0;
 osSemaphoreId_t uartRxSemHandle;
+
+/* VL53L0X */
+VL53L0X_Dev_t                      vl53l0x_dev;
+VL53L0X_RangingMeasurementData_t   vl53l0x_meas;
+volatile uint16_t                   distancia_mm = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,6 +99,7 @@ static void MX_I2C1_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_USART2_UART_Init(void);
 void StartDefaultTask(void *argument);
 void ParserTask(void *argument);
 void StartTelemetriaTask(void *argument);
@@ -163,6 +172,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM1_Init();
   MX_TIM2_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   /*LCD_init();
     MPU9250_Init();*/
@@ -171,6 +181,37 @@ int main(void)
   __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
   HAL_NVIC_SetPriority(USART1_IRQn, 6, 0);
   HAL_NVIC_EnableIRQ(USART1_IRQn);
+
+  /* ---- Inicialización VL53L0X ---- */
+  {
+    uint32_t refSpadCount;
+    uint8_t  isApertureSpads;
+    uint8_t  VhvSettings, PhaseCal;
+    VL53L0X_Error vl_status;
+
+    vl53l0x_dev.I2cDevAddr      = VL53L0X_DEFAULT_ADDR; /* 0x52 (8-bit) */
+    vl53l0x_dev.comms_speed_khz = 100;
+    vl53l0x_dev.comms_type      = 1; /* I2C */
+
+    vl_status = VL53L0X_DataInit(&vl53l0x_dev);
+    if (vl_status != VL53L0X_ERROR_NONE) Error_Handler();
+
+    vl_status = VL53L0X_StaticInit(&vl53l0x_dev);
+    if (vl_status != VL53L0X_ERROR_NONE) Error_Handler();
+
+    vl_status = VL53L0X_PerformRefCalibration(
+                    &vl53l0x_dev, &VhvSettings, &PhaseCal);
+    if (vl_status != VL53L0X_ERROR_NONE) Error_Handler();
+
+    vl_status = VL53L0X_PerformRefSpadManagement(
+                    &vl53l0x_dev, &refSpadCount, &isApertureSpads);
+    if (vl_status != VL53L0X_ERROR_NONE) Error_Handler();
+
+    vl_status = VL53L0X_SetDeviceMode(
+                    &vl53l0x_dev, VL53L0X_DEVICEMODE_SINGLE_RANGING);
+    if (vl_status != VL53L0X_ERROR_NONE) Error_Handler();
+  }
+  /* ---- Fin inicialización VL53L0X ---- */
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -491,6 +532,39 @@ static void MX_USART1_UART_Init(void)
 }
 
 /**
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART2_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART2_Init 0 */
+
+  /* USER CODE END USART2_Init 0 */
+
+  /* USER CODE BEGIN USART2_Init 1 */
+
+  /* USER CODE END USART2_Init 1 */
+  huart2.Instance = USART2;
+  huart2.Init.BaudRate = 115200;
+  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.StopBits = UART_STOPBITS_1;
+  huart2.Init.Parity = UART_PARITY_NONE;
+  huart2.Init.Mode = UART_MODE_TX_RX;
+  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART2_Init 2 */
+
+  /* USER CODE END USART2_Init 2 */
+
+}
+
+/**
   * Enable DMA controller clock
   */
 static void MX_DMA_Init(void)
@@ -503,6 +577,9 @@ static void MX_DMA_Init(void)
   /* DMA2_Stream2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
+  /* DMA2_Stream7_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream7_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream7_IRQn);
 
 }
 
@@ -513,13 +590,25 @@ static void MX_DMA_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : PC13 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -586,20 +675,39 @@ void ParserTask(void *argument)
 void StartTelemetriaTask(void *argument)
 {
   /* USER CODE BEGIN StartTelemetriaTask */
-	TickType_t xLastWakeTime;
-	  const TickType_t xFrequency = pdMS_TO_TICKS(200);
-	  static uint8_t tx_buffer[20];
-	  uint8_t sensor_data = 0x10;
-	  uint16_t packet_size = 0;
-	  xLastWakeTime = xTaskGetTickCount();
-	  for(;;)
-	  {
-	      packet_size = build_packet(tx_buffer, 0x27, &sensor_data, 1);
-	      if (huart1.gState == HAL_UART_STATE_READY) {
-	          HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
-	      }
-	      vTaskDelayUntil(&xLastWakeTime, xFrequency);
-	  }
+
+  TickType_t xLastWakeTime;
+  const TickType_t xFrequency = pdMS_TO_TICKS(500);
+  static uint8_t tx_buffer[20];
+  uint16_t packet_size = 0;
+  xLastWakeTime = xTaskGetTickCount();
+
+  for(;;)
+  {
+      /* --- Leer distancia del VL53L0X --- */
+      VL53L0X_Error vl_status = VL53L0X_PerformSingleRangingMeasurement(
+                                     &vl53l0x_dev, &vl53l0x_meas);
+
+      if (vl_status == VL53L0X_ERROR_NONE &&
+          vl53l0x_meas.RangeStatus == 0)          /* 0 = medicion valida */
+      {
+          distancia_mm = vl53l0x_meas.RangeMilliMeter;
+      }
+
+      /* Empaquetar los 2 bytes de distancia (Big-Endian) */
+      uint8_t dist_bytes[2] = {
+          (uint8_t)(distancia_mm >> 8),
+          (uint8_t)(distancia_mm & 0xFF)
+      };
+
+      packet_size = build_packet(tx_buffer, 0x27, dist_bytes, 2);
+
+      if (huart1.gState == HAL_UART_STATE_READY) {
+          HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
+      }
+
+      vTaskDelayUntil(&xLastWakeTime, xFrequency);
+  }
   /* USER CODE END StartTelemetriaTask */
 }
 
