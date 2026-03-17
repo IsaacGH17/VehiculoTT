@@ -46,15 +46,32 @@ build/MINGW32_NT-6.2/generated/gui_generated/src/common/FrontendApplicationBase.
  ../Middlewares/ST/touchgfx/framework/include/common/Partition.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/NoTransition.hpp \
  gui/include/gui/common/FrontendApplication.hpp \
- gui/include/gui/screen_screen/screenView.hpp \
- generated/gui_generated/include/gui_generated/screen_screen/screenViewBase.hpp \
+ gui/include/gui/home_screen/homeView.hpp \
+ generated/gui_generated/include/gui_generated/home_screen/homeViewBase.hpp \
  ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp \
- gui/include/gui/screen_screen/screenPresenter.hpp \
+ gui/include/gui/home_screen/homePresenter.hpp \
  gui/include/gui/model/ModelListener.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithLabel.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/TypedText.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Texts.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Button.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
+ gui/include/gui/manual_screen/ManualView.hpp \
+ generated/gui_generated/include/gui_generated/manual_screen/ManualViewBase.hpp \
+ gui/include/gui/manual_screen/ManualPresenter.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp \
+ gui/include/gui/semi_screen/SemiView.hpp \
+ generated/gui_generated/include/gui_generated/semi_screen/SemiViewBase.hpp \
+ gui/include/gui/semi_screen/SemiPresenter.hpp \
  generated/texts/include/texts/TextKeysAndLanguages.hpp
 generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp:
 ../Middlewares/ST/touchgfx/framework/include/mvp/MVPApplication.hpp:
@@ -103,13 +120,30 @@ generated/gui_generated/include/gui_generated/common/FrontendHeapBase.hpp:
 ../Middlewares/ST/touchgfx/framework/include/common/Partition.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/NoTransition.hpp:
 gui/include/gui/common/FrontendApplication.hpp:
-gui/include/gui/screen_screen/screenView.hpp:
-generated/gui_generated/include/gui_generated/screen_screen/screenViewBase.hpp:
+gui/include/gui/home_screen/homeView.hpp:
+generated/gui_generated/include/gui_generated/home_screen/homeViewBase.hpp:
 ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:
-gui/include/gui/screen_screen/screenPresenter.hpp:
+gui/include/gui/home_screen/homePresenter.hpp:
 gui/include/gui/model/ModelListener.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp:
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithLabel.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/TypedText.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Texts.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Button.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
+gui/include/gui/manual_screen/ManualView.hpp:
+generated/gui_generated/include/gui_generated/manual_screen/ManualViewBase.hpp:
+gui/include/gui/manual_screen/ManualPresenter.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp:
+gui/include/gui/semi_screen/SemiView.hpp:
+generated/gui_generated/include/gui_generated/semi_screen/SemiViewBase.hpp:
+gui/include/gui/semi_screen/SemiPresenter.hpp:
 generated/texts/include/texts/TextKeysAndLanguages.hpp:

@@ -1,0 +1,13 @@
+../Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp:37:18:virtual void touchgfx::Presenter::activate()	16	static
+../Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp:47:18:virtual void touchgfx::Presenter::deactivate()	16	static
+../Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp:52:13:touchgfx::Presenter::~Presenter()	16	static
+../Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp:52:13:virtual touchgfx::Presenter::~Presenter()	16	static
+../Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp:58:5:touchgfx::Presenter::Presenter()	16	static
+../TouchGFX/gui/include/gui/model/ModelListener.hpp:9:5:ModelListener::ModelListener()	16	static
+../TouchGFX/gui/include/gui/model/ModelListener.hpp:11:13:ModelListener::~ModelListener()	16	static
+../TouchGFX/gui/include/gui/model/ModelListener.hpp:11:13:virtual ModelListener::~ModelListener()	16	static
+../TouchGFX/gui/include/gui/semi_screen/SemiPresenter.hpp:28:13:SemiPresenter::~SemiPresenter()	16	static
+../TouchGFX/gui/include/gui/semi_screen/SemiPresenter.hpp:28:13:virtual SemiPresenter::~SemiPresenter()	16	static
+../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:4:1:SemiPresenter::SemiPresenter(SemiView&)	16	static
+../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:10:6:virtual void SemiPresenter::activate()	16	static
+../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:15:6:virtual void SemiPresenter::deactivate()	16	static

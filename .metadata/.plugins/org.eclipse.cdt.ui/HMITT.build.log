@@ -1,10 +1,10 @@
-03:38:46 **** Incremental Build of configuration Debug for project HMITT ****
+00:51:01 **** Incremental Build of configuration Debug for project HMITT ****
 make -j16 all 
 arm-none-eabi-size  HMITT.elf 
    text	   data	    bss	    dec	    hex	filename
- 328912	    628	  33154	 362694	  588c6	HMITT.elf
+ 175704	    640	  67682	 244026	  3b93a	HMITT.elf
 Finished building: default.size.stdout
  
 
-03:38:49 Build Finished. 0 errors, 0 warnings. (took 2s.549ms)
+00:51:04 Build Finished. 0 errors, 0 warnings. (took 2s.746ms)
 

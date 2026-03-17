@@ -72,6 +72,8 @@ void HAL_MspInit(void)
   __HAL_RCC_PWR_CLK_ENABLE();
 
   /* System interrupt init*/
+  /* PendSV_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(PendSV_IRQn, 15, 0);
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -175,7 +177,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     __HAL_LINKDMA(hspi,hdmatx,hdma_spi1_tx);
 
     /* SPI1 interrupt Init */
-    HAL_NVIC_SetPriority(SPI1_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(SPI1_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(SPI1_IRQn);
   /* USER CODE BEGIN SPI1_MspInit 1 */
 
@@ -202,6 +204,9 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+    /* SPI2 interrupt Init */
+    HAL_NVIC_SetPriority(SPI2_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(SPI2_IRQn);
   /* USER CODE BEGIN SPI2_MspInit 1 */
 
   /* USER CODE END SPI2_MspInit 1 */
@@ -256,6 +261,8 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
     */
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_10|GPIO_PIN_14|GPIO_PIN_15);
 
+    /* SPI2 interrupt DeInit */
+    HAL_NVIC_DisableIRQ(SPI2_IRQn);
   /* USER CODE BEGIN SPI2_MspDeInit 1 */
 
   /* USER CODE END SPI2_MspDeInit 1 */
@@ -279,7 +286,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
     /* Peripheral clock enable */
     __HAL_RCC_TIM2_CLK_ENABLE();
     /* TIM2 interrupt Init */
-    HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(TIM2_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(TIM2_IRQn);
   /* USER CODE BEGIN TIM2_MspInit 1 */
 

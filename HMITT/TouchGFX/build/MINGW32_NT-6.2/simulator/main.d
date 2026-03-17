@@ -70,14 +70,30 @@ build/MINGW32_NT-6.2/simulator/main.o: simulator/main.cpp \
  ../Middlewares/ST/touchgfx/framework/include/mvp/MVPApplication.hpp \
  ../Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp \
- gui/include/gui/model/Model.hpp \
- gui/include/gui/screen_screen/screenView.hpp \
- generated/gui_generated/include/gui_generated/screen_screen/screenViewBase.hpp \
+ gui/include/gui/model/Model.hpp gui/include/gui/home_screen/homeView.hpp \
+ generated/gui_generated/include/gui_generated/home_screen/homeViewBase.hpp \
  ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp \
- gui/include/gui/screen_screen/screenPresenter.hpp \
+ gui/include/gui/home_screen/homePresenter.hpp \
  gui/include/gui/model/ModelListener.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithLabel.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Button.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
+ gui/include/gui/manual_screen/ManualView.hpp \
+ generated/gui_generated/include/gui_generated/manual_screen/ManualViewBase.hpp \
+ gui/include/gui/manual_screen/ManualPresenter.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp \
+ gui/include/gui/semi_screen/SemiView.hpp \
+ generated/gui_generated/include/gui_generated/semi_screen/SemiViewBase.hpp \
+ gui/include/gui/semi_screen/SemiPresenter.hpp \
  generated/gui_generated/include/gui_generated/common/SimConstants.hpp \
  ../Middlewares/ST/touchgfx/framework/include/platform/driver/touch/SDL2TouchController.hpp \
  generated/simulator/include/simulator/mainBase.hpp
@@ -153,13 +169,30 @@ generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp
 ../Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:
 gui/include/gui/model/Model.hpp:
-gui/include/gui/screen_screen/screenView.hpp:
-generated/gui_generated/include/gui_generated/screen_screen/screenViewBase.hpp:
+gui/include/gui/home_screen/homeView.hpp:
+generated/gui_generated/include/gui_generated/home_screen/homeViewBase.hpp:
 ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:
-gui/include/gui/screen_screen/screenPresenter.hpp:
+gui/include/gui/home_screen/homePresenter.hpp:
 gui/include/gui/model/ModelListener.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/ImageProgress.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractDirectionProgress.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithLabel.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Button.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
+gui/include/gui/manual_screen/ManualView.hpp:
+generated/gui_generated/include/gui_generated/manual_screen/ManualViewBase.hpp:
+gui/include/gui/manual_screen/ManualPresenter.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp:
+gui/include/gui/semi_screen/SemiView.hpp:
+generated/gui_generated/include/gui_generated/semi_screen/SemiViewBase.hpp:
+gui/include/gui/semi_screen/SemiPresenter.hpp:
 generated/gui_generated/include/gui_generated/common/SimConstants.hpp:
 ../Middlewares/ST/touchgfx/framework/include/platform/driver/touch/SDL2TouchController.hpp:
 generated/simulator/include/simulator/mainBase.hpp:

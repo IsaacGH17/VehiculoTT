@@ -2,39 +2,259 @@
   "Application": {
     "Screens": [
       {
-        "Name": "screen",
+        "Name": "home",
         "Components": [
           {
-            "Type": "Gauge",
-            "Name": "gauge1",
-            "X": 76,
-            "Y": 52,
-            "Width": 169,
-            "Height": 154,
-            "Preset": "alternate_theme\\presets\\gauges\\medium\\active.json",
-            "FileNameBackground": "__generated\\alternate_theme_images_widgets_gauge_medium_backgrounds_active.png",
-            "RotationCenterX": 120.0,
-            "RotationCenterY": 120.0,
-            "StartAngle": -113.0,
-            "EndAngle": 112.0,
-            "RangeMax": 100.0,
-            "InitialValue": 50.0,
-            "Easing": "Linear",
-            "EasingOption": "In",
-            "FileNameNeedle": "__generated\\alternate_theme_images_widgets_gauge_medium_needles_smooth.png",
-            "NeedleRotationCenterX": 7.0,
-            "NeedleRotationCenterY": 67.0,
-            "NeedleMovingRenderingAlgorithm": "Bilinear Interpolation",
-            "NeedleSteadyRenderingAlgorithm": "Bilinear Interpolation",
-            "ArcColor": {
-              "Red": 20,
-              "Green": 151,
-              "Blue": 197
+            "Type": "Container",
+            "Name": "container1",
+            "Width": 320,
+            "Height": 240,
+            "Components": []
+          },
+          {
+            "Type": "Box",
+            "Name": "box1",
+            "Width": 320,
+            "Height": 240,
+            "Color": {
+              "Green": 64,
+              "Blue": 138
+            }
+          },
+          {
+            "Type": "ImageProgress",
+            "Name": "imageProgress1",
+            "X": 261,
+            "Y": 13,
+            "Width": 45,
+            "Height": 20,
+            "FileNameProgress": "__generated\\alternate_theme_images_widgets_imageprogress_styled_batteries_battery_small_active.png",
+            "AnchorAtZero": true,
+            "Direction": "Right",
+            "Preset": "alternate_theme\\presets\\imageprogress\\styled\\batteries\\small_active.json",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_imageprogress_styled_batteries_battery_small.png",
+            "IndicatorPositionX": 3,
+            "IndicatorPositionY": 3,
+            "IndicatorPositionWidth": 36,
+            "IndicatorPositionHeight": 14,
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 60
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "btnman",
+            "X": 79,
+            "Y": 95,
+            "Width": 175,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_small_round_disabled.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_small_round_disabled.png",
+            "TextId": "__SingleUse_3AI3",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
             },
-            "ArcCapStyle": "Butt"
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\small_round_disabled.json"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "btnsemi",
+            "X": 79,
+            "Y": 166,
+            "Width": 175,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_small_round_disabled.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_small_round_disabled.png",
+            "TextId": "__SingleUse_220X",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\small_round_disabled.json"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 73,
+            "Y": 63,
+            "Width": 186,
+            "Height": 20,
+            "TextId": "__SingleUse_81D2",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 225,
+            "Y": 14,
+            "Width": 27,
+            "Height": 16,
+            "TextId": "__SingleUse_CBPV",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
           }
         ],
-        "Interactions": []
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "btnman"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Manual"
+            }
+          },
+          {
+            "InteractionName": "Interaction2",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "btnsemi"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Semi"
+            }
+          },
+          {
+            "InteractionName": "Interaction3",
+            "Trigger": {
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "Type": "ActionNone"
+            }
+          },
+          {
+            "InteractionName": "Interaction4",
+            "Trigger": {
+              "Type": "TriggerNone"
+            },
+            "Action": {
+              "Type": "ActionNone"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Manual",
+        "Components": [
+          {
+            "Type": "Box",
+            "Name": "box1",
+            "Width": 320,
+            "Height": 240,
+            "Color": {
+              "Green": 54,
+              "Blue": 115
+            }
+          },
+          {
+            "Type": "ButtonWithIcon",
+            "Name": "back",
+            "X": 130,
+            "Y": 160,
+            "Width": 60,
+            "Height": 60,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_round_tiny_fill_disabled.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_round_tiny_fill_disabled.png",
+            "IconPressed": "__generated\\icon_theme_images_action_highlight_off_25_25_E8F6FB.svg.png",
+            "IconReleased": "__generated\\icon_theme_images_action_highlight_off_25_25_E8F6FB.svg.png",
+            "IconX": 18,
+            "IconY": 18,
+            "IconHeight": 25,
+            "IconWidth": 25,
+            "Preset": "alternate_theme\\presets\\button\\icon\\round\\tiny_fill_disabled.json"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "back"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "home"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Semi",
+        "Components": [
+          {
+            "Type": "Box",
+            "Name": "box1",
+            "Width": 320,
+            "Height": 240,
+            "Color": {
+              "Green": 64,
+              "Blue": 138
+            }
+          },
+          {
+            "Type": "ButtonWithIcon",
+            "Name": "back",
+            "X": 130,
+            "Y": 162,
+            "Width": 60,
+            "Height": 60,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_round_tiny_fill_disabled.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_icon_round_tiny_fill_disabled.png",
+            "IconPressed": "__generated\\icon_theme_images_action_highlight_off_25_25_E8F6FB.svg.png",
+            "IconReleased": "__generated\\icon_theme_images_action_highlight_off_25_25_E8F6FB.svg.png",
+            "IconX": 18,
+            "IconY": 18,
+            "IconHeight": 25,
+            "IconWidth": 25,
+            "Preset": "alternate_theme\\presets\\button\\icon\\round\\tiny_fill_disabled.json"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "back"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "home"
+            }
+          }
+        ]
       }
     ],
     "CustomContainerDefinitions": [],
@@ -44,7 +264,7 @@
       "Height": 240
     },
     "SelectedColorDepth": 16,
-    "StartupScreenName": "screen",
+    "StartupScreenName": "home",
     "SelectedStartupLanguage": "GB",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
     "UIPath": ".",

@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "app_touchgfx.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -50,6 +51,27 @@ DMA_HandleTypeDef hdma_spi1_tx;
 
 TIM_HandleTypeDef htim2;
 
+/* Definitions for defaultTask */
+osThreadId_t defaultTaskHandle;
+const osThreadAttr_t defaultTask_attributes = {
+  .name = "defaultTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for refreshGUI */
+osThreadId_t refreshGUIHandle;
+const osThreadAttr_t refreshGUI_attributes = {
+  .name = "refreshGUI",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for TouchGFXTask */
+osThreadId_t TouchGFXTaskHandle;
+const osThreadAttr_t TouchGFXTask_attributes = {
+  .name = "TouchGFXTask",
+  .stack_size = 2048 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -62,31 +84,16 @@ static void MX_SPI1_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_CRC_Init(void);
 static void MX_TIM2_Init(void);
+void StartDefaultTask(void *argument);
+void RefreshGUI(void *argument);
+extern void TouchGFX_Task(void *argument);
+
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-// ====================================================================
-// DIAGNÓSTICO: esta variable te dice hasta dónde llegó el código
-//   1 = entró a LCD_Raw_Test
-//   2 = hizo el RESET físico del display
-//   3 = mandó Software Reset por SPI  <- si se queda aquí, SPI no funciona
-//   4 = mandó Sleep Out
-//   5 = mandó Display ON + pixel format
-//   6 = terminó de pintar la pantalla  <- si llega aquí y no ves rojo, problema de display
-// ====================================================================
-volatile uint32_t debug_status = 0;
-volatile HAL_StatusTypeDef spi_last_result = HAL_OK;
-
-
-// Buffer para leer el ID del chip - ver en debugger:
-//   lcd_id[1] debe ser 0x93
-//   lcd_id[2] debe ser 0x41
-// Si es ILI9341 genuino y el SPI funciona
-
 
 /* USER CODE END 0 */
 
@@ -124,25 +131,64 @@ int main(void)
   MX_SPI2_Init();
   MX_CRC_Init();
   MX_TIM2_Init();
-  MX_TouchGFX_Init(); // COMENTADO - interferye con test raw SPI
+  /* Call PreOsInit function */
+  MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
-  // ================================================================
-  // TEST GPIO PURO - Mide con multímetro en modo DC voltaje
-  // Cada pin parpadea 5 veces lentamente para que lo veas cambiar
-  // Si un pin dice 3.3V fijo o 0V fijo = ese pin NO está toggling
-  // ================================================================
-
- // GPIO test completado
+  ILI9341_Init();    // Display init ANTES del scheduler
+  XPT2046_Init();
   /* USER CODE END 2 */
+
+  /* Init scheduler */
+  osKernelInitialize();
+  MX_TouchGFX_Init();
+
+  /* USER CODE BEGIN RTOS_MUTEX */
+  /* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+  /* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+  /* add queues, ... */
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+  /* creation of defaultTask */
+  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+
+  /* creation of refreshGUI */
+  refreshGUIHandle = osThreadNew(RefreshGUI, NULL, &refreshGUI_attributes);
+
+  /* creation of TouchGFXTask */
+  TouchGFXTaskHandle = osThreadNew(TouchGFX_Task, NULL, &TouchGFXTask_attributes);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+  /* add threads, ... */
+  /* USER CODE END RTOS_THREADS */
+
+  /* USER CODE BEGIN RTOS_EVENTS */
+  /* add events, ... */
+  /* USER CODE END RTOS_EVENTS */
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-
-  MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
+    /* Nota: este loop nunca se ejecuta porque osKernelStart() no retorna.
+     * TouchGFX corre en TouchGFXTask, vsync en refreshGUI. */
   }
   /* USER CODE END 3 */
 }
@@ -280,7 +326,7 @@ static void MX_SPI2_Init(void)
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -351,7 +397,7 @@ static void MX_DMA_Init(void)
 
   /* DMA interrupt init */
   /* DMA2_Stream2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
 
 }
@@ -372,8 +418,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, RESET_Pin|DC_Pin|SPI1_NSS_Pin|T_IRQ_Pin
-                          |T_CS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, RESET_Pin|DC_Pin|SPI1_NSS_Pin|T_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : RESET_Pin DC_Pin SPI1_NSS_Pin */
   GPIO_InitStruct.Pin = RESET_Pin|DC_Pin|SPI1_NSS_Pin;
@@ -382,26 +427,93 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : T_IRQ_Pin T_CS_Pin */
-  GPIO_InitStruct.Pin = T_IRQ_Pin|T_CS_Pin;
+  /*Configure GPIO pin : T_IRQ_Pin */
+  GPIO_InitStruct.Pin = T_IRQ_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(T_IRQ_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : T_CS_Pin */
+  GPIO_InitStruct.Pin = T_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(T_CS_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-/*
-extern void touchgfxSignalVSync(void);
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	if(htim->Instance == TIM2){
-		touchgfxSignalVSync();
-	}
-}*/
+
 /* USER CODE END 4 */
+
+/* USER CODE BEGIN Header_StartDefaultTask */
+/**
+  * @brief  Function implementing the defaultTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_StartDefaultTask */
+void StartDefaultTask(void *argument)
+{
+  /* USER CODE BEGIN 5 */
+  /* Esta tarea ya no se usa - TouchGFX corre en su propia tarea (TouchGFX_Task) */
+  for(;;)
+  {
+    osDelay(1000);
+  }
+  /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_RefreshGUI */
+/**
+* @brief Function implementing the refreshGUI thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_RefreshGUI */
+void RefreshGUI(void *argument)
+{
+  /* USER CODE BEGIN RefreshGUI */
+  /* Infinite loop */
+	TickType_t xLastWakeTime;
+	  const TickType_t xFrequency = pdMS_TO_TICKS(50);
+	  extern void touchgfxSignalVSync(void);
+	  xLastWakeTime = xTaskGetTickCount();
+
+	  for(;;)
+	  {
+		  touchgfxSignalVSync();
+	      vTaskDelayUntil(&xLastWakeTime, xFrequency);
+	  }
+  /* USER CODE END RefreshGUI */
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.

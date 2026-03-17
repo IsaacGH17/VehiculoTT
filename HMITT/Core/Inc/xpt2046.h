@@ -48,10 +48,10 @@ SOFTWARE.
 #define TP_CATH_PRES 0x40
 #define CMD_RDX 0xD0
 #define CMD_RDY 0x90
-#define XPT_XMIN 350
-#define XPT_YMIN 350
-#define XPT_XMAX 3800
-#define XPT_YMAX 3600
+#define XPT_XMIN 10
+#define XPT_YMIN 10
+#define XPT_XMAX 4000
+#define XPT_YMAX 3850
 #define XPT_WIDTH (XPT_XMAX - XPT_XMIN)
 #define XPT_HEIGHT (XPT_YMAX - XPT_YMIN)
 

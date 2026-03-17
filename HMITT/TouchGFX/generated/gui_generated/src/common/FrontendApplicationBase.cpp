@@ -8,8 +8,12 @@
 #include <texts/TextKeysAndLanguages.hpp>
 #include <touchgfx/Texts.hpp>
 #include <touchgfx/hal/HAL.hpp>
-#include <gui/screen_screen/screenView.hpp>
-#include <gui/screen_screen/screenPresenter.hpp>
+#include <gui/home_screen/homeView.hpp>
+#include <gui/home_screen/homePresenter.hpp>
+#include <gui/manual_screen/ManualView.hpp>
+#include <gui/manual_screen/ManualPresenter.hpp>
+#include <gui/semi_screen/SemiView.hpp>
+#include <gui/semi_screen/SemiPresenter.hpp>
 
 using namespace touchgfx;
 
@@ -20,21 +24,48 @@ FrontendApplicationBase::FrontendApplicationBase(Model& m, FrontendHeap& heap)
       model(m)
 {
     touchgfx::HAL::getInstance()->setDisplayOrientation(touchgfx::ORIENTATION_LANDSCAPE);
+    touchgfx::Texts::setLanguage(GB);
 }
 
 /*
  * Screen Transition Declarations
  */
 
-// screen
+// home
 
-void FrontendApplicationBase::gotoscreenScreenNoTransition()
+void FrontendApplicationBase::gotohomeScreenNoTransition()
 {
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoscreenScreenNoTransitionImpl);
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotohomeScreenNoTransitionImpl);
     pendingScreenTransitionCallback = &transitionCallback;
 }
 
-void FrontendApplicationBase::gotoscreenScreenNoTransitionImpl()
+void FrontendApplicationBase::gotohomeScreenNoTransitionImpl()
 {
-    touchgfx::makeTransition<screenView, screenPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    touchgfx::makeTransition<homeView, homePresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+// Manual
+
+void FrontendApplicationBase::gotoManualScreenNoTransition()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoManualScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoManualScreenNoTransitionImpl()
+{
+    touchgfx::makeTransition<ManualView, ManualPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+// Semi
+
+void FrontendApplicationBase::gotoSemiScreenNoTransition()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoSemiScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoSemiScreenNoTransitionImpl()
+{
+    touchgfx::makeTransition<SemiView, SemiPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
