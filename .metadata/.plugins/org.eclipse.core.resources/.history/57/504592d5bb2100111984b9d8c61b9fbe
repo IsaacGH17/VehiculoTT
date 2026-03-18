@@ -1,0 +1,73 @@
+/*
+ * INA226.c
+ *
+ *  Created on: Mar 17, 2026
+ *      Author: USER
+ */
+#include "INA226.h"
+#include <stdbool.h>
+bool _reset = 0;
+uint16_t _cal = 1024;
+float _shuntResistance = 0.01;			//Shunt Resistance in Ohms
+float _currentResolution = 0.00005;		//Calculated Current Resolution 	in A/Bit
+float _voltageResolutionBus = 1.25e-3;	//Fixed Bus Voltage Resolution		in V/Bit
+float _voltageResolutionShunt = 2.5e-6;
+
+// Factor de correccion por divisor de voltaje en el modulo
+// Si tu modulo tiene divisor 1:2 (2 resistencias iguales) -> factor = 2.0
+// Si lee bien sin divisor -> factor = 1.0
+// Calcula: factor = voltaje_real / voltaje_leido  (ej: 5.0 / 2.7 = 1.85)
+static float VBUS_DIVIDER_FACTOR = 1.85f;
+
+void updateConfiguration(AVG_t _average, ConvTime_t _time, MeasureId_t _measure)
+{
+	uint16_t reg = 0x0000;
+	reg |= (_reset   << 15);
+	reg |= (_average << 9);
+	reg |= (_time    << 6);	// Bus conversion time
+	reg |= (_time    << 3);	// Shunt conversion time
+	reg |= _measure;
+
+	// ESCRIBIR al registro de configuracion del INA226
+	uint8_t data[2] = {(reg >> 8) & 0xFF, reg & 0xFF};
+	HAL_I2C_Mem_Write(&hi2c1, INA226_ADDR, CONFIG_REG, I2C_MEMADD_SIZE_8BIT, data, 2, 200);
+
+	calibrateDevice();
+}
+
+float getShuntVol()
+{
+	uint8_t data[2] = {0x00, 0x00};
+	HAL_I2C_Mem_Read(&hi2c1, INA226_ADDR, SHUNTVOL_REG, I2C_MEMADD_SIZE_8BIT, data, 2, 200);
+	return (float)((int16_t)((data[0] << 8) + data[1]) * _voltageResolutionShunt);
+}
+
+float getBusVol()
+{
+	uint8_t data[2] = {0x00, 0x00};
+	HAL_I2C_Mem_Read(&hi2c1, INA226_ADDR, BUSVOL_REG, I2C_MEMADD_SIZE_8BIT, data, 2, 200);
+	float raw = (float)(((data[0] << 8) + data[1]) * _voltageResolutionBus);
+	return raw * VBUS_DIVIDER_FACTOR;  // Correccion por divisor del modulo
+}
+
+float getPower()
+{
+	uint8_t data[2] = {0x00, 0x00};
+	HAL_I2C_Mem_Read(&hi2c1, INA226_ADDR, POWER_REG, I2C_MEMADD_SIZE_8BIT, data, 2, 200);
+	return (float)(((data[0] << 8) + data[1]) * 25 * _currentResolution);
+}
+
+float getCurrent()
+{
+	uint8_t data[2] = {0x00, 0x00};
+	HAL_I2C_Mem_Read(&hi2c1, INA226_ADDR, CURRENT_REG, I2C_MEMADD_SIZE_8BIT, data, 2, 200);
+	return (float)(((data[0] << 8) + data[1]) * _currentResolution);
+}
+
+void calibrateDevice()
+{
+	uint8_t data[2] = {(_cal >> 8) & 0xFF, _cal & 0xFF};
+	// Enviar 2 bytes (registro de 16 bits)
+	HAL_I2C_Mem_Write(&hi2c1, INA226_ADDR, CALIB_REG, I2C_MEMADD_SIZE_8BIT, data, 2, 200);
+}
+

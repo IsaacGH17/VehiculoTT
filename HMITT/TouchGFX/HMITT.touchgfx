@@ -104,11 +104,11 @@
           },
           {
             "Type": "TextArea",
-            "Name": "textArea2",
-            "X": 225,
-            "Y": 14,
-            "Width": 27,
-            "Height": 16,
+            "Name": "baterry",
+            "X": 166,
+            "Y": 13,
+            "Width": 81,
+            "Height": 20,
             "TextId": "__SingleUse_CBPV",
             "TextRotation": "0",
             "Color": {
@@ -116,7 +116,9 @@
               "Green": 255,
               "Blue": 255
             },
-            "AutoSize": true
+            "Wildcard1": {
+              "TextId": "__SingleUse_BRKE"
+            }
           }
         ],
         "Interactions": [

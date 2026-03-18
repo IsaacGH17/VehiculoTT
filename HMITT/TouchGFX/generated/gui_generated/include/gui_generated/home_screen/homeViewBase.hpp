@@ -12,6 +12,7 @@
 #include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
 #include <touchgfx/widgets/ButtonWithLabel.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class homeViewBase : public touchgfx::View<homePresenter>
 {
@@ -35,7 +36,7 @@ protected:
     touchgfx::ButtonWithLabel btnman;
     touchgfx::ButtonWithLabel btnsemi;
     touchgfx::TextArea textArea1;
-    touchgfx::TextArea textArea2;
+    touchgfx::TextAreaWithOneWildcard baterry;
 
 private:
 

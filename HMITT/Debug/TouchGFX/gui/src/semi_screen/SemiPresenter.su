@@ -6,6 +6,7 @@
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:9:5:ModelListener::ModelListener()	16	static
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:11:13:ModelListener::~ModelListener()	16	static
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:11:13:virtual ModelListener::~ModelListener()	16	static
+../TouchGFX/gui/include/gui/model/ModelListener.hpp:17:18:virtual void ModelListener::updateBat(float)	16	static
 ../TouchGFX/gui/include/gui/semi_screen/SemiPresenter.hpp:28:13:SemiPresenter::~SemiPresenter()	16	static
 ../TouchGFX/gui/include/gui/semi_screen/SemiPresenter.hpp:28:13:virtual SemiPresenter::~SemiPresenter()	16	static
 ../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:4:1:SemiPresenter::SemiPresenter(SemiView&)	16	static

@@ -16,3 +16,7 @@ void homePresenter::deactivate()
 {
 
 }
+void homePresenter::updateBat(float value)
+{
+    view.setbatValue(value);
+}

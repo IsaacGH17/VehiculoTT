@@ -25,6 +25,8 @@
 /* USER CODE BEGIN Includes */
 #include "ili9341.h"
 #include "xpt2046.h"
+#include "globals.h"
+#include "INA226.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,6 +46,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 CRC_HandleTypeDef hcrc;
+
+I2C_HandleTypeDef hi2c1;
 
 SPI_HandleTypeDef hspi1;
 SPI_HandleTypeDef hspi2;
@@ -72,6 +76,13 @@ const osThreadAttr_t TouchGFXTask_attributes = {
   .stack_size = 2048 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for CounterUp */
+osThreadId_t CounterUpHandle;
+const osThreadAttr_t CounterUp_attributes = {
+  .name = "CounterUp",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -84,9 +95,11 @@ static void MX_SPI1_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_CRC_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_I2C1_Init(void);
 void StartDefaultTask(void *argument);
 void RefreshGUI(void *argument);
 extern void TouchGFX_Task(void *argument);
+void Counter_UP(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -131,15 +144,21 @@ int main(void)
   MX_SPI2_Init();
   MX_CRC_Init();
   MX_TIM2_Init();
+  MX_I2C1_Init();
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
   ILI9341_Init();    // Display init ANTES del scheduler
   XPT2046_Init();
+  updateConfiguration(AVERAGE_4, CONV_TIME_332, SHUNTBUS_CONTINOUS);
   /* USER CODE END 2 */
 
   /* Init scheduler */
   osKernelInitialize();
+
+  /* MX_TouchGFX_Init AQUI - DESPUES de osKernelInitialize()
+   * NOTA: Cada vez que regeneres desde CubeMX/TouchGFX Designer,
+   * esta linea vuelve arriba - debes moverla manualmente. */
   MX_TouchGFX_Init();
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -168,6 +187,9 @@ int main(void)
   /* creation of TouchGFXTask */
   TouchGFXTaskHandle = osThreadNew(TouchGFX_Task, NULL, &TouchGFXTask_attributes);
 
+  /* creation of CounterUp */
+  CounterUpHandle = osThreadNew(Counter_UP, NULL, &CounterUp_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -186,6 +208,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
     /* Nota: este loop nunca se ejecuta porque osKernelStart() no retorna.
      * TouchGFX corre en TouchGFXTask, vsync en refreshGUI. */
@@ -262,6 +285,40 @@ static void MX_CRC_Init(void)
   /* USER CODE BEGIN CRC_Init 2 */
 
   /* USER CODE END CRC_Init 2 */
+
+}
+
+/**
+  * @brief I2C1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C1_Init(void)
+{
+
+  /* USER CODE BEGIN I2C1_Init 0 */
+
+  /* USER CODE END I2C1_Init 0 */
+
+  /* USER CODE BEGIN I2C1_Init 1 */
+
+  /* USER CODE END I2C1_Init 1 */
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.ClockSpeed = 100000;
+  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C1_Init 2 */
+
+  /* USER CODE END I2C1_Init 2 */
 
 }
 
@@ -462,7 +519,6 @@ static void MX_GPIO_Init(void)
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
-  /* Esta tarea ya no se usa - TouchGFX corre en su propia tarea (TouchGFX_Task) */
   for(;;)
   {
     osDelay(1000);
@@ -492,6 +548,25 @@ void RefreshGUI(void *argument)
 	      vTaskDelayUntil(&xLastWakeTime, xFrequency);
 	  }
   /* USER CODE END RefreshGUI */
+}
+
+/* USER CODE BEGIN Header_Counter_UP */
+/**
+* @brief Function implementing the CounterUp thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Counter_UP */
+void Counter_UP(void *argument)
+{
+  /* USER CODE BEGIN Counter_UP */
+  /* Infinite loop */
+  for(;;)
+  {
+	vbat = getShuntVol();  // Voltaje del bus (bateria) en V
+    osDelay(1000);
+  }
+  /* USER CODE END Counter_UP */
 }
 
 /**

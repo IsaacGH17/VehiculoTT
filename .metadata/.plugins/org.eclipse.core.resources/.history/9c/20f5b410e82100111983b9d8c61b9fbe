@@ -1,0 +1,10 @@
+/*
+ * globals.c
+ *
+ *  Created on: Mar 17, 2026
+ *      Author: USER
+ */
+#include "globals.h"
+
+volatile int vbat = 0;
+

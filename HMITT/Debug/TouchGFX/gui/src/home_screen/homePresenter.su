@@ -6,8 +6,10 @@
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:9:5:ModelListener::ModelListener()	16	static
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:11:13:ModelListener::~ModelListener()	16	static
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:11:13:virtual ModelListener::~ModelListener()	16	static
+../TouchGFX/gui/include/gui/model/ModelListener.hpp:17:18:virtual void ModelListener::updateBat(float)	16	static
 ../TouchGFX/gui/include/gui/home_screen/homePresenter.hpp:28:13:homePresenter::~homePresenter()	16	static
 ../TouchGFX/gui/include/gui/home_screen/homePresenter.hpp:28:13:virtual homePresenter::~homePresenter()	16	static
 ../TouchGFX/gui/src/home_screen/homePresenter.cpp:4:1:homePresenter::homePresenter(homeView&)	16	static
 ../TouchGFX/gui/src/home_screen/homePresenter.cpp:10:6:virtual void homePresenter::activate()	16	static
 ../TouchGFX/gui/src/home_screen/homePresenter.cpp:15:6:virtual void homePresenter::deactivate()	16	static
+../TouchGFX/gui/src/home_screen/homePresenter.cpp:19:6:virtual void homePresenter::updateBat(float)	16	static

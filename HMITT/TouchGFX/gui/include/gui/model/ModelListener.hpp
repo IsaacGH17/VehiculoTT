@@ -14,6 +14,7 @@ public:
     {
         model = m;
     }
+    virtual void updateBat(float value) {}
 protected:
     Model* model;
 };
