@@ -1,4 +1,4 @@
-
+#include <stdint.h>
 uint16_t build_packet(uint8_t *buffer, uint8_t cmd, uint8_t *payload, uint8_t payload_len) {
     uint16_t idx = 0;
     uint8_t checksum = 0;
