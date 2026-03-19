@@ -699,12 +699,16 @@ void StartTelemetriaTask(void *argument)
           (uint8_t)(distancia_mm >> 8),
           (uint8_t)(distancia_mm & 0xFF)
       };
-      uint16_t vbat = (uint16_t)(getBusVol() * 1000.0f);
+
+      // Leer voltaje de batería y convertir a mV (uint16_t, sin floats en el protocolo)
+      uint16_t vbat_mv = (uint16_t)(getBusVol() * 1000.0f);
+
+      // Payload: [dist_MSB, dist_LSB, vbat_MSB, vbat_LSB]
       uint8_t payload[4] = {
           dist_bytes[0],
           dist_bytes[1],
-          (uint8_t)(vbat >> 8),
-          (uint8_t)(vbat & 0xFF)
+          (uint8_t)(vbat_mv >> 8),
+          (uint8_t)(vbat_mv & 0xFF)
       };
 
       packet_size = build_packet(tx_buffer, CMD_TELE_SENSORS, payload, 4);
