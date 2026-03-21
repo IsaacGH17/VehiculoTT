@@ -161,7 +161,6 @@ int main(void)
   MX_TIM2_Init();
   MX_I2C1_Init();
   MX_USART1_UART_Init();
-  MX_TouchGFX_Init();
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
@@ -173,7 +172,7 @@ int main(void)
 
   /* Init scheduler */
   osKernelInitialize();
-
+  MX_TouchGFX_Init();
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
@@ -648,8 +647,8 @@ void ParserTask(void *argument)
 	  for(;;)
 	  {
 	    osSemaphoreAcquire(uartRxSemHandle, osWaitForever);
-	    uint16_t dma_write_idx = DMA_RX_BUF_SIZE
-	        - __HAL_DMA_GET_COUNTER(huart1.hdmarx);
+	    uint16_t dma_write_idx = (DMA_RX_BUF_SIZE
+	        - __HAL_DMA_GET_COUNTER(huart1.hdmarx)) % DMA_RX_BUF_SIZE;
 	    while (dma_read_idx != dma_write_idx) {
 	      uint8_t byte = dma_rx_buf[dma_read_idx];
 	      dma_read_idx = (dma_read_idx + 1) % DMA_RX_BUF_SIZE;

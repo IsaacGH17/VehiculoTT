@@ -2,17 +2,16 @@
 
 homeView::homeView()
 {
+    // Inicializar el buffer con un valor por defecto
     Unicode::strncpy(batValueBuffer, "0", 10);
-    Unicode::strncpy(pwmValueBuffer, "0", 10);
 }
 
 void homeView::setupScreen()
 {
     homeViewBase::setupScreen();
+    // CLAVE: conectar el buffer al widget antes del primer redraw
     baterry.setWildcard(batValueBuffer);
     baterry.invalidate();
-    pwmval.setWildcard(pwmValueBuffer);
-    pwmval.invalidate();
 }
 
 void homeView::tearDownScreen()
