@@ -7,4 +7,4 @@
 #include "globals.h"
 
 volatile float vbat = 0;
-
+volatile int pwm = 0;

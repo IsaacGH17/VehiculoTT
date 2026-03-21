@@ -20,3 +20,6 @@ void homePresenter::updateBat(float value)
 {
     view.setbatValue(value);
 }
+void homePresenter::updatePWM(int value){
+	view.setPWMValue(value);
+}

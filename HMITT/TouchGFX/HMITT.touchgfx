@@ -119,6 +119,22 @@
             "Wildcard1": {
               "TextId": "__SingleUse_BRKE"
             }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "pwmval",
+            "X": 11,
+            "Y": 15,
+            "Width": 96,
+            "Height": 16,
+            "TextId": "__SingleUse_9XK1",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
           }
         ],
         "Interactions": [

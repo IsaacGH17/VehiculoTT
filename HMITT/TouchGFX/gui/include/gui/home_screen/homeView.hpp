@@ -12,7 +12,9 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
     void setbatValue(float value);
+    void setPWMValue(int value);
     Unicode::UnicodeChar batValueBuffer[10];
+    Unicode::UnicodeChar pwmValueBuffer[10];
 protected:
 };
 

@@ -8,4 +8,5 @@
 #ifndef INC_GLOBALS_H_
 #define INC_GLOBALS_H_
 extern volatile float vbat;
+extern volatile int pwm;
 #endif /* INC_GLOBALS_H_ */

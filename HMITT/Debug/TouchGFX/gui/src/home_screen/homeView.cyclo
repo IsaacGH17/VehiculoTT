@@ -11,3 +11,4 @@
 ../TouchGFX/gui/src/home_screen/homeView.cpp:9:6:virtual void homeView::setupScreen()	1
 ../TouchGFX/gui/src/home_screen/homeView.cpp:17:6:virtual void homeView::tearDownScreen()	1
 ../TouchGFX/gui/src/home_screen/homeView.cpp:21:6:void homeView::setbatValue(float)	2
+../TouchGFX/gui/src/home_screen/homeView.cpp:35:6:void homeView::setPWMValue(int)	2

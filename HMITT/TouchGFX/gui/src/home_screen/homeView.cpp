@@ -20,19 +20,26 @@ void homeView::tearDownScreen()
 }
 void homeView::setbatValue(float value)
 {
-    // Solo redibujar si el valor cambió
     static int lastValue = -1;
     if (value != lastValue)
     {
         lastValue = value;
 
-        // Actualizar el label de texto
         Unicode::snprintfFloat(batValueBuffer, 10, "%.3f", value);
         baterry.invalidate();
-
-        // Actualizar el progress bar (rango 0-100)
-        int pct = (int) value % 101; // cicla entre 0 y 100
+        int pct = (int) value % 101;
         imageProgress1.setValue(pct);
         imageProgress1.invalidate();
     }
 }
+void homeView::setPWMValue(int value)
+{
+    static int lastValue = -1;
+    if (value != lastValue)
+    {
+        lastValue = value;
+        Unicode::snprintf(pwmValueBuffer, 10, "%d", value);
+        pwmval.invalidate();
+    }
+}
+

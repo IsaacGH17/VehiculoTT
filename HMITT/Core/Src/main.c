@@ -27,6 +27,7 @@
 #include "xpt2046.h"
 #include "globals.h"
 #include "INA226.h"
+#include "protocolo.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,7 +37,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define DMA_RX_BUF_SIZE 64
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -54,6 +55,10 @@ SPI_HandleTypeDef hspi2;
 DMA_HandleTypeDef hdma_spi1_tx;
 
 TIM_HandleTypeDef htim2;
+
+UART_HandleTypeDef huart1;
+DMA_HandleTypeDef hdma_usart1_rx;
+DMA_HandleTypeDef hdma_usart1_tx;
 
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -83,8 +88,17 @@ const osThreadAttr_t CounterUp_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
+/* Definitions for parserTask */
+osThreadId_t parserTaskHandle;
+const osThreadAttr_t parserTask_attributes = {
+  .name = "parserTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityAboveNormal7,
+};
 /* USER CODE BEGIN PV */
-
+uint8_t dma_rx_buf[DMA_RX_BUF_SIZE];
+volatile uint16_t dma_read_idx = 0;
+osSemaphoreId_t uartRxSemHandle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -96,10 +110,12 @@ static void MX_SPI2_Init(void);
 static void MX_CRC_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_I2C1_Init(void);
+static void MX_USART1_UART_Init(void);
 void StartDefaultTask(void *argument);
 void RefreshGUI(void *argument);
 extern void TouchGFX_Task(void *argument);
 void Counter_UP(void *argument);
+void ParserTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -107,7 +123,6 @@ void Counter_UP(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
@@ -145,28 +160,27 @@ int main(void)
   MX_CRC_Init();
   MX_TIM2_Init();
   MX_I2C1_Init();
+  MX_USART1_UART_Init();
+  MX_TouchGFX_Init();
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
-  ILI9341_Init();    // Display init ANTES del scheduler
+  ILI9341_Init();
   XPT2046_Init();
-  updateConfiguration(AVERAGE_4, CONV_TIME_332, SHUNTBUS_CONTINOUS);
+  HAL_UART_Receive_DMA(&huart1, dma_rx_buf, DMA_RX_BUF_SIZE);
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
   /* USER CODE END 2 */
 
   /* Init scheduler */
   osKernelInitialize();
-
-  /* MX_TouchGFX_Init AQUI - DESPUES de osKernelInitialize()
-   * NOTA: Cada vez que regeneres desde CubeMX/TouchGFX Designer,
-   * esta linea vuelve arriba - debes moverla manualmente. */
-  MX_TouchGFX_Init();
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
+  const osSemaphoreAttr_t uartRxSem_attr = { .name = "uartRxSem" };
+  uartRxSemHandle = osSemaphoreNew(1, 0, &uartRxSem_attr);
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
@@ -190,6 +204,9 @@ int main(void)
   /* creation of CounterUp */
   CounterUpHandle = osThreadNew(Counter_UP, NULL, &CounterUp_attributes);
 
+  /* creation of parserTask */
+  parserTaskHandle = osThreadNew(ParserTask, NULL, &parserTask_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -210,8 +227,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    /* Nota: este loop nunca se ejecuta porque osKernelStart() no retorna.
-     * TouchGFX corre en TouchGFXTask, vsync en refreshGUI. */
   }
   /* USER CODE END 3 */
 }
@@ -444,6 +459,39 @@ static void MX_TIM2_Init(void)
 }
 
 /**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART1_Init 0 */
+
+  /* USER CODE END USART1_Init 0 */
+
+  /* USER CODE BEGIN USART1_Init 1 */
+
+  /* USER CODE END USART1_Init 1 */
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 9600;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART1_Init 2 */
+
+  /* USER CODE END USART1_Init 2 */
+
+}
+
+/**
   * Enable DMA controller clock
   */
 static void MX_DMA_Init(void)
@@ -456,6 +504,12 @@ static void MX_DMA_Init(void)
   /* DMA2_Stream2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
+  /* DMA2_Stream5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream5_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream5_IRQn);
+  /* DMA2_Stream7_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream7_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream7_IRQn);
 
 }
 
@@ -471,11 +525,18 @@ static void MX_GPIO_Init(void)
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, RESET_Pin|DC_Pin|SPI1_NSS_Pin|T_CS_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PWM_INC_Pin PWM_DEC_Pin */
+  GPIO_InitStruct.Pin = PWM_INC_Pin|PWM_DEC_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : RESET_Pin DC_Pin SPI1_NSS_Pin */
   GPIO_InitStruct.Pin = RESET_Pin|DC_Pin|SPI1_NSS_Pin;
@@ -500,6 +561,9 @@ static void MX_GPIO_Init(void)
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -563,10 +627,38 @@ void Counter_UP(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	vbat = getShuntVol();  // Voltaje del bus (bateria) en V
     osDelay(1000);
   }
   /* USER CODE END Counter_UP */
+}
+
+/* USER CODE BEGIN Header_ParserTask */
+/**
+* @brief Function implementing the parserTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_ParserTask */
+void ParserTask(void *argument)
+{
+  /* USER CODE BEGIN ParserTask */
+	 Packet_t pkt;
+	  ParserCtx_t ctx = {0};
+
+	  for(;;)
+	  {
+	    osSemaphoreAcquire(uartRxSemHandle, osWaitForever);
+	    uint16_t dma_write_idx = DMA_RX_BUF_SIZE
+	        - __HAL_DMA_GET_COUNTER(huart1.hdmarx);
+	    while (dma_read_idx != dma_write_idx) {
+	      uint8_t byte = dma_rx_buf[dma_read_idx];
+	      dma_read_idx = (dma_read_idx + 1) % DMA_RX_BUF_SIZE;
+	      if (parse_byte(byte, &pkt, &ctx)) {
+	        execute_command(&pkt);
+	      }
+	    }
+	  }
+  /* USER CODE END ParserTask */
 }
 
 /**

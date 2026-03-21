@@ -77,10 +77,10 @@
 ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:36:7:touchgfx::View<homePresenter>::~View()	1
 ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:36:7:virtual touchgfx::View<homePresenter>::~View()	1
 ../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:9:1:homeViewBase::homeViewBase()	1
-../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:63:1:homeViewBase::~homeViewBase()	1
-../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:63:1:virtual homeViewBase::~homeViewBase()	1
-../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:68:6:virtual void homeViewBase::setupScreen()	1
-../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:73:6:void homeViewBase::buttonCallbackHandler(const touchgfx::AbstractButton&)	3
+../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:69:1:homeViewBase::~homeViewBase()	1
+../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:69:1:virtual homeViewBase::~homeViewBase()	1
+../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:74:6:virtual void homeViewBase::setupScreen()	1
+../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:79:6:void homeViewBase::buttonCallbackHandler(const touchgfx::AbstractButton&)	3
 ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:39:5:touchgfx::View<T>::View() [with T = homePresenter]	1
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:134:7:constexpr touchgfx::GenericCallback<const touchgfx::AbstractButton&>::GenericCallback()	1
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:373:5:touchgfx::Callback<dest_type, T1, void, void>::Callback(dest_type*, void (dest_type::*)(T1)) [with dest_type = homeViewBase; T1 = const touchgfx::AbstractButton&]	1

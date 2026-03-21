@@ -37,6 +37,7 @@ protected:
     touchgfx::ButtonWithLabel btnsemi;
     touchgfx::TextArea textArea1;
     touchgfx::TextAreaWithOneWildcard baterry;
+    touchgfx::TextAreaWithOneWildcard pwmval;
 
 private:
 

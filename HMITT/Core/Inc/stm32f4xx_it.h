@@ -57,7 +57,11 @@ void TIM1_UP_TIM10_IRQHandler(void);
 void TIM2_IRQHandler(void);
 void SPI1_IRQHandler(void);
 void SPI2_IRQHandler(void);
+void USART1_IRQHandler(void);
+void EXTI15_10_IRQHandler(void);
 void DMA2_Stream2_IRQHandler(void);
+void DMA2_Stream5_IRQHandler(void);
+void DMA2_Stream7_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

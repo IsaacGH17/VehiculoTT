@@ -15,6 +15,7 @@ public:
         model = m;
     }
     virtual void updateBat(float value) {}
+    virtual void updatePWM(int value) {}
 protected:
     Model* model;
 };

@@ -58,6 +58,12 @@ homeViewBase::homeViewBase() :
     baterry.setWildcard(touchgfx::TypedText(T___SINGLEUSE_BRKE).getText());
     baterry.setTypedText(touchgfx::TypedText(T___SINGLEUSE_CBPV));
     add(baterry);
+
+    pwmval.setPosition(11, 15, 96, 16);
+    pwmval.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    pwmval.setLinespacing(0);
+    pwmval.setTypedText(touchgfx::TypedText(T___SINGLEUSE_9XK1));
+    add(pwmval);
 }
 
 homeViewBase::~homeViewBase()

@@ -25,6 +25,7 @@ public:
      */
     virtual void deactivate();
     virtual void updateBat(float value);
+    virtual void updatePWM(int value);
     virtual ~homePresenter() {}
 
 private:
