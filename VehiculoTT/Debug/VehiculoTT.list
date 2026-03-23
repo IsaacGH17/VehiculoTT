@@ -1708,8 +1708,8 @@ void StartTelemetriaTask(void *argument)
   /* USER CODE BEGIN StartTelemetriaTask */
 
   TickType_t xLastWakeTime;
-  const TickType_t xFrequency = pdMS_TO_TICKS(500);
- 8000d04:	f44f 73fa 	mov.w	r3, #500	@ 0x1f4
+  const TickType_t xFrequency = pdMS_TO_TICKS(700);
+ 8000d04:	f44f 732f 	mov.w	r3, #700	@ 0x2bc
  8000d08:	61fb      	str	r3, [r7, #28]
   static uint8_t tx_buffer[20];
   uint16_t packet_size = 0;

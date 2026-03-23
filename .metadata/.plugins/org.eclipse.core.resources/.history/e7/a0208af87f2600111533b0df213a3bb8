@@ -156,7 +156,7 @@ int main(void)
   MX_CRC_Init();
   MX_TIM2_Init();
   MX_USART1_UART_Init();
-
+  MX_TouchGFX_Init();
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
@@ -169,7 +169,7 @@ int main(void)
 
   /* Init scheduler */
   osKernelInitialize();
-  MX_TouchGFX_Init();
+
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */

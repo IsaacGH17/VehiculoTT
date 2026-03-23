@@ -62,6 +62,18 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     uint8_t payload;
     uint16_t len;
 
+    /* Antirrebote especifico para los botones y no para la pantalla tactil */
+    if (GPIO_Pin == PWM_INC_Pin || GPIO_Pin == PWM_DEC_Pin)
+    {
+        static uint32_t last_button_time = 0;
+        uint32_t current_time = HAL_GetTick();
+        if ((current_time - last_button_time) < 150)
+        {
+            return;
+        }
+        last_button_time = current_time;
+    }
+
     if (GPIO_Pin == PWM_INC_Pin)
     {
         if (pwm < 100){
@@ -89,6 +101,7 @@ extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi2;
 extern TIM_HandleTypeDef htim2;
 extern DMA_HandleTypeDef hdma_usart1_rx;
+extern DMA_HandleTypeDef hdma_usart1_tx;
 extern UART_HandleTypeDef huart1;
 extern TIM_HandleTypeDef htim1;
 
@@ -324,6 +337,20 @@ void DMA2_Stream5_IRQHandler(void)
   /* USER CODE BEGIN DMA2_Stream5_IRQn 1 */
 
   /* USER CODE END DMA2_Stream5_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA2 stream7 global interrupt.
+  */
+void DMA2_Stream7_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream7_IRQn 0 */
+
+  /* USER CODE END DMA2_Stream7_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart1_tx);
+  /* USER CODE BEGIN DMA2_Stream7_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream7_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
