@@ -15,8 +15,8 @@
 ../Core/Src/main.c:506:13:MX_USART1_UART_Init	2
 ../Core/Src/main.c:537:13:MX_DMA_Init	1
 ../Core/Src/main.c:558:13:MX_GPIO_Init	1
-../Core/Src/main.c:603:6:StartDefaultTask	1
-../Core/Src/main.c:621:6:ParserTask	3
-../Core/Src/main.c:650:6:StartTelemetriaTask	4
-../Core/Src/main.c:700:6:HAL_TIM_PeriodElapsedCallback	2
-../Core/Src/main.c:717:6:Error_Handler	1
+../Core/Src/main.c:595:6:StartDefaultTask	1
+../Core/Src/main.c:613:6:ParserTask	3
+../Core/Src/main.c:642:6:StartTelemetriaTask	4
+../Core/Src/main.c:693:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/main.c:710:6:Error_Handler	1

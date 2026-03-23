@@ -1,6 +1,0 @@
-../Core/Src/INA226.c:19:6:updateConfiguration	40	static
-../Core/Src/INA226.c:35:7:getShuntVol	32	static
-../Core/Src/INA226.c:42:7:getBusVol	32	static
-../Core/Src/INA226.c:49:7:getPower	32	static
-../Core/Src/INA226.c:56:7:getCurrent	32	static
-../Core/Src/INA226.c:63:6:calibrateDevice	32	static

@@ -24,26 +24,6 @@ C_SRCS += \
 ../Core/Src/vl53l0x_api_strings.c \
 ../Core/Src/vl53l0x_platform.c 
 
-OBJS += \
-./Core/Src/INA226.o \
-./Core/Src/freertos.o \
-./Core/Src/main.o \
-./Core/Src/motor_control.o \
-./Core/Src/packetbuilder.o \
-./Core/Src/parser.o \
-./Core/Src/stm32f4xx_hal_msp.o \
-./Core/Src/stm32f4xx_hal_timebase_tim.o \
-./Core/Src/stm32f4xx_it.o \
-./Core/Src/syscalls.o \
-./Core/Src/sysmem.o \
-./Core/Src/system_stm32f4xx.o \
-./Core/Src/vl53l0x_api.o \
-./Core/Src/vl53l0x_api_calibration.o \
-./Core/Src/vl53l0x_api_core.o \
-./Core/Src/vl53l0x_api_ranging.o \
-./Core/Src/vl53l0x_api_strings.o \
-./Core/Src/vl53l0x_platform.o 
-
 C_DEPS += \
 ./Core/Src/INA226.d \
 ./Core/Src/freertos.d \
@@ -63,6 +43,26 @@ C_DEPS += \
 ./Core/Src/vl53l0x_api_ranging.d \
 ./Core/Src/vl53l0x_api_strings.d \
 ./Core/Src/vl53l0x_platform.d 
+
+OBJS += \
+./Core/Src/INA226.o \
+./Core/Src/freertos.o \
+./Core/Src/main.o \
+./Core/Src/motor_control.o \
+./Core/Src/packetbuilder.o \
+./Core/Src/parser.o \
+./Core/Src/stm32f4xx_hal_msp.o \
+./Core/Src/stm32f4xx_hal_timebase_tim.o \
+./Core/Src/stm32f4xx_it.o \
+./Core/Src/syscalls.o \
+./Core/Src/sysmem.o \
+./Core/Src/system_stm32f4xx.o \
+./Core/Src/vl53l0x_api.o \
+./Core/Src/vl53l0x_api_calibration.o \
+./Core/Src/vl53l0x_api_core.o \
+./Core/Src/vl53l0x_api_ranging.o \
+./Core/Src/vl53l0x_api_strings.o \
+./Core/Src/vl53l0x_platform.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes

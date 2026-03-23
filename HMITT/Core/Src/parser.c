@@ -60,12 +60,12 @@ void execute_command(Packet_t *pkt) {
         if (pkt->length >= 4) {
             uint16_t vbat_mv = (uint16_t)(((uint16_t)pkt->payload[2] << 8) | pkt->payload[3]);
             float v_volts = (float)vbat_mv / 1000.0f;
-            float porcentaje = ((v_volts - 5.3f) / (8.2f - 5.3f)) * 100.0f;
+            float porcentaje = ((v_volts - 2.5f) / (5.0f - 2.5f)) * 100.0f;
             if (porcentaje > 100.0f) porcentaje = 100.0f;
             if (porcentaje < 0.0f) porcentaje = 0.0f;
             vbat = porcentaje;
-            // uint16_t dist_mm = (uint16_t)(((uint16_t)pkt->payload[0] << 8) | pkt->payload[1]);
-            // distancia_mm_global = dist_mm;
+            uint16_t mm = (uint16_t)(((uint16_t)pkt->payload[0] << 8) | pkt->payload[1]);
+            dist_mm = mm;
         }
     }
 }

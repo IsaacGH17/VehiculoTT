@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;HMITT/Core/Inc/INA226.h&apos;" deleteContents="false" description="Delete resource &apos;HMITT/Core/Inc/INA226.h&apos;" element1="/HMITT/Core/Inc/INA226.h" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1774227825943"/>&#x0A;<refactoring comment="Delete resource &apos;HMITT/Core/Src/INA226.c&apos;" deleteContents="false" description="Delete resource &apos;HMITT/Core/Src/INA226.c&apos;" element1="/HMITT/Core/Src/INA226.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1774227827920"/>
+</session>

@@ -116,7 +116,7 @@ static int16_t besttwoavg( int16_t x , int16_t y , int16_t z ) {
 void XPT2046_Init(void)
 {
 	XPT2046_initilazed = 1;
-}
+ }
 
 void XPT2046_Update(uint16_t *x, uint16_t *y)
 {

@@ -76,11 +76,11 @@
 ../TouchGFX/generated/gui_generated/include/gui_generated/home_screen/homeViewBase.hpp:25:26:FrontendApplication& homeViewBase::application()	16	static
 ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:36:7:touchgfx::View<homePresenter>::~View()	16	static
 ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:36:7:virtual touchgfx::View<homePresenter>::~View()	16	static
-../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:9:1:homeViewBase::homeViewBase()	248	static
-../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:69:1:homeViewBase::~homeViewBase()	16	static
-../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:69:1:virtual homeViewBase::~homeViewBase()	16	static
-../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:74:6:virtual void homeViewBase::setupScreen()	16	static
-../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:79:6:void homeViewBase::buttonCallbackHandler(const touchgfx::AbstractButton&)	16	static
+../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:9:1:homeViewBase::homeViewBase()	280	static
+../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:75:1:homeViewBase::~homeViewBase()	16	static
+../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:75:1:virtual homeViewBase::~homeViewBase()	16	static
+../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:80:6:virtual void homeViewBase::setupScreen()	16	static
+../TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp:85:6:void homeViewBase::buttonCallbackHandler(const touchgfx::AbstractButton&)	16	static
 ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:39:5:touchgfx::View<T>::View() [with T = homePresenter]	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:134:7:constexpr touchgfx::GenericCallback<const touchgfx::AbstractButton&>::GenericCallback()	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:373:5:touchgfx::Callback<dest_type, T1, void, void>::Callback(dest_type*, void (dest_type::*)(T1)) [with dest_type = homeViewBase; T1 = const touchgfx::AbstractButton&]	24	static

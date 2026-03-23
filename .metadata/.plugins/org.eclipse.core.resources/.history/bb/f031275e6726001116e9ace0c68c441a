@@ -1,0 +1,23 @@
+#ifndef HOMEVIEW_HPP
+#define HOMEVIEW_HPP
+
+#include <gui_generated/home_screen/homeViewBase.hpp>
+#include <gui/home_screen/homePresenter.hpp>
+
+class homeView : public homeViewBase
+{
+public:
+    homeView();
+    virtual ~homeView() {}
+    virtual void setupScreen();
+    virtual void tearDownScreen();
+    void setbatValue(int value);
+    void setPWMValue(int value);
+    void setDistValue(int value);
+    Unicode::UnicodeChar batValueBuffer[10];
+    Unicode::UnicodeChar pwmValueBuffer[10];
+    Unicode::UnicodeChar distValueBuffer[10];
+protected:
+};
+
+#endif // HOMEVIEW_HPP

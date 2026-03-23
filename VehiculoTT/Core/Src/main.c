@@ -78,7 +78,7 @@ const osThreadAttr_t parserTask_attributes = {
 osThreadId_t sendTelemetriaHandle;
 const osThreadAttr_t sendTelemetria_attributes = {
   .name = "sendTelemetria",
-  .stack_size = 128 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
@@ -577,14 +577,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA2 PA3 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_3;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF7_USART2;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
 }
@@ -652,7 +644,7 @@ void StartTelemetriaTask(void *argument)
   /* USER CODE BEGIN StartTelemetriaTask */
 
   TickType_t xLastWakeTime;
-  const TickType_t xFrequency = pdMS_TO_TICKS(200);
+  const TickType_t xFrequency = pdMS_TO_TICKS(700);
   static uint8_t tx_buffer[20];
   uint16_t packet_size = 0;
   xLastWakeTime = xTaskGetTickCount();
@@ -685,6 +677,7 @@ void StartTelemetriaTask(void *argument)
       }
 
       vTaskDelayUntil(&xLastWakeTime, xFrequency);
+
   }
   /* USER CODE END StartTelemetriaTask */
 }

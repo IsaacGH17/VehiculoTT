@@ -52,7 +52,7 @@ homeViewBase::homeViewBase() :
     textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_81D2));
     add(textArea1);
 
-    baterry.setPosition(166, 13, 81, 20);
+    baterry.setPosition(192, 14, 62, 18);
     baterry.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     baterry.setLinespacing(0);
     baterry.setWildcard(touchgfx::TypedText(T___SINGLEUSE_BRKE).getText());
@@ -64,6 +64,12 @@ homeViewBase::homeViewBase() :
     pwmval.setLinespacing(0);
     pwmval.setTypedText(touchgfx::TypedText(T___SINGLEUSE_9XK1));
     add(pwmval);
+
+    dist.setPosition(11, 33, 81, 20);
+    dist.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    dist.setLinespacing(0);
+    dist.setTypedText(touchgfx::TypedText(T___SINGLEUSE_ROXI));
+    add(dist);
 }
 
 homeViewBase::~homeViewBase()

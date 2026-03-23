@@ -105,10 +105,10 @@
           {
             "Type": "TextArea",
             "Name": "baterry",
-            "X": 166,
-            "Y": 13,
-            "Width": 81,
-            "Height": 20,
+            "X": 192,
+            "Y": 14,
+            "Width": 62,
+            "Height": 18,
             "TextId": "__SingleUse_CBPV",
             "TextRotation": "0",
             "Color": {
@@ -128,6 +128,22 @@
             "Width": 96,
             "Height": 16,
             "TextId": "__SingleUse_9XK1",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "dist",
+            "X": 11,
+            "Y": 33,
+            "Width": 81,
+            "Height": 20,
+            "TextId": "__SingleUse_ROXI",
             "TextRotation": "0",
             "Color": {
               "Red": 255,

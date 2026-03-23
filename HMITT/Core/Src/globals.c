@@ -8,3 +8,4 @@
 
 volatile float vbat = 0;
 volatile int pwm = 0;
+volatile int dist_mm = 0;

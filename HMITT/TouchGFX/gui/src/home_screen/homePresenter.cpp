@@ -23,3 +23,6 @@ void homePresenter::updateBat(float value)
 void homePresenter::updatePWM(int value){
 	view.setPWMValue(value);
 }
+void homePresenter::updateDist(int value){
+	view.setDistValue(value);
+}

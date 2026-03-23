@@ -12,6 +12,7 @@ void Model::tick()
 	{
 		modelListener->updateBat(vbat);
 		modelListener->updatePWM(pwm);
+		modelListener->updateDist(dist_mm);
 	}
 
 }

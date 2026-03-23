@@ -1,4 +1,3 @@
-../Middlewares/ST/touchgfx/framework/include/touchgfx/Unicode.hpp:404:25:static touchgfx::Unicode::UnicodeChar* touchgfx::Unicode::snprintfFloat(UnicodeChar*, uint16_t, const char*, float)	24	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:104:18:virtual void touchgfx::Screen::afterTransition()	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:115:18:virtual void touchgfx::Screen::tearDownScreen()	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:144:18:virtual void touchgfx::Screen::handleTickEvent()	16	static
@@ -8,7 +7,8 @@
 ../TouchGFX/gui/include/gui/home_screen/homeView.hpp:11:13:homeView::~homeView()	16	static
 ../TouchGFX/gui/include/gui/home_screen/homeView.hpp:11:13:virtual homeView::~homeView()	16	static
 ../TouchGFX/gui/src/home_screen/homeView.cpp:3:1:homeView::homeView()	16	static
-../TouchGFX/gui/src/home_screen/homeView.cpp:9:6:virtual void homeView::setupScreen()	16	static
-../TouchGFX/gui/src/home_screen/homeView.cpp:18:6:virtual void homeView::tearDownScreen()	16	static
-../TouchGFX/gui/src/home_screen/homeView.cpp:22:6:void homeView::setbatValue(float)	24	static
-../TouchGFX/gui/src/home_screen/homeView.cpp:36:6:void homeView::setPWMValue(int)	16	static
+../TouchGFX/gui/src/home_screen/homeView.cpp:10:6:virtual void homeView::setupScreen()	16	static
+../TouchGFX/gui/src/home_screen/homeView.cpp:21:6:virtual void homeView::tearDownScreen()	16	static
+../TouchGFX/gui/src/home_screen/homeView.cpp:25:6:void homeView::setbatValue(float)	24	static
+../TouchGFX/gui/src/home_screen/homeView.cpp:40:6:void homeView::setPWMValue(int)	16	static
+../TouchGFX/gui/src/home_screen/homeView.cpp:50:6:void homeView::setDistValue(int)	16	static

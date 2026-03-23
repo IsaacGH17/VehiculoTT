@@ -10,6 +10,9 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_ROXI" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">mm:&lt;value&gt;</Translation>
+      </Text>
       <Text Id="__SingleUse_9XK1" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">PWM:&lt;value&gt;%</Translation>
       </Text>

@@ -4,6 +4,7 @@ homeView::homeView()
 {
     Unicode::strncpy(batValueBuffer, "0", 10);
     Unicode::strncpy(pwmValueBuffer, "0", 10);
+    Unicode::strncpy(distValueBuffer, "0", 10);
 }
 
 void homeView::setupScreen()
@@ -13,6 +14,8 @@ void homeView::setupScreen()
     baterry.invalidate();
     pwmval.setWildcard(pwmValueBuffer);
     pwmval.invalidate();
+    dist.setWildcard(distValueBuffer);
+    dist.invalidate();
 }
 
 void homeView::tearDownScreen()
@@ -25,10 +28,11 @@ void homeView::setbatValue(float value)
     if (value != lastValue)
     {
         lastValue = value;
+        int pct = (int)value;
 
-        Unicode::snprintfFloat(batValueBuffer, 10, "%.3f", value);
+        Unicode::snprintf(batValueBuffer, 10, "%d", pct);
         baterry.invalidate();
-        int pct = (int) value % 101;
+        
         imageProgress1.setValue(pct);
         imageProgress1.invalidate();
     }
@@ -41,6 +45,16 @@ void homeView::setPWMValue(int value)
         lastValue = value;
         Unicode::snprintf(pwmValueBuffer, 10, "%d", value);
         pwmval.invalidate();
+    }
+}
+void homeView::setDistValue(int value)
+{
+    static int lastValue = -1;
+    if (value != lastValue)
+    {
+        lastValue = value;
+        Unicode::snprintf(distValueBuffer, 10, "%d", value);
+        dist.invalidate();
     }
 }
 

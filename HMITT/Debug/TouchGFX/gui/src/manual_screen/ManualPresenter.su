@@ -8,6 +8,7 @@
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:11:13:virtual ModelListener::~ModelListener()	16	static
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:17:18:virtual void ModelListener::updateBat(float)	16	static
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:18:18:virtual void ModelListener::updatePWM(int)	16	static
+../TouchGFX/gui/include/gui/model/ModelListener.hpp:19:18:virtual void ModelListener::updateDist(int)	16	static
 ../TouchGFX/gui/include/gui/manual_screen/ManualPresenter.hpp:28:13:ManualPresenter::~ManualPresenter()	16	static
 ../TouchGFX/gui/include/gui/manual_screen/ManualPresenter.hpp:28:13:virtual ManualPresenter::~ManualPresenter()	16	static
 ../TouchGFX/gui/src/manual_screen/ManualPresenter.cpp:4:1:ManualPresenter::ManualPresenter(ManualView&)	16	static

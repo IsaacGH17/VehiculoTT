@@ -8,10 +8,12 @@
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:11:13:virtual ModelListener::~ModelListener()	1
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:17:18:virtual void ModelListener::updateBat(float)	1
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:18:18:virtual void ModelListener::updatePWM(int)	1
-../TouchGFX/gui/include/gui/home_screen/homePresenter.hpp:29:13:homePresenter::~homePresenter()	1
-../TouchGFX/gui/include/gui/home_screen/homePresenter.hpp:29:13:virtual homePresenter::~homePresenter()	1
+../TouchGFX/gui/include/gui/model/ModelListener.hpp:19:18:virtual void ModelListener::updateDist(int)	1
+../TouchGFX/gui/include/gui/home_screen/homePresenter.hpp:30:13:homePresenter::~homePresenter()	1
+../TouchGFX/gui/include/gui/home_screen/homePresenter.hpp:30:13:virtual homePresenter::~homePresenter()	1
 ../TouchGFX/gui/src/home_screen/homePresenter.cpp:4:1:homePresenter::homePresenter(homeView&)	1
 ../TouchGFX/gui/src/home_screen/homePresenter.cpp:10:6:virtual void homePresenter::activate()	1
 ../TouchGFX/gui/src/home_screen/homePresenter.cpp:15:6:virtual void homePresenter::deactivate()	1
 ../TouchGFX/gui/src/home_screen/homePresenter.cpp:19:6:virtual void homePresenter::updateBat(float)	1
 ../TouchGFX/gui/src/home_screen/homePresenter.cpp:23:6:virtual void homePresenter::updatePWM(int)	1
+../TouchGFX/gui/src/home_screen/homePresenter.cpp:26:6:virtual void homePresenter::updateDist(int)	1
