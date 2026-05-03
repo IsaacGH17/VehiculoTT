@@ -9,8 +9,11 @@
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:17:18:virtual void ModelListener::updateBat(float)	16	static
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:18:18:virtual void ModelListener::updatePWM(int)	16	static
 ../TouchGFX/gui/include/gui/model/ModelListener.hpp:19:18:virtual void ModelListener::updateDist(int)	16	static
-../TouchGFX/gui/include/gui/semi_screen/SemiPresenter.hpp:28:13:SemiPresenter::~SemiPresenter()	16	static
-../TouchGFX/gui/include/gui/semi_screen/SemiPresenter.hpp:28:13:virtual SemiPresenter::~SemiPresenter()	16	static
+../TouchGFX/gui/include/gui/semi_screen/SemiPresenter.hpp:32:13:SemiPresenter::~SemiPresenter()	16	static
+../TouchGFX/gui/include/gui/semi_screen/SemiPresenter.hpp:32:13:virtual SemiPresenter::~SemiPresenter()	16	static
 ../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:4:1:SemiPresenter::SemiPresenter(SemiView&)	16	static
-../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:10:6:virtual void SemiPresenter::activate()	16	static
-../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:15:6:virtual void SemiPresenter::deactivate()	16	static
+../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:9:6:virtual void SemiPresenter::activate()	16	static
+../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:13:6:virtual void SemiPresenter::deactivate()	16	static
+../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:17:6:virtual void SemiPresenter::updateBat(float)	16	static
+../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:22:6:virtual void SemiPresenter::updatePWM(int)	16	static
+../TouchGFX/gui/src/semi_screen/SemiPresenter.cpp:27:6:virtual void SemiPresenter::updateDist(int)	16	static

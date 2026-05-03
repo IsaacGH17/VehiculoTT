@@ -9,10 +9,9 @@
 #include <gui/home_screen/homePresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/containers/Container.hpp>
-#include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
+#include <gui/containers/containerTele.hpp>
 #include <touchgfx/widgets/ButtonWithLabel.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
-#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class homeViewBase : public touchgfx::View<homePresenter>
 {
@@ -32,13 +31,10 @@ protected:
     touchgfx::Box __background;
     touchgfx::Container container1;
     touchgfx::Box box1;
-    touchgfx::ImageProgress imageProgress1;
+    containerTele containerTele1;
     touchgfx::ButtonWithLabel btnman;
     touchgfx::ButtonWithLabel btnsemi;
     touchgfx::TextArea textArea1;
-    touchgfx::TextAreaWithOneWildcard baterry;
-    touchgfx::TextAreaWithOneWildcard pwmval;
-    touchgfx::TextAreaWithOneWildcard dist;
 
 private:
 

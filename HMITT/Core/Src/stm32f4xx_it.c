@@ -56,24 +56,27 @@
 /* USER CODE BEGIN 0 */
 extern UART_HandleTypeDef huart1;
 static uint8_t pwm_tx_buf[8];
+static uint8_t act_tx_buf[8];
+
+/* Actuador seleccionado actualmente:
+ * 0 = ninguno, 1 = Pinzas, 2 = Ruedas, 3 = Cremallera */
+volatile uint8_t selected_actuator = 0;
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     uint8_t payload;
     uint16_t len;
 
-    /* Antirrebote especifico para los botones y no para la pantalla tactil */
-    if (GPIO_Pin == PWM_INC_Pin || GPIO_Pin == PWM_DEC_Pin)
+    if (GPIO_Pin != T_IRQ_Pin)
     {
         static uint32_t last_button_time = 0;
         uint32_t current_time = HAL_GetTick();
-        if ((current_time - last_button_time) < 150)
+        if ((current_time - last_button_time) < 200)
         {
             return;
         }
         last_button_time = current_time;
     }
-
     if (GPIO_Pin == PWM_INC_Pin)
     {
         if (pwm < 100){
@@ -92,7 +95,62 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
             HAL_UART_Transmit_DMA(&huart1, pwm_tx_buf, len);
         }
     }
+    else if (GPIO_Pin == Pinzas_Pin)
+    {
+        selected_actuator = 1;
+    }
+    else if (GPIO_Pin == Ruedas_Pin)
+    {
+        selected_actuator = 2;
+    }
+    else if (GPIO_Pin == Cremallera_Pin)
+    {
+        selected_actuator = 3;
+    }
+    else if (GPIO_Pin == Abrir_Pin)
+    {
+        if (selected_actuator == 1)
+        {
+            payload = PARAM_OPEN;
+            len = build_packet(act_tx_buf, CMD_PINZAS, &payload, 1);
+            HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+        }
+        else if (selected_actuator == 2)
+        {
+            payload = PARAM_DECOUPLE;
+            len = build_packet(act_tx_buf, CMD_ACOPLE_RUEDAS, &payload, 1);
+            HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+        }
+        else if (selected_actuator == 3)
+        {
+            payload = PARAM_EXTEND;
+            len = build_packet(act_tx_buf, CMD_PINON, &payload, 1);
+            HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+        }
+    }
+    else if (GPIO_Pin == Cerrar_Pin)
+    {
+        if (selected_actuator == 1)
+        {
+            payload = PARAM_CLOSE;
+            len = build_packet(act_tx_buf, CMD_PINZAS, &payload, 1);
+            HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+        }
+        else if (selected_actuator == 2)
+        {
+            payload = PARAM_COUPLE;
+            len = build_packet(act_tx_buf, CMD_ACOPLE_RUEDAS, &payload, 1);
+            HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+        }
+        else if (selected_actuator == 3)
+        {
+            payload = PARAM_RETRACT;
+            len = build_packet(act_tx_buf, CMD_PINON, &payload, 1);
+            HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+        }
+    }
 }
+
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -208,6 +266,62 @@ void DebugMon_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles EXTI line1 interrupt.
+  */
+void EXTI1_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI1_IRQn 0 */
+
+  /* USER CODE END EXTI1_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Cremallera_Pin);
+  /* USER CODE BEGIN EXTI1_IRQn 1 */
+
+  /* USER CODE END EXTI1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line2 interrupt.
+  */
+void EXTI2_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI2_IRQn 0 */
+
+  /* USER CODE END EXTI2_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Reset_Pin);
+  /* USER CODE BEGIN EXTI2_IRQn 1 */
+
+  /* USER CODE END EXTI2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line3 interrupt.
+  */
+void EXTI3_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI3_IRQn 0 */
+
+  /* USER CODE END EXTI3_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Cerrar_Pin);
+  /* USER CODE BEGIN EXTI3_IRQn 1 */
+
+  /* USER CODE END EXTI3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line4 interrupt.
+  */
+void EXTI4_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI4_IRQn 0 */
+
+  /* USER CODE END EXTI4_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Abrir_Pin);
+  /* USER CODE BEGIN EXTI4_IRQn 1 */
+
+  /* USER CODE END EXTI4_IRQn 1 */
+}
+
+/**
   * @brief This function handles EXTI line[9:5] interrupts.
   */
 void EXTI9_5_IRQHandler(void)
@@ -304,6 +418,8 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 
   /* USER CODE END EXTI15_10_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Pinzas_Pin);
+  HAL_GPIO_EXTI_IRQHandler(Ruedas_Pin);
   HAL_GPIO_EXTI_IRQHandler(PWM_INC_Pin);
   HAL_GPIO_EXTI_IRQHandler(PWM_DEC_Pin);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */

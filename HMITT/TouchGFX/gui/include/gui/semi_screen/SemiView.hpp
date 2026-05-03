@@ -11,6 +11,10 @@ public:
     virtual ~SemiView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    void setBatValue(float value);
+    void setPWMValue(int value);
+    void setDistValue(int value);
 protected:
 };
 

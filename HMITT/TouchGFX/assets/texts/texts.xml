@@ -10,17 +10,41 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
-      <Text Id="__SingleUse_ROXI" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">mm:&lt;value&gt;</Translation>
+      <Text Id="__SingleUse_BABP" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">New Text</Translation>
       </Text>
-      <Text Id="__SingleUse_9XK1" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">PWM:&lt;value&gt;%</Translation>
+      <Text Id="__SingleUse_CYF2" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">New Text</Translation>
       </Text>
-      <Text Id="__SingleUse_BRKE" Alignment="Left" TypographyId="Default">
+      <Text Id="__SingleUse_HZWX" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">New Text</Translation>
+      </Text>
+      <Text Id="__SingleUse_H8OV" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">New Text</Translation>
+      </Text>
+      <Text Id="__SingleUse_HIPL" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">0</Translation>
       </Text>
-      <Text Id="__SingleUse_CBPV" Alignment="Left" TypographyId="Default">
+      <Text Id="__SingleUse_SA29" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_K7SP" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">PWM:&lt;value&gt;%</Translation>
+      </Text>
+      <Text Id="__SingleUse_KA26" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">mm:&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_UVWR" Alignment="Left" TypographyId="Small">
+        <Translation Language="GB">Ruedas 2</Translation>
+      </Text>
+      <Text Id="__SingleUse_OAJ2" Alignment="Left" TypographyId="Small">
+        <Translation Language="GB">Ruedas 1</Translation>
+      </Text>
+      <Text Id="__SingleUse_K6U0" Alignment="Left" TypographyId="Small">
+        <Translation Language="GB">Pinza</Translation>
+      </Text>
+      <Text Id="__SingleUse_YBDT" Alignment="Left" TypographyId="Small">
+        <Translation Language="GB">Cremallera</Translation>
       </Text>
       <Text Id="__SingleUse_81D2" Alignment="Left" TypographyId="Typography1">
         <Translation Language="GB">Selección de modo</Translation>

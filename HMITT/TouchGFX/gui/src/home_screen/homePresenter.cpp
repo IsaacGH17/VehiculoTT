@@ -4,25 +4,27 @@
 homePresenter::homePresenter(homeView& v)
     : view(v)
 {
-
 }
 
 void homePresenter::activate()
 {
-
 }
 
 void homePresenter::deactivate()
 {
-
 }
+
 void homePresenter::updateBat(float value)
 {
-    view.setbatValue(value);
+    view.setBatValue(value);
 }
-void homePresenter::updatePWM(int value){
-	view.setPWMValue(value);
+
+void homePresenter::updatePWM(int value)
+{
+    view.setPWMValue(value);
 }
-void homePresenter::updateDist(int value){
-	view.setDistValue(value);
+
+void homePresenter::updateDist(int value)
+{
+    view.setDistValue(value);
 }

@@ -5,5 +5,8 @@
 ../TouchGFX/gui/include/gui/semi_screen/SemiView.hpp:11:13:SemiView::~SemiView()	16	static
 ../TouchGFX/gui/include/gui/semi_screen/SemiView.hpp:11:13:virtual SemiView::~SemiView()	16	static
 ../TouchGFX/gui/src/semi_screen/SemiView.cpp:3:1:SemiView::SemiView()	16	static
-../TouchGFX/gui/src/semi_screen/SemiView.cpp:8:6:virtual void SemiView::setupScreen()	16	static
-../TouchGFX/gui/src/semi_screen/SemiView.cpp:13:6:virtual void SemiView::tearDownScreen()	16	static
+../TouchGFX/gui/src/semi_screen/SemiView.cpp:7:6:virtual void SemiView::setupScreen()	16	static
+../TouchGFX/gui/src/semi_screen/SemiView.cpp:12:6:virtual void SemiView::tearDownScreen()	16	static
+../TouchGFX/gui/src/semi_screen/SemiView.cpp:17:6:void SemiView::setBatValue(float)	16	static
+../TouchGFX/gui/src/semi_screen/SemiView.cpp:22:6:void SemiView::setPWMValue(int)	16	static
+../TouchGFX/gui/src/semi_screen/SemiView.cpp:27:6:void SemiView::setDistValue(int)	16	static

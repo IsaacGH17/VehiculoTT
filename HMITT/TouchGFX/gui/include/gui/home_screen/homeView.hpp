@@ -11,12 +11,10 @@ public:
     virtual ~homeView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
-    void setbatValue(float value);
+
+    void setBatValue(float value);
     void setPWMValue(int value);
     void setDistValue(int value);
-    Unicode::UnicodeChar batValueBuffer[10];
-    Unicode::UnicodeChar pwmValueBuffer[10];
-    Unicode::UnicodeChar distValueBuffer[10];
 protected:
 };
 

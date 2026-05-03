@@ -12,8 +12,8 @@
 ../TouchGFX/gui/include/gui/home_screen/homePresenter.hpp:30:13:homePresenter::~homePresenter()	16	static
 ../TouchGFX/gui/include/gui/home_screen/homePresenter.hpp:30:13:virtual homePresenter::~homePresenter()	16	static
 ../TouchGFX/gui/src/home_screen/homePresenter.cpp:4:1:homePresenter::homePresenter(homeView&)	16	static
-../TouchGFX/gui/src/home_screen/homePresenter.cpp:10:6:virtual void homePresenter::activate()	16	static
-../TouchGFX/gui/src/home_screen/homePresenter.cpp:15:6:virtual void homePresenter::deactivate()	16	static
-../TouchGFX/gui/src/home_screen/homePresenter.cpp:19:6:virtual void homePresenter::updateBat(float)	16	static
-../TouchGFX/gui/src/home_screen/homePresenter.cpp:23:6:virtual void homePresenter::updatePWM(int)	16	static
-../TouchGFX/gui/src/home_screen/homePresenter.cpp:26:6:virtual void homePresenter::updateDist(int)	16	static
+../TouchGFX/gui/src/home_screen/homePresenter.cpp:9:6:virtual void homePresenter::activate()	16	static
+../TouchGFX/gui/src/home_screen/homePresenter.cpp:13:6:virtual void homePresenter::deactivate()	16	static
+../TouchGFX/gui/src/home_screen/homePresenter.cpp:17:6:virtual void homePresenter::updateBat(float)	16	static
+../TouchGFX/gui/src/home_screen/homePresenter.cpp:22:6:virtual void homePresenter::updatePWM(int)	16	static
+../TouchGFX/gui/src/home_screen/homePresenter.cpp:27:6:virtual void homePresenter::updateDist(int)	16	static

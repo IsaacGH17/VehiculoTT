@@ -22,23 +22,11 @@
             }
           },
           {
-            "Type": "ImageProgress",
-            "Name": "imageProgress1",
-            "X": 261,
-            "Y": 13,
-            "Width": 45,
-            "Height": 20,
-            "FileNameProgress": "__generated\\alternate_theme_images_widgets_imageprogress_styled_batteries_battery_small_active.png",
-            "AnchorAtZero": true,
-            "Direction": "Right",
-            "Preset": "alternate_theme\\presets\\imageprogress\\styled\\batteries\\small_active.json",
-            "FileNameBackground": "__generated\\alternate_theme_images_widgets_imageprogress_styled_batteries_battery_small.png",
-            "IndicatorPositionX": 3,
-            "IndicatorPositionY": 3,
-            "IndicatorPositionWidth": 36,
-            "IndicatorPositionHeight": 14,
-            "ProgressRangeMax": 100,
-            "ProgressInitialValue": 60
+            "Type": "CustomContainerInstance",
+            "Name": "containerTele1",
+            "Width": 320,
+            "Height": 59,
+            "CustomContainerDefinitionName": "containerTele"
           },
           {
             "Type": "ButtonWithLabel",
@@ -101,56 +89,6 @@
               "Blue": 255
             },
             "AutoSize": true
-          },
-          {
-            "Type": "TextArea",
-            "Name": "baterry",
-            "X": 192,
-            "Y": 14,
-            "Width": 62,
-            "Height": 18,
-            "TextId": "__SingleUse_CBPV",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "Wildcard1": {
-              "TextId": "__SingleUse_BRKE"
-            }
-          },
-          {
-            "Type": "TextArea",
-            "Name": "pwmval",
-            "X": 11,
-            "Y": 15,
-            "Width": 96,
-            "Height": 16,
-            "TextId": "__SingleUse_9XK1",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "Wildcard1": {}
-          },
-          {
-            "Type": "TextArea",
-            "Name": "dist",
-            "X": 11,
-            "Y": 33,
-            "Width": 81,
-            "Height": 20,
-            "TextId": "__SingleUse_ROXI",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "Wildcard1": {}
           }
         ],
         "Interactions": [
@@ -212,10 +150,17 @@
             }
           },
           {
+            "Type": "CustomContainerInstance",
+            "Name": "containerTele1",
+            "Width": 320,
+            "Height": 59,
+            "CustomContainerDefinitionName": "containerTele"
+          },
+          {
             "Type": "ButtonWithIcon",
             "Name": "back",
-            "X": 130,
-            "Y": 160,
+            "X": 127,
+            "Y": 163,
             "Width": 60,
             "Height": 60,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_round_tiny_fill_disabled.png",
@@ -227,6 +172,158 @@
             "IconHeight": 25,
             "IconWidth": 25,
             "Preset": "alternate_theme\\presets\\button\\icon\\round\\tiny_fill_disabled.json"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 46,
+            "Y": 52,
+            "Width": 55,
+            "Height": 10,
+            "TextId": "__SingleUse_YBDT",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1_2",
+            "X": 217,
+            "Y": 52,
+            "Width": 46,
+            "Height": 10,
+            "TextId": "__SingleUse_OAJ2",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1_2_1",
+            "X": 217,
+            "Y": 122,
+            "Width": 46,
+            "Height": 10,
+            "TextId": "__SingleUse_UVWR",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1_1",
+            "X": 60,
+            "Y": 122,
+            "Width": 26,
+            "Height": 10,
+            "TextId": "__SingleUse_K6U0",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "buttonWithLabel1",
+            "X": 18,
+            "Y": 68,
+            "Width": 110,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_active.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_disabled.png",
+            "TextId": "__SingleUse_H8OV",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "buttonWithLabel1_1",
+            "X": 18,
+            "Y": 137,
+            "Width": 110,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_active.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_disabled.png",
+            "TextId": "__SingleUse_HZWX",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "buttonWithLabel1_1_1",
+            "X": 186,
+            "Y": 137,
+            "Width": 110,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_active.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_disabled.png",
+            "TextId": "__SingleUse_BABP",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "buttonWithLabel1_2",
+            "X": 186,
+            "Y": 68,
+            "Width": 110,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_active.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_disabled.png",
+            "TextId": "__SingleUse_CYF2",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0"
           }
         ],
         "Interactions": [
@@ -256,6 +353,13 @@
               "Green": 64,
               "Blue": 138
             }
+          },
+          {
+            "Type": "CustomContainerInstance",
+            "Name": "containerTele1",
+            "Width": 320,
+            "Height": 59,
+            "CustomContainerDefinitionName": "containerTele"
           },
           {
             "Type": "ButtonWithIcon",
@@ -291,7 +395,84 @@
         ]
       }
     ],
-    "CustomContainerDefinitions": [],
+    "CustomContainerDefinitions": [
+      {
+        "Name": "containerTele",
+        "Width": 320,
+        "Height": 59,
+        "Components": [
+          {
+            "Type": "ImageProgress",
+            "Name": "imageProgress1",
+            "X": 261,
+            "Y": 11,
+            "Width": 45,
+            "Height": 20,
+            "FileNameProgress": "__generated\\alternate_theme_images_widgets_imageprogress_styled_batteries_battery_small_active.png",
+            "AnchorAtZero": true,
+            "Direction": "Right",
+            "Preset": "alternate_theme\\presets\\imageprogress\\styled\\batteries\\small_active.json",
+            "FileNameBackground": "__generated\\alternate_theme_images_widgets_imageprogress_styled_batteries_battery_small.png",
+            "IndicatorPositionX": 3,
+            "IndicatorPositionY": 3,
+            "IndicatorPositionWidth": 36,
+            "IndicatorPositionHeight": 14,
+            "ProgressRangeMax": 100
+          },
+          {
+            "Type": "TextArea",
+            "Name": "baterry",
+            "X": 192,
+            "Y": 12,
+            "Width": 62,
+            "Height": 18,
+            "TextId": "__SingleUse_SA29",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {
+              "TextId": "__SingleUse_HIPL"
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "pwmval",
+            "X": 11,
+            "Y": 13,
+            "Width": 96,
+            "Height": 16,
+            "TextId": "__SingleUse_K7SP",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "dist",
+            "X": 11,
+            "Y": 31,
+            "Width": 81,
+            "Height": 20,
+            "TextId": "__SingleUse_KA26",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          }
+        ],
+        "Interactions": []
+      }
+    ],
     "Name": "HMITT",
     "Resolution": {
       "Width": 320,

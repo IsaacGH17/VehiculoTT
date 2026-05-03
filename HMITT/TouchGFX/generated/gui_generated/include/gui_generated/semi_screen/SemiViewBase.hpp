@@ -8,6 +8,7 @@
 #include <mvp/View.hpp>
 #include <gui/semi_screen/SemiPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
+#include <gui/containers/containerTele.hpp>
 #include <touchgfx/widgets/ButtonWithIcon.hpp>
 
 class SemiViewBase : public touchgfx::View<SemiPresenter>
@@ -27,6 +28,7 @@ protected:
      */
     touchgfx::Box __background;
     touchgfx::Box box1;
+    containerTele containerTele1;
     touchgfx::ButtonWithIcon back;
 
 private:

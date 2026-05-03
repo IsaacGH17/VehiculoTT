@@ -8,7 +8,10 @@
 #include <mvp/View.hpp>
 #include <gui/manual_screen/ManualPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
+#include <gui/containers/containerTele.hpp>
 #include <touchgfx/widgets/ButtonWithIcon.hpp>
+#include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/widgets/ButtonWithLabel.hpp>
 
 class ManualViewBase : public touchgfx::View<ManualPresenter>
 {
@@ -27,7 +30,16 @@ protected:
      */
     touchgfx::Box __background;
     touchgfx::Box box1;
+    containerTele containerTele1;
     touchgfx::ButtonWithIcon back;
+    touchgfx::TextArea textArea1;
+    touchgfx::TextArea textArea1_2;
+    touchgfx::TextArea textArea1_2_1;
+    touchgfx::TextArea textArea1_1;
+    touchgfx::ButtonWithLabel buttonWithLabel1;
+    touchgfx::ButtonWithLabel buttonWithLabel1_1;
+    touchgfx::ButtonWithLabel buttonWithLabel1_1_1;
+    touchgfx::ButtonWithLabel buttonWithLabel1_2;
 
 private:
 

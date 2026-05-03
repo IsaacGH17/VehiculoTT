@@ -69,6 +69,7 @@ build/MINGW32_NT-6.2/generated/gui_generated/src/common/FrontendApplicationBase.
  generated/gui_generated/include/gui_generated/manual_screen/ManualViewBase.hpp \
  gui/include/gui/manual_screen/ManualPresenter.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ToggleButton.hpp \
  gui/include/gui/semi_screen/SemiView.hpp \
  generated/gui_generated/include/gui_generated/semi_screen/SemiViewBase.hpp \
  gui/include/gui/semi_screen/SemiPresenter.hpp \
@@ -143,6 +144,7 @@ gui/include/gui/manual_screen/ManualView.hpp:
 generated/gui_generated/include/gui_generated/manual_screen/ManualViewBase.hpp:
 gui/include/gui/manual_screen/ManualPresenter.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ToggleButton.hpp:
 gui/include/gui/semi_screen/SemiView.hpp:
 generated/gui_generated/include/gui_generated/semi_screen/SemiViewBase.hpp:
 gui/include/gui/semi_screen/SemiPresenter.hpp:

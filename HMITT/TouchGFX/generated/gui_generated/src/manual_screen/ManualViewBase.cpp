@@ -4,6 +4,7 @@
 #include <gui_generated/manual_screen/ManualViewBase.hpp>
 #include <touchgfx/Color.hpp>
 #include <images/BitmapDatabase.hpp>
+#include <texts/TextKeysAndLanguages.hpp>
 
 ManualViewBase::ManualViewBase() :
     buttonCallback(this, &ManualViewBase::buttonCallbackHandler)
@@ -16,11 +17,66 @@ ManualViewBase::ManualViewBase() :
     box1.setColor(touchgfx::Color::getColorFromRGB(0, 54, 115));
     add(box1);
 
-    back.setXY(130, 160);
+    containerTele1.setXY(0, 0);
+    add(containerTele1);
+
+    back.setXY(127, 163);
     back.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUND_TINY_FILL_DISABLED_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUND_TINY_FILL_DISABLED_ID), touchgfx::Bitmap(BITMAP_ICON_THEME_IMAGES_ACTION_HIGHLIGHT_OFF_25_25_E8F6FB_SVG_ID), touchgfx::Bitmap(BITMAP_ICON_THEME_IMAGES_ACTION_HIGHLIGHT_OFF_25_25_E8F6FB_SVG_ID));
     back.setIconXY(18, 18);
     back.setAction(buttonCallback);
     add(back);
+
+    textArea1.setXY(46, 52);
+    textArea1.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    textArea1.setLinespacing(0);
+    textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_YBDT));
+    add(textArea1);
+
+    textArea1_2.setXY(217, 52);
+    textArea1_2.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    textArea1_2.setLinespacing(0);
+    textArea1_2.setTypedText(touchgfx::TypedText(T___SINGLEUSE_OAJ2));
+    add(textArea1_2);
+
+    textArea1_2_1.setXY(217, 122);
+    textArea1_2_1.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    textArea1_2_1.setLinespacing(0);
+    textArea1_2_1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_UVWR));
+    add(textArea1_2_1);
+
+    textArea1_1.setXY(60, 122);
+    textArea1_1.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    textArea1_1.setLinespacing(0);
+    textArea1_1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_K6U0));
+    add(textArea1_1);
+
+    buttonWithLabel1.setXY(18, 68);
+    buttonWithLabel1.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_TINY_ROUNDED_DISABLED_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_TINY_ROUNDED_ACTIVE_ID));
+    buttonWithLabel1.setLabelText(touchgfx::TypedText(T___SINGLEUSE_H8OV));
+    buttonWithLabel1.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    buttonWithLabel1.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    add(buttonWithLabel1);
+
+    buttonWithLabel1_1.setXY(18, 137);
+    buttonWithLabel1_1.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_TINY_ROUNDED_DISABLED_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_TINY_ROUNDED_ACTIVE_ID));
+    buttonWithLabel1_1.setLabelText(touchgfx::TypedText(T___SINGLEUSE_HZWX));
+    buttonWithLabel1_1.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    buttonWithLabel1_1.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    add(buttonWithLabel1_1);
+
+    buttonWithLabel1_1_1.setXY(186, 137);
+    buttonWithLabel1_1_1.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_TINY_ROUNDED_DISABLED_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_TINY_ROUNDED_ACTIVE_ID));
+    buttonWithLabel1_1_1.setLabelText(touchgfx::TypedText(T___SINGLEUSE_BABP));
+    buttonWithLabel1_1_1.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    buttonWithLabel1_1_1.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    add(buttonWithLabel1_1_1);
+
+    buttonWithLabel1_2.setXY(186, 68);
+    buttonWithLabel1_2.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_TINY_ROUNDED_DISABLED_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_TINY_ROUNDED_ACTIVE_ID));
+    buttonWithLabel1_2.setLabelText(touchgfx::TypedText(T___SINGLEUSE_CYF2));
+    buttonWithLabel1_2.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    buttonWithLabel1_2.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    add(buttonWithLabel1_2);
 }
 
 ManualViewBase::~ManualViewBase()
@@ -30,7 +86,7 @@ ManualViewBase::~ManualViewBase()
 
 void ManualViewBase::setupScreen()
 {
-
+    containerTele1.initialize();
 }
 
 void ManualViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)

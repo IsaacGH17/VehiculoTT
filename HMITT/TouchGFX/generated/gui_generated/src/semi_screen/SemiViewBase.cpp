@@ -16,6 +16,9 @@ SemiViewBase::SemiViewBase() :
     box1.setColor(touchgfx::Color::getColorFromRGB(0, 64, 138));
     add(box1);
 
+    containerTele1.setXY(0, 0);
+    add(containerTele1);
+
     back.setXY(130, 162);
     back.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUND_TINY_FILL_DISABLED_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_ICON_ROUND_TINY_FILL_DISABLED_ID), touchgfx::Bitmap(BITMAP_ICON_THEME_IMAGES_ACTION_HIGHLIGHT_OFF_25_25_E8F6FB_SVG_ID), touchgfx::Bitmap(BITMAP_ICON_THEME_IMAGES_ACTION_HIGHLIGHT_OFF_25_25_E8F6FB_SVG_ID));
     back.setIconXY(18, 18);
@@ -30,7 +33,7 @@ SemiViewBase::~SemiViewBase()
 
 void SemiViewBase::setupScreen()
 {
-
+    containerTele1.initialize();
 }
 
 void SemiViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)

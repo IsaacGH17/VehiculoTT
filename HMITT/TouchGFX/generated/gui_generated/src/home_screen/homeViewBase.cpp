@@ -20,15 +20,8 @@ homeViewBase::homeViewBase() :
     box1.setColor(touchgfx::Color::getColorFromRGB(0, 64, 138));
     add(box1);
 
-    imageProgress1.setXY(261, 13);
-    imageProgress1.setProgressIndicatorPosition(3, 3, 36, 14);
-    imageProgress1.setRange(0, 100);
-    imageProgress1.setDirection(touchgfx::AbstractDirectionProgress::RIGHT);
-    imageProgress1.setBackground(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_IMAGEPROGRESS_STYLED_BATTERIES_BATTERY_SMALL_ID));
-    imageProgress1.setBitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_IMAGEPROGRESS_STYLED_BATTERIES_BATTERY_SMALL_ACTIVE_ID);
-    imageProgress1.setValue(60);
-    imageProgress1.setAnchorAtZero(true);
-    add(imageProgress1);
+    containerTele1.setXY(0, 0);
+    add(containerTele1);
 
     btnman.setXY(79, 95);
     btnman.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_SMALL_ROUND_DISABLED_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_SMALL_ROUND_DISABLED_ID));
@@ -51,25 +44,6 @@ homeViewBase::homeViewBase() :
     textArea1.setLinespacing(0);
     textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_81D2));
     add(textArea1);
-
-    baterry.setPosition(192, 14, 62, 18);
-    baterry.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    baterry.setLinespacing(0);
-    baterry.setWildcard(touchgfx::TypedText(T___SINGLEUSE_BRKE).getText());
-    baterry.setTypedText(touchgfx::TypedText(T___SINGLEUSE_CBPV));
-    add(baterry);
-
-    pwmval.setPosition(11, 15, 96, 16);
-    pwmval.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    pwmval.setLinespacing(0);
-    pwmval.setTypedText(touchgfx::TypedText(T___SINGLEUSE_9XK1));
-    add(pwmval);
-
-    dist.setPosition(11, 33, 81, 20);
-    dist.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    dist.setLinespacing(0);
-    dist.setTypedText(touchgfx::TypedText(T___SINGLEUSE_ROXI));
-    add(dist);
 }
 
 homeViewBase::~homeViewBase()
@@ -79,7 +53,7 @@ homeViewBase::~homeViewBase()
 
 void homeViewBase::setupScreen()
 {
-
+    containerTele1.initialize();
 }
 
 void homeViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)

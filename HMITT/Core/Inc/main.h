@@ -66,6 +66,12 @@ void Error_Handler(void);
 #define DC_GPIO_Port GPIOA
 #define SPI1_NSS_Pin GPIO_PIN_4
 #define SPI1_NSS_GPIO_Port GPIOA
+#define Cremallera_Pin GPIO_PIN_1
+#define Cremallera_GPIO_Port GPIOB
+#define Cremallera_EXTI_IRQn EXTI1_IRQn
+#define Reset_Pin GPIO_PIN_2
+#define Reset_GPIO_Port GPIOB
+#define Reset_EXTI_IRQn EXTI2_IRQn
 #define PWM_INC_Pin GPIO_PIN_12
 #define PWM_INC_GPIO_Port GPIOB
 #define PWM_INC_EXTI_IRQn EXTI15_10_IRQn
@@ -74,6 +80,18 @@ void Error_Handler(void);
 #define T_IRQ_EXTI_IRQn EXTI9_5_IRQn
 #define T_CS_Pin GPIO_PIN_9
 #define T_CS_GPIO_Port GPIOA
+#define Pinzas_Pin GPIO_PIN_10
+#define Pinzas_GPIO_Port GPIOA
+#define Pinzas_EXTI_IRQn EXTI15_10_IRQn
+#define Ruedas_Pin GPIO_PIN_11
+#define Ruedas_GPIO_Port GPIOA
+#define Ruedas_EXTI_IRQn EXTI15_10_IRQn
+#define Cerrar_Pin GPIO_PIN_3
+#define Cerrar_GPIO_Port GPIOB
+#define Cerrar_EXTI_IRQn EXTI3_IRQn
+#define Abrir_Pin GPIO_PIN_4
+#define Abrir_GPIO_Port GPIOB
+#define Abrir_EXTI_IRQn EXTI4_IRQn
 
 /* USER CODE BEGIN Private defines */
 

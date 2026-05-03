@@ -1,9 +1,26 @@
+../Middlewares/ST/touchgfx/framework/include/touchgfx/hal/Types.hpp:91:5:touchgfx::colortype::colortype(uint32_t)	1
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:104:18:virtual void touchgfx::Screen::afterTransition()	1
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:115:18:virtual void touchgfx::Screen::tearDownScreen()	1
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:144:18:virtual void touchgfx::Screen::handleTickEvent()	1
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:154:18:virtual void touchgfx::Screen::handleKeyEvent(uint8_t)	1
-../TouchGFX/gui/include/gui/manual_screen/ManualView.hpp:11:13:ManualView::~ManualView()	1
-../TouchGFX/gui/include/gui/manual_screen/ManualView.hpp:11:13:virtual ManualView::~ManualView()	1
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp:63:10:void touchgfx::AbstractButton::setAction(touchgfx::GenericCallback<const touchgfx::AbstractButton&>&)	1
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithLabel.hpp:77:10:void touchgfx::ButtonWithLabel::setLabelColor(touchgfx::colortype)	1
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithLabel.hpp:94:10:void touchgfx::ButtonWithLabel::setLabelColorPressed(touchgfx::colortype)	1
+../TouchGFX/gui/include/gui/manual_screen/ManualView.hpp:12:13:ManualView::~ManualView()	1
+../TouchGFX/gui/include/gui/manual_screen/ManualView.hpp:12:13:virtual ManualView::~ManualView()	1
 ../TouchGFX/gui/src/manual_screen/ManualView.cpp:3:1:ManualView::ManualView()	1
-../TouchGFX/gui/src/manual_screen/ManualView.cpp:8:6:virtual void ManualView::setupScreen()	1
-../TouchGFX/gui/src/manual_screen/ManualView.cpp:13:6:virtual void ManualView::tearDownScreen()	1
+../TouchGFX/gui/src/manual_screen/ManualView.cpp:9:6:virtual void ManualView::setupScreen()	1
+../TouchGFX/gui/src/manual_screen/ManualView.cpp:27:6:virtual void ManualView::tearDownScreen()	1
+../TouchGFX/gui/src/manual_screen/ManualView.cpp:32:6:void ManualView::toggleCallbackHandler(const touchgfx::AbstractButton&)	5
+../TouchGFX/gui/src/manual_screen/ManualView.cpp:60:6:void ManualView::updateButtonAppearance(touchgfx::ButtonWithLabel&, bool)	2
+../TouchGFX/gui/src/manual_screen/ManualView.cpp:77:6:void ManualView::setBatValue(float)	1
+../TouchGFX/gui/src/manual_screen/ManualView.cpp:82:6:void ManualView::setPWMValue(int)	1
+../TouchGFX/gui/src/manual_screen/ManualView.cpp:87:6:void ManualView::setDistValue(int)	1
+../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:134:7:constexpr touchgfx::GenericCallback<const touchgfx::AbstractButton&>::GenericCallback()	1
+../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:373:5:touchgfx::Callback<dest_type, T1, void, void>::Callback(dest_type*, void (dest_type::*)(T1)) [with dest_type = ManualView; T1 = const touchgfx::AbstractButton&]	1
+../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:138:13:touchgfx::GenericCallback<T1, void, void>::~GenericCallback() [with T1 = const touchgfx::AbstractButton&]	1
+../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:138:13:touchgfx::GenericCallback<T1, void, void>::~GenericCallback() [with T1 = const touchgfx::AbstractButton&]	1
+../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:357:8:touchgfx::Callback<ManualView, const touchgfx::AbstractButton&>::~Callback()	1
+../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:357:8:virtual touchgfx::Callback<ManualView, const touchgfx::AbstractButton&>::~Callback()	1
+../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:386:18:void touchgfx::Callback<dest_type, T1, void, void>::execute(T1) [with dest_type = ManualView; T1 = const touchgfx::AbstractButton&]	2
+../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:396:18:bool touchgfx::Callback<dest_type, T1, void, void>::isValid() const [with dest_type = ManualView; T1 = const touchgfx::AbstractButton&]	5

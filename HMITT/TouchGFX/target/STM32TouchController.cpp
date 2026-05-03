@@ -30,8 +30,8 @@ extern "C" {
 static void ConvXPTtoILI(uint16_t *x, uint16_t *y)
 {
 	int16_t tx, ty;
-	// X: directo
-	tx = (int16_t)(((int32_t)*x - XPT_XMIN) * GUI_WIDTH / XPT_WIDTH);
+	// X: invertido (el touch va en sentido contrario a la pantalla en este eje)
+	tx = (int16_t)(((int32_t)XPT_XMAX - *x) * GUI_WIDTH / XPT_WIDTH);
 	tx = (tx < 0) ? 0 : tx;
 	tx = (tx >= GUI_WIDTH) ? GUI_WIDTH-1 : tx;
 
