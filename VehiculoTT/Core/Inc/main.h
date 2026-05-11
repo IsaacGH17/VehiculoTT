@@ -59,10 +59,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define Servo1_Pin GPIO_PIN_0
-#define Servo1_GPIO_Port GPIOA
 #define Servo2_Pin GPIO_PIN_1
 #define Servo2_GPIO_Port GPIOA
+#define Servo1_Pin GPIO_PIN_5
+#define Servo1_GPIO_Port GPIOA
 #define Motor1_Pin GPIO_PIN_8
 #define Motor1_GPIO_Port GPIOA
 #define Motor2_Pin GPIO_PIN_9

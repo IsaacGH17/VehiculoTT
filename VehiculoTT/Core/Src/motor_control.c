@@ -2,7 +2,7 @@
 
 /* Handle del timer de motores (definido en main.c) */
 extern TIM_HandleTypeDef htim1;
-
+extern TIM_HandleTypeDef htim2;
 /* Pulso actual global (igual para los 4 motores por defecto) */
 static uint16_t current_pulse = 0;
 
@@ -59,6 +59,9 @@ void Motor_SpeedDec(void) {
 
 void Motor_Stop(void) {
     Motor_SetAllPulse(0);
+}
+void Servo_Pinza(void){
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 19989);
 }
 
 uint16_t Motor_GetCurrentPulse(void) {

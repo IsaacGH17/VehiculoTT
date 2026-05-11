@@ -88,6 +88,7 @@ void execute_command(Packet_t *pkt) {
             break;
 
         case CMD_PINZAS:
+        	Servo_Pinza();
             break;
 
         case CMD_PINON:

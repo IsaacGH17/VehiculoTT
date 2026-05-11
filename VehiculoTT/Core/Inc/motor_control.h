@@ -36,7 +36,7 @@ void Motor_SpeedDec(void);
 
 /* Paro: pone todos los motores a 0 */
 void Motor_Stop(void);
-
+void Servo_Pinza(void);
 /* Devuelve el pulso actual global */
 uint16_t Motor_GetCurrentPulse(void);
 
