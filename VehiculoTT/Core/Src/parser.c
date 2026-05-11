@@ -88,7 +88,13 @@ void execute_command(Packet_t *pkt) {
             break;
 
         case CMD_PINZAS:
-        	Servo_Pinza();
+           Servo_Pinza();
+           if(pkt->payload[0] == PARAM_CLOSE){
+        	   Servo_Pinza();
+           } else if(pkt->payload[0] == PARAM_OPEN){
+        	   Servo_Pinza();
+           }
+
             break;
 
         case CMD_PINON:

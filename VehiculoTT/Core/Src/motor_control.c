@@ -20,9 +20,14 @@ void Motor_Init(void) {
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
-
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 0);
+      	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 0);
     /* Todos los motores apagados al inicio */
     Motor_SetAllPulse(0);
+
+
 }
 
 void Motor_SetPulse(MotorId_t motor, uint16_t pulse) {
@@ -62,6 +67,7 @@ void Motor_Stop(void) {
 }
 void Servo_Pinza(void){
 	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 19989);
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 19989);
 }
 
 uint16_t Motor_GetCurrentPulse(void) {

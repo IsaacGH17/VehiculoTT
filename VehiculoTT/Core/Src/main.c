@@ -261,6 +261,23 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  /*Packet_t pkt;
+	   ParserCtx_t ctx = {0};
+	  uint16_t dma_write_idx =
+	          (DMA_RX_BUF_SIZE - __HAL_DMA_GET_COUNTER(huart1.hdmarx))
+	          % DMA_RX_BUF_SIZE;
+
+	      while (dma_read_idx != dma_write_idx)
+	      {
+	          uint8_t byte = dma_rx_buf[dma_read_idx];
+
+	          dma_read_idx = (dma_read_idx + 1) % DMA_RX_BUF_SIZE;
+
+	          // breakpoint here
+	          // or printf("%c", byte);
+
+	          parse_byte(byte, &pkt, &ctx);
+	      }*/
 /*
 	  MPU9250_Read(&ax, &ay, &az, &gx, &gy, &gz);
 	  	   Ax = ax / 16384.0;

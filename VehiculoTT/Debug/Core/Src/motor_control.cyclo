@@ -1,8 +1,8 @@
 ../Core/Src/motor_control.c:17:6:Motor_Init	1
-../Core/Src/motor_control.c:28:6:Motor_SetPulse	6
-../Core/Src/motor_control.c:35:6:Motor_SetAllPulse	6
-../Core/Src/motor_control.c:44:6:Motor_SpeedInc	2
-../Core/Src/motor_control.c:50:6:Motor_SpeedDec	2
-../Core/Src/motor_control.c:60:6:Motor_Stop	1
-../Core/Src/motor_control.c:63:6:Servo_Pinza	1
-../Core/Src/motor_control.c:67:10:Motor_GetCurrentPulse	1
+../Core/Src/motor_control.c:33:6:Motor_SetPulse	6
+../Core/Src/motor_control.c:40:6:Motor_SetAllPulse	6
+../Core/Src/motor_control.c:49:6:Motor_SpeedInc	2
+../Core/Src/motor_control.c:55:6:Motor_SpeedDec	2
+../Core/Src/motor_control.c:65:6:Motor_Stop	1
+../Core/Src/motor_control.c:68:6:Servo_Pinza	1
+../Core/Src/motor_control.c:73:10:Motor_GetCurrentPulse	1
