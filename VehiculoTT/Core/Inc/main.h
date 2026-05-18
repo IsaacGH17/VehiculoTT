@@ -59,10 +59,16 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define ADC_tension_Pin GPIO_PIN_0
+#define ADC_tension_GPIO_Port GPIOA
 #define Servo2_Pin GPIO_PIN_1
 #define Servo2_GPIO_Port GPIOA
 #define Servo1_Pin GPIO_PIN_5
 #define Servo1_GPIO_Port GPIOA
+#define Direccion1_Pin GPIO_PIN_7
+#define Direccion1_GPIO_Port GPIOA
+#define Direccion2_Pin GPIO_PIN_0
+#define Direccion2_GPIO_Port GPIOB
 #define Motor1_Pin GPIO_PIN_8
 #define Motor1_GPIO_Port GPIOA
 #define Motor2_Pin GPIO_PIN_9
@@ -71,6 +77,10 @@ void Error_Handler(void);
 #define Motor3_GPIO_Port GPIOA
 #define Motor4_Pin GPIO_PIN_11
 #define Motor4_GPIO_Port GPIOA
+#define Direccion3_Pin GPIO_PIN_12
+#define Direccion3_GPIO_Port GPIOA
+#define Direccion4_Pin GPIO_PIN_15
+#define Direccion4_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

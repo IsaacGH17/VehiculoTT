@@ -1,0 +1,76 @@
+#include "motor_control.h"
+
+/* Handle del timer de motores (definido en main.c) */
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim2;
+/* Pulso actual global (igual para los 4 motores por defecto) */
+static uint16_t current_pulse = 0;
+int i = 0;
+/* Mapeo de MotorId_t a canal de TIM */
+static const uint32_t motor_channel[MOTOR_COUNT] = {
+    TIM_CHANNEL_1,
+    TIM_CHANNEL_2,
+    TIM_CHANNEL_3,
+    TIM_CHANNEL_4
+};
+
+void Motor_Init(void) {
+    /* Iniciar PWM en los 4 canales de TIM1 */
+    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
+    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, i);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, i);
+    /* Todos los motores apagados al inicio */
+    Motor_SetAllPulse(0);
+
+
+}
+
+void Motor_SetPulse(MotorId_t motor, uint16_t pulse) {
+    if (motor >= MOTOR_COUNT) return;
+    if (pulse > MOTOR_PWM_MAX) pulse = MOTOR_PWM_MAX;
+
+    __HAL_TIM_SET_COMPARE(&htim1, motor_channel[motor], pulse);
+}
+
+void Motor_SetAllPulse(uint16_t pulse) {
+    if (pulse > MOTOR_PWM_MAX) pulse = MOTOR_PWM_MAX;
+    current_pulse = pulse;
+
+    for (uint8_t i = 0; i < MOTOR_COUNT; i++) {
+        __HAL_TIM_SET_COMPARE(&htim1, motor_channel[i], pulse);
+    }
+}
+
+void Motor_SpeedInc(void) {
+    uint16_t new_pulse = current_pulse + MOTOR_SPEED_STEP;
+    if (new_pulse > MOTOR_PWM_MAX) new_pulse = MOTOR_PWM_MAX;
+    Motor_SetAllPulse(new_pulse);
+}
+
+void Motor_SpeedDec(void) {
+    uint16_t new_pulse;
+    if (current_pulse < MOTOR_SPEED_STEP) {
+        new_pulse = 0;
+    } else {
+        new_pulse = current_pulse - MOTOR_SPEED_STEP;
+    }
+    Motor_SetAllPulse(new_pulse);
+}
+
+void Motor_Stop(void) {
+    Motor_SetAllPulse(0);
+}
+void Servo_Pinza(void){
+	i = i + 100;
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, i);
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, i);
+}
+
+uint16_t Motor_GetCurrentPulse(void) {
+    return current_pulse;
+}
