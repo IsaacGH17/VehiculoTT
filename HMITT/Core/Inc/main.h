@@ -57,15 +57,24 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define Verde_Pin GPIO_PIN_13
+#define Verde_GPIO_Port GPIOC
 #define PWM_DEC_Pin GPIO_PIN_14
 #define PWM_DEC_GPIO_Port GPIOC
 #define PWM_DEC_EXTI_IRQn EXTI15_10_IRQn
+#define Amarillo_Pin GPIO_PIN_15
+#define Amarillo_GPIO_Port GPIOC
+#define Rojo_Pin GPIO_PIN_0
+#define Rojo_GPIO_Port GPIOA
 #define RESET_Pin GPIO_PIN_2
 #define RESET_GPIO_Port GPIOA
 #define DC_Pin GPIO_PIN_3
 #define DC_GPIO_Port GPIOA
 #define SPI1_NSS_Pin GPIO_PIN_4
 #define SPI1_NSS_GPIO_Port GPIOA
+#define Paro_Pin GPIO_PIN_0
+#define Paro_GPIO_Port GPIOB
+#define Paro_EXTI_IRQn EXTI0_IRQn
 #define Cremallera_Pin GPIO_PIN_1
 #define Cremallera_GPIO_Port GPIOB
 #define Cremallera_EXTI_IRQn EXTI1_IRQn
@@ -75,6 +84,9 @@ void Error_Handler(void);
 #define PWM_INC_Pin GPIO_PIN_12
 #define PWM_INC_GPIO_Port GPIOB
 #define PWM_INC_EXTI_IRQn EXTI15_10_IRQn
+#define ParoE_Pin GPIO_PIN_13
+#define ParoE_GPIO_Port GPIOB
+#define ParoE_EXTI_IRQn EXTI15_10_IRQn
 #define T_IRQ_Pin GPIO_PIN_8
 #define T_IRQ_GPIO_Port GPIOA
 #define T_IRQ_EXTI_IRQn EXTI9_5_IRQn

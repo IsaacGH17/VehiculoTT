@@ -116,20 +116,29 @@ void StartTelemetriaTask(void *argument);
 
 
 
-void I2C_Scan(void)
+char* I2C_Scan(void)
 {
-    char msg[16];
+    static char msg[1024]; // Buffer estático grande para evitar desbordamiento
+    uint8_t count = 0;
+    char *ptr = msg;       // Puntero para ir escribiendo en el buffer
 
     for (uint8_t i = 1; i < 128; i++)
     {
         if (HAL_I2C_IsDeviceReady(&hi2c1, (i << 1), 1, 20) == HAL_OK)
         {
-            sprintf(msg, "0x%02X", i);
-            LCD_CLEAR();
-            LCD_CADENA(msg);
-            HAL_Delay(1500);
+            if (count > 0) {
+                ptr += sprintf(ptr, ", "); // Agrega coma y espacio entre direcciones
+            }
+            ptr += sprintf(ptr, "0x%02X", i); // Escribe la dirección
+            count++;
         }
     }
+
+    if (count == 0) {
+        sprintf(msg, "No se encontraron dispositivos I2C");
+    }
+
+    return msg;
 }
 
 
@@ -148,7 +157,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	//int16_t ax, ay, az, gx, gy, gz;
 
   /* USER CODE END 1 */
 
@@ -158,11 +166,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  /*float Ax = 0;
-  float Ay = 0;
-  float Az = 0;
-  float roll  = 0;
-  float pitch = 0;*/
+
 
   /* USER CODE END Init */
 
@@ -184,6 +188,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   /*LCD_init();
     MPU9250_Init();*/
+  MPU6050_Init();
   Motor_Init();
   updateConfiguration(AVERAGE_4, CONV_TIME_332, SHUNTBUS_CONTINOUS);
   HAL_UART_Receive_DMA(&huart1, dma_rx_buf, DMA_RX_BUF_SIZE);
@@ -191,6 +196,7 @@ int main(void)
   HAL_NVIC_SetPriority(USART1_IRQn, 6, 0);
   HAL_NVIC_EnableIRQ(USART1_IRQn);
   {
+
     uint32_t refSpadCount;
     uint8_t  isApertureSpads;
     uint8_t  VhvSettings, PhaseCal;
@@ -215,6 +221,7 @@ int main(void)
     vl_status = VL53L0X_SetDeviceMode(&vl53l0x_dev, VL53L0X_DEVICEMODE_SINGLE_RANGING);
     vl53_init_status = vl_status;
     vl53_init_fail:;
+
   }
 
   /* USER CODE END 2 */
@@ -767,8 +774,18 @@ void StartTelemetriaTask(void *argument)
   uint16_t packet_size = 0;
   xLastWakeTime = xTaskGetTickCount();
 
+  int16_t ax, ay, az, gx, gy, gz;
+  float Ax = 0, Ay = 0, Az = 0;
+
   for(;;)
   {
+      MPU6050_Read(&ax, &ay, &az, &gx, &gy, &gz);
+      Ax = ax / 16384.0f;
+      Ay = ay / 16384.0f;
+      Az = az / 16384.0f;
+      /*roll  = atan2f(Ay, Az) * 180.0f / M_PI;
+      pitch = atan2f(-Ax, sqrtf(Ay*Ay + Az*Az)) * 180.0f / M_PI;*/
+
       /* --- Leer distancia del VL53L0X --- */
       vl53_meas_status = VL53L0X_PerformSingleRangingMeasurement(
                              &vl53l0x_dev, &vl53l0x_meas);
@@ -777,25 +794,31 @@ void StartTelemetriaTask(void *argument)
       if (vl53_meas_status == VL53L0X_ERROR_NONE && vl53_range_status == 0) {
           distancia_mm = vl53l0x_meas.RangeMilliMeter;
       }
+
       uint8_t dist_bytes[2] = {
           (uint8_t)(distancia_mm >> 8),
           (uint8_t)(distancia_mm & 0xFF)
       };
+
       uint16_t vbat = (uint16_t)(getBusVol() * 1000.0f);
-      uint8_t payload[4] = {
+      int16_t ax_send = (int16_t)(Ax * 1000.0f);
+      int16_t ay_send = (int16_t)(Ay * 1000.0f);
+      int16_t az_send = (int16_t)(Az * 1000.0f);
+      uint8_t payload[10] = {
           dist_bytes[0],
           dist_bytes[1],
-          (uint8_t)(vbat >> 8),
-          (uint8_t)(vbat & 0xFF)
+          (uint8_t)(vbat   >> 8), (uint8_t)(vbat   & 0xFF),
+          (uint8_t)(ax_send >> 8), (uint8_t)(ax_send & 0xFF),
+          (uint8_t)(ay_send >> 8), (uint8_t)(ay_send & 0xFF),
+          (uint8_t)(az_send >> 8), (uint8_t)(az_send & 0xFF)
       };
 
-      packet_size = build_packet(tx_buffer, CMD_TELE_SENSORS, payload, 4);
+      packet_size = build_packet(tx_buffer, CMD_TELE_SENSORS, payload, 10);
       if (huart1.gState == HAL_UART_STATE_READY) {
           HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
       }
 
       vTaskDelayUntil(&xLastWakeTime, xFrequency);
-
   }
   /* USER CODE END StartTelemetriaTask */
 }

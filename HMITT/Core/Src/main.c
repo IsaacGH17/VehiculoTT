@@ -157,19 +157,19 @@ int main(void)
   MX_TIM2_Init();
   MX_USART1_UART_Init();
   /* Call PreOsInit function */
-    MX_TouchGFX_PreOSInit();
-    /* USER CODE BEGIN 2 */
+  MX_TouchGFX_PreOSInit();
+  /* USER CODE BEGIN 2 */
+
     ILI9341_Init();
     XPT2046_Init();
 
     HAL_UART_Receive_DMA(&huart1, dma_rx_buf, DMA_RX_BUF_SIZE);
 
-    /* USER CODE END 2 */
+  /* USER CODE END 2 */
 
-    /* Init scheduler */
-    osKernelInitialize();
-    MX_TouchGFX_Init();
-
+  /* Init scheduler */
+  osKernelInitialize();
+  MX_TouchGFX_Init();
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
@@ -492,7 +492,18 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, RESET_Pin|DC_Pin|SPI1_NSS_Pin|T_CS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, Verde_Pin|Amarillo_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, Rojo_Pin|RESET_Pin|DC_Pin|SPI1_NSS_Pin
+                          |T_CS_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : Verde_Pin Amarillo_Pin */
+  GPIO_InitStruct.Pin = Verde_Pin|Amarillo_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PWM_DEC_Pin */
   GPIO_InitStruct.Pin = PWM_DEC_Pin;
@@ -500,12 +511,25 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(PWM_DEC_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : Rojo_Pin T_CS_Pin */
+  GPIO_InitStruct.Pin = Rojo_Pin|T_CS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /*Configure GPIO pins : RESET_Pin DC_Pin SPI1_NSS_Pin */
   GPIO_InitStruct.Pin = RESET_Pin|DC_Pin|SPI1_NSS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : Paro_Pin ParoE_Pin */
+  GPIO_InitStruct.Pin = Paro_Pin|ParoE_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Cremallera_Pin Reset_Pin PWM_INC_Pin Cerrar_Pin
                            Abrir_Pin */
@@ -521,13 +545,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(T_IRQ_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : T_CS_Pin */
-  GPIO_InitStruct.Pin = T_CS_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(T_CS_GPIO_Port, &GPIO_InitStruct);
-
   /*Configure GPIO pins : Pinzas_Pin Ruedas_Pin */
   GPIO_InitStruct.Pin = Pinzas_Pin|Ruedas_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
@@ -535,6 +552,9 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
   HAL_NVIC_SetPriority(EXTI1_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
