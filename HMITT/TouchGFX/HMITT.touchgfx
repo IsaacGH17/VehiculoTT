@@ -25,37 +25,14 @@
             "Type": "CustomContainerInstance",
             "Name": "containerTele1",
             "Width": 320,
-            "Height": 59,
+            "Height": 120,
             "CustomContainerDefinitionName": "containerTele"
-          },
-          {
-            "Type": "ButtonWithLabel",
-            "Name": "btnman",
-            "X": 79,
-            "Y": 95,
-            "Width": 175,
-            "Height": 50,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_small_round_disabled.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_small_round_disabled.png",
-            "TextId": "__SingleUse_3AI3",
-            "ReleasedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "PressedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "TextRotation": "0",
-            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\small_round_disabled.json"
           },
           {
             "Type": "ButtonWithLabel",
             "Name": "btnsemi",
             "X": 79,
-            "Y": 166,
+            "Y": 152,
             "Width": 175,
             "Height": 50,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_small_round_disabled.png",
@@ -78,7 +55,7 @@
             "Type": "TextArea",
             "Name": "textArea1",
             "X": 73,
-            "Y": 63,
+            "Y": 110,
             "Width": 186,
             "Height": 20,
             "TextId": "__SingleUse_81D2",
@@ -96,12 +73,11 @@
             "InteractionName": "Interaction1",
             "Trigger": {
               "Type": "TriggerClicked",
-              "TriggerComponent": "btnman"
+              "TriggerComponent": "btnsemi"
             },
             "Action": {
               "Type": "ActionGotoScreen",
-              "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "Manual"
+              "ScreenTransitionType": "ScreenTransitionNone"
             }
           },
           {
@@ -119,10 +95,12 @@
           {
             "InteractionName": "Interaction3",
             "Trigger": {
-              "Type": "TriggerClicked"
+              "Type": "TriggerClicked",
+              "TriggerComponent": "btnsemi"
             },
             "Action": {
-              "Type": "ActionNone"
+              "Type": "ActionCustom",
+              "FunctionName": "modoSemi"
             }
           },
           {
@@ -132,211 +110,6 @@
             },
             "Action": {
               "Type": "ActionNone"
-            }
-          }
-        ]
-      },
-      {
-        "Name": "Manual",
-        "Components": [
-          {
-            "Type": "Box",
-            "Name": "box1",
-            "Width": 320,
-            "Height": 240,
-            "Color": {
-              "Green": 54,
-              "Blue": 115
-            }
-          },
-          {
-            "Type": "CustomContainerInstance",
-            "Name": "containerTele1",
-            "Width": 320,
-            "Height": 59,
-            "CustomContainerDefinitionName": "containerTele"
-          },
-          {
-            "Type": "ButtonWithIcon",
-            "Name": "back",
-            "X": 127,
-            "Y": 163,
-            "Width": 60,
-            "Height": 60,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_icon_round_tiny_fill_disabled.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_icon_round_tiny_fill_disabled.png",
-            "IconPressed": "__generated\\icon_theme_images_action_highlight_off_25_25_E8F6FB.svg.png",
-            "IconReleased": "__generated\\icon_theme_images_action_highlight_off_25_25_E8F6FB.svg.png",
-            "IconX": 18,
-            "IconY": 18,
-            "IconHeight": 25,
-            "IconWidth": 25,
-            "Preset": "alternate_theme\\presets\\button\\icon\\round\\tiny_fill_disabled.json"
-          },
-          {
-            "Type": "TextArea",
-            "Name": "textArea1",
-            "X": 46,
-            "Y": 52,
-            "Width": 55,
-            "Height": 10,
-            "TextId": "__SingleUse_YBDT",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "AutoSize": true
-          },
-          {
-            "Type": "TextArea",
-            "Name": "textArea1_2",
-            "X": 217,
-            "Y": 52,
-            "Width": 46,
-            "Height": 10,
-            "TextId": "__SingleUse_OAJ2",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "AutoSize": true
-          },
-          {
-            "Type": "TextArea",
-            "Name": "textArea1_2_1",
-            "X": 217,
-            "Y": 122,
-            "Width": 46,
-            "Height": 10,
-            "TextId": "__SingleUse_UVWR",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "AutoSize": true
-          },
-          {
-            "Type": "TextArea",
-            "Name": "textArea1_1",
-            "X": 60,
-            "Y": 122,
-            "Width": 26,
-            "Height": 10,
-            "TextId": "__SingleUse_K6U0",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "AutoSize": true
-          },
-          {
-            "Type": "ButtonWithLabel",
-            "Name": "buttonWithLabel1",
-            "X": 18,
-            "Y": 68,
-            "Width": 110,
-            "Height": 50,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_active.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_disabled.png",
-            "TextId": "__SingleUse_H8OV",
-            "ReleasedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "PressedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "TextRotation": "0"
-          },
-          {
-            "Type": "ButtonWithLabel",
-            "Name": "buttonWithLabel1_1",
-            "X": 18,
-            "Y": 137,
-            "Width": 110,
-            "Height": 50,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_active.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_disabled.png",
-            "TextId": "__SingleUse_HZWX",
-            "ReleasedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "PressedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "TextRotation": "0"
-          },
-          {
-            "Type": "ButtonWithLabel",
-            "Name": "buttonWithLabel1_1_1",
-            "X": 186,
-            "Y": 137,
-            "Width": 110,
-            "Height": 50,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_active.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_disabled.png",
-            "TextId": "__SingleUse_BABP",
-            "ReleasedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "PressedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "TextRotation": "0"
-          },
-          {
-            "Type": "ButtonWithLabel",
-            "Name": "buttonWithLabel1_2",
-            "X": 186,
-            "Y": 68,
-            "Width": 110,
-            "Height": 50,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_active.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_tiny_rounded_disabled.png",
-            "TextId": "__SingleUse_CYF2",
-            "ReleasedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "PressedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "TextRotation": "0"
-          }
-        ],
-        "Interactions": [
-          {
-            "InteractionName": "Interaction1",
-            "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "back"
-            },
-            "Action": {
-              "Type": "ActionGotoScreen",
-              "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "home"
             }
           }
         ]
@@ -358,7 +131,7 @@
             "Type": "CustomContainerInstance",
             "Name": "containerTele1",
             "Width": 320,
-            "Height": 59,
+            "Height": 120,
             "CustomContainerDefinitionName": "containerTele"
           },
           {
@@ -399,7 +172,7 @@
       {
         "Name": "containerTele",
         "Width": 320,
-        "Height": 59,
+        "Height": 120,
         "Components": [
           {
             "Type": "ImageProgress",
@@ -461,6 +234,38 @@
             "Width": 81,
             "Height": 20,
             "TextId": "__SingleUse_KA26",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "rollval",
+            "X": 11,
+            "Y": 51,
+            "Width": 96,
+            "Height": 20,
+            "TextId": "__SingleUse_RT0F",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "pitchval",
+            "X": 11,
+            "Y": 71,
+            "Width": 96,
+            "Height": 20,
+            "TextId": "__SingleUse_VPGZ",
             "TextRotation": "0",
             "Color": {
               "Red": 255,

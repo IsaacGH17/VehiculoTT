@@ -28,6 +28,8 @@ protected:
     touchgfx::TextAreaWithOneWildcard baterry;
     touchgfx::TextAreaWithOneWildcard pwmval;
     touchgfx::TextAreaWithOneWildcard dist;
+    touchgfx::TextAreaWithOneWildcard rollval;
+    touchgfx::TextAreaWithOneWildcard pitchval;
 
 private:
 

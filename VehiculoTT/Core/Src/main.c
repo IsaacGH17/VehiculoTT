@@ -43,6 +43,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define DMA_RX_BUF_SIZE 64
+#define ADC_BUF_LEN 10
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -88,12 +89,12 @@ const osThreadAttr_t sendTelemetria_attributes = {
 uint8_t dma_rx_buf[DMA_RX_BUF_SIZE];
 volatile uint16_t dma_read_idx = 0;
 osSemaphoreId_t uartRxSemHandle;
-
+uint16_t adc_buffer[ADC_BUF_LEN];
 /* VL53L0X */
 VL53L0X_Dev_t                      vl53l0x_dev;
 VL53L0X_RangingMeasurementData_t   vl53l0x_meas;
 volatile uint16_t                   distancia_mm = 0;
-/* Diagnóstico - ver desde debugger (Live Expressions) */
+
 volatile VL53L0X_Error vl53_init_status = 0;
 volatile VL53L0X_Error vl53_meas_status = 0;
 volatile uint8_t       vl53_range_status = 0xFF;
@@ -190,13 +191,20 @@ int main(void)
     MPU9250_Init();*/
   MPU6050_Init();
   Motor_Init();
+  HAL_ADC_Start_DMA(&hadc1,(uint32_t*)adc_buffer, ADC_BUF_LEN);
   updateConfiguration(AVERAGE_4, CONV_TIME_332, SHUNTBUS_CONTINOUS);
   HAL_UART_Receive_DMA(&huart1, dma_rx_buf, DMA_RX_BUF_SIZE);
   __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
   HAL_NVIC_SetPriority(USART1_IRQn, 6, 0);
   HAL_NVIC_EnableIRQ(USART1_IRQn);
-  {
+  uint16_t packet_size = 0;
+              uint8_t tx_buffer[20];
+              uint8_t payload[1] = { (uint8_t)0 };
+              packet_size = build_packet(tx_buffer, RESP_SUCCESS, payload, 1);
+              if (huart1.gState == HAL_UART_STATE_READY)
+                  HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
 
+  {
     uint32_t refSpadCount;
     uint8_t  isApertureSpads;
     uint8_t  VhvSettings, PhaseCal;
@@ -387,13 +395,13 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.ScanConvMode = DISABLE;
-  hadc1.Init.ContinuousConvMode = DISABLE;
+  hadc1.Init.ContinuousConvMode = ENABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.NbrOfConversion = 1;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.DMAContinuousRequests = ENABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
@@ -773,7 +781,7 @@ void StartTelemetriaTask(void *argument)
   static uint8_t tx_buffer[20];
   uint16_t packet_size = 0;
   xLastWakeTime = xTaskGetTickCount();
-
+  float vbat1= 0.0f;
   int16_t ax, ay, az, gx, gy, gz;
   float Ax = 0, Ay = 0, Az = 0;
 
@@ -785,34 +793,39 @@ void StartTelemetriaTask(void *argument)
       Az = az / 16384.0f;
       /*roll  = atan2f(Ay, Az) * 180.0f / M_PI;
       pitch = atan2f(-Ax, sqrtf(Ay*Ay + Az*Az)) * 180.0f / M_PI;*/
+      /* --- Leer y procesar Voltaje de Batería --- */
+            uint32_t sum = 0;
+            for(int i = 0; i < ADC_BUF_LEN; i++)
+            {
+                sum += adc_buffer[i];
+            }
+            vbat1 = (float)sum / ADC_BUF_LEN;
+            vbat1 = (vbat1 / 4095.0f) * 16.5f;
 
-      /* --- Leer distancia del VL53L0X --- */
-      vl53_meas_status = VL53L0X_PerformSingleRangingMeasurement(
-                             &vl53l0x_dev, &vl53l0x_meas);
-      vl53_range_status = vl53l0x_meas.RangeStatus;
+            uint16_t vbat_send = (uint16_t)(vbat1 * 100.0f);
 
-      if (vl53_meas_status == VL53L0X_ERROR_NONE && vl53_range_status == 0) {
-          distancia_mm = vl53l0x_meas.RangeMilliMeter;
-      }
+            /* --- Leer distancia del VL53L0X --- */
+            vl53_meas_status = VL53L0X_PerformSingleRangingMeasurement(&vl53l0x_dev, &vl53l0x_meas);
+            vl53_range_status = vl53l0x_meas.RangeStatus;
 
-      uint8_t dist_bytes[2] = {
-          (uint8_t)(distancia_mm >> 8),
-          (uint8_t)(distancia_mm & 0xFF)
-      };
-
-      uint16_t vbat = (uint16_t)(getBusVol() * 1000.0f);
-      int16_t ax_send = (int16_t)(Ax * 1000.0f);
-      int16_t ay_send = (int16_t)(Ay * 1000.0f);
-      int16_t az_send = (int16_t)(Az * 1000.0f);
-      uint8_t payload[10] = {
-          dist_bytes[0],
-          dist_bytes[1],
-          (uint8_t)(vbat   >> 8), (uint8_t)(vbat   & 0xFF),
-          (uint8_t)(ax_send >> 8), (uint8_t)(ax_send & 0xFF),
-          (uint8_t)(ay_send >> 8), (uint8_t)(ay_send & 0xFF),
-          (uint8_t)(az_send >> 8), (uint8_t)(az_send & 0xFF)
-      };
-
+            if (vl53_meas_status == VL53L0X_ERROR_NONE && vl53_range_status == 0) {
+                distancia_mm = vl53l0x_meas.RangeMilliMeter;
+            }
+            uint8_t dist_bytes[2] = {
+                (uint8_t)(distancia_mm >> 8),
+                (uint8_t)(distancia_mm & 0xFF)
+            };
+            int16_t ax_send = (int16_t)(Ax * 1000.0f);
+            int16_t ay_send = (int16_t)(Ay * 1000.0f);
+            int16_t az_send = (int16_t)(Az * 1000.0f);
+            uint8_t payload[10] = {
+                dist_bytes[0],
+                dist_bytes[1],
+                (uint8_t)(vbat_send >> 8), (uint8_t)(vbat_send & 0xFF),
+                (uint8_t)(ax_send   >> 8), (uint8_t)(ax_send   & 0xFF),
+                (uint8_t)(ay_send   >> 8), (uint8_t)(ay_send   & 0xFF),
+                (uint8_t)(az_send   >> 8), (uint8_t)(az_send   & 0xFF)
+            };
       packet_size = build_packet(tx_buffer, CMD_TELE_SENSORS, payload, 10);
       if (huart1.gState == HAL_UART_STATE_READY) {
           HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);

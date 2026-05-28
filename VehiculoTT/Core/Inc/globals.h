@@ -7,5 +7,6 @@
 
 #ifndef INC_GLOBALS_H_
 #define INC_GLOBALS_H_
-extern volatile float vbat = 10.1;
+#include <stdint.h>
+extern volatile uint16_t percentage_pulse;
 #endif /* INC_GLOBALS_H_ */

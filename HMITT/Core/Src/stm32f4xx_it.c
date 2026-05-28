@@ -107,6 +107,18 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     {
         selected_actuator = 3;
     }
+    else if (GPIO_Pin == Reset_Pin){
+    	 HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_SET);
+    	        HAL_GPIO_WritePin(Verde_GPIO_Port, Verde_Pin, GPIO_PIN_RESET);
+    	        HAL_GPIO_WritePin(Rojo_GPIO_Port, Rojo_Pin, GPIO_PIN_SET);
+    	        uint16_t packet_size = 0;
+    	        static uint8_t tx_buffer[20];
+    	        packet_size = build_packet(tx_buffer, CMD_ACK_NACK, NULL, 0);
+
+    	        if (huart1.gState == HAL_UART_STATE_READY) {
+    	            HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
+    	        }
+    }
     else if (GPIO_Pin == Abrir_Pin)
     {
         if (selected_actuator == 1)

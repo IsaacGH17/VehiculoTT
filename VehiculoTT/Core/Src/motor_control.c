@@ -1,10 +1,11 @@
 #include "motor_control.h"
-
+#include "globals.h"
 /* Handle del timer de motores (definido en main.c) */
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
 /* Pulso actual global (igual para los 4 motores por defecto) */
-static uint16_t current_pulse = 0;
+volatile uint16_t current_pulse = 0;
+volatile uint16_t percentage_pulse = 0;
 int i = 0;
 /* Mapeo de MotorId_t a canal de TIM */
 static const uint32_t motor_channel[MOTOR_COUNT] = {
@@ -48,7 +49,11 @@ void Motor_SetAllPulse(uint16_t pulse) {
 
 void Motor_SpeedInc(void) {
     uint16_t new_pulse = current_pulse + MOTOR_SPEED_STEP;
-    if (new_pulse > MOTOR_PWM_MAX) new_pulse = MOTOR_PWM_MAX;
+    percentage_pulse = percentage_pulse + 10;
+    if (new_pulse > MOTOR_PWM_MAX){
+    	new_pulse = MOTOR_PWM_MAX;
+    	percentage_pulse = 100;
+    }
     Motor_SetAllPulse(new_pulse);
 }
 
@@ -56,8 +61,10 @@ void Motor_SpeedDec(void) {
     uint16_t new_pulse;
     if (current_pulse < MOTOR_SPEED_STEP) {
         new_pulse = 0;
+        percentage_pulse = 0;
     } else {
         new_pulse = current_pulse - MOTOR_SPEED_STEP;
+        percentage_pulse = percentage_pulse - 10;
     }
     Motor_SetAllPulse(new_pulse);
 }

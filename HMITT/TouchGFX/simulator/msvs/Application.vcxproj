@@ -21,9 +21,6 @@
     <ClCompile Include="..\..\generated\gui_generated\src\common\FrontendApplicationBase.cpp"/>
     <ClCompile Include="..\..\gui\src\model\Model.cpp"/>
     <ClCompile Include="..\..\generated\simulator\src\video\SoftwareMJPEGDecoder.cpp"/>
-    <ClCompile Include="..\..\gui\src\manual_screen\ManualPresenter.cpp"/>
-    <ClCompile Include="..\..\gui\src\manual_screen\ManualView.cpp"/>
-    <ClCompile Include="..\..\generated\gui_generated\src\manual_screen\ManualViewBase.cpp"/>
     <ClCompile Include="..\..\gui\src\semi_screen\SemiPresenter.cpp"/>
     <ClCompile Include="..\..\gui\src\semi_screen\SemiView.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\semi_screen\SemiViewBase.cpp"/>
@@ -182,9 +179,6 @@
     <ClInclude Include="..\..\gui\include\gui\model\ModelListener.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\SimConstants.hpp"/>
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\SoftwareMJPEGDecoder.hpp"/>
-    <ClInclude Include="..\..\gui\include\gui\manual_screen\ManualPresenter.hpp"/>
-    <ClInclude Include="..\..\gui\include\gui\manual_screen\ManualView.hpp"/>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\manual_screen\ManualViewBase.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\semi_screen\SemiPresenter.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\semi_screen\SemiView.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\semi_screen\SemiViewBase.hpp"/>

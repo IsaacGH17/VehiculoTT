@@ -3,6 +3,11 @@
 #include <stdbool.h>
 #include "main.h"
 #include "globals.h"
+#include <math.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846f
+#endif
 
 bool parse_byte(uint8_t byte, Packet_t *pkt, ParserCtx_t *ctx) {
 
@@ -57,15 +62,33 @@ bool parse_byte(uint8_t byte, Packet_t *pkt, ParserCtx_t *ctx) {
 
 void execute_command(Packet_t *pkt) {
     if (pkt->command == CMD_TELE_SENSORS) {
-        if (pkt->length >= 4) {
+        if (pkt->length >= 10) {
+            uint16_t mm = (uint16_t)(((uint16_t)pkt->payload[0] << 8) | pkt->payload[1]);
+            dist_mm = mm;
+
             uint16_t vbat_mv = (uint16_t)(((uint16_t)pkt->payload[2] << 8) | pkt->payload[3]);
             float v_volts = (float)vbat_mv / 1000.0f;
             float porcentaje = ((v_volts - 5.6f) / (8.4f - 5.6f)) * 100.0f;
             if (porcentaje > 100.0f) porcentaje = 100.0f;
             if (porcentaje < 0.0f) porcentaje = 0.0f;
             vbat = porcentaje;
-            uint16_t mm = (uint16_t)(((uint16_t)pkt->payload[0] << 8) | pkt->payload[1]);
-            dist_mm = mm;
+
+            int16_t ax_raw = (int16_t)(((uint16_t)pkt->payload[4] << 8) | pkt->payload[5]);
+            int16_t ay_raw = (int16_t)(((uint16_t)pkt->payload[6] << 8) | pkt->payload[7]);
+            int16_t az_raw = (int16_t)(((uint16_t)pkt->payload[8] << 8) | pkt->payload[9]);
+
+            float Ax = (float)ax_raw / 1000.0f;
+            float Ay = (float)ay_raw / 1000.0f;
+            float Az = (float)az_raw / 1000.0f;
+
+            roll = atan2f(Ay, Az) * 180.0f / M_PI;
+            pitch = atan2f(-Ax, sqrtf(Ay*Ay + Az*Az)) * 180.0f / M_PI;
+        }
+    } else if (pkt->command == RESP_SUCCESS) {
+        HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(Verde_GPIO_Port, Verde_Pin, GPIO_PIN_SET);
+        if (pkt->length >= 1) {
+            pwm = pkt->payload[0];
         }
     }
 }

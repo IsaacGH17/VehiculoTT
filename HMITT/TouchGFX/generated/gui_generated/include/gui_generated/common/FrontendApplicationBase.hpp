@@ -23,9 +23,6 @@ public:
     // home
     void gotohomeScreenNoTransition();
 
-    // Manual
-    void gotoManualScreenNoTransition();
-
     // Semi
     void gotoSemiScreenNoTransition();
 
@@ -36,9 +33,6 @@ protected:
 
     // home
     void gotohomeScreenNoTransitionImpl();
-
-    // Manual
-    void gotoManualScreenNoTransitionImpl();
 
     // Semi
     void gotoSemiScreenNoTransitionImpl();

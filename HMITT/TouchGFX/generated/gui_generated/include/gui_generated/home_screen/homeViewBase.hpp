@@ -20,6 +20,14 @@ public:
     virtual ~homeViewBase();
     virtual void setupScreen();
 
+    /*
+     * Virtual Action Handlers
+     */
+    virtual void modoSemi()
+    {
+        // Override and implement this function in home
+    }
+
 protected:
     FrontendApplication& application() {
         return *static_cast<FrontendApplication*>(touchgfx::Application::getInstance());
@@ -32,7 +40,6 @@ protected:
     touchgfx::Container container1;
     touchgfx::Box box1;
     containerTele containerTele1;
-    touchgfx::ButtonWithLabel btnman;
     touchgfx::ButtonWithLabel btnsemi;
     touchgfx::TextArea textArea1;
 

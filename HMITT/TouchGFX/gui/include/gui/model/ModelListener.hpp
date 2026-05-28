@@ -17,6 +17,8 @@ public:
     virtual void updateBat(float value) {}
     virtual void updatePWM(int value) {}
     virtual void updateDist(int value) {}
+    virtual void updateRoll(float value) {}
+    virtual void updatePitch(float value) {}
 protected:
     Model* model;
 };

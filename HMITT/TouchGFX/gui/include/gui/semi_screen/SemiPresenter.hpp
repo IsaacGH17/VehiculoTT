@@ -28,7 +28,8 @@ public:
     virtual void updateBat(float value);
     virtual void updatePWM(int value);
     virtual void updateDist(int value);
-
+    virtual void updatePitch(float value);
+    virtual void updateRoll(float value);
     virtual ~SemiPresenter() {}
 
 private:

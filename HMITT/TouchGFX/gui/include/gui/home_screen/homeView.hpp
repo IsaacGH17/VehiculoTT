@@ -15,6 +15,8 @@ public:
     void setBatValue(float value);
     void setPWMValue(int value);
     void setDistValue(int value);
+    void setRollValue(float value);
+    void setPitchValue(float value);
 protected:
 };
 

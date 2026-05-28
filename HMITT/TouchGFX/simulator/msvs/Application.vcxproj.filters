@@ -172,12 +172,6 @@
     <Filter Include="Header Files\generated\simulator\include\simulator\video">
       <UniqueIdentifier>DAF3BA0A-2C48-528D-09CA-8A838F7AA5D4</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\gui\manual_screen">
-      <UniqueIdentifier>D18D8E38-9FD2-A28A-3154-9749751BD791</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\gui\manual_screen">
-      <UniqueIdentifier>3C9BA697-BB4F-E0EE-2AA3-C250199F7F85</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\gui\semi_screen">
       <UniqueIdentifier>751306E2-ED2E-D295-9F8F-67F0FAFCDAF7</UniqueIdentifier>
     </Filter>
@@ -189,12 +183,6 @@
     </Filter>
     <Filter Include="Header Files\generated\gui_generated\semi_screen">
       <UniqueIdentifier>751BD661-C27D-BA21-B747-E56AEF4ACAFF</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\manual_screen">
-      <UniqueIdentifier>1AD02D7C-0E9D-AC56-ED09-242B1B301758</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\manual_screen">
-      <UniqueIdentifier>3B13461B-5BD7-E567-7D82-F44481EECCA0</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\gui\home_screen">
       <UniqueIdentifier>140BC94A-1C4C-20AE-F2D0-9CCD59E9BBC7</UniqueIdentifier>
@@ -251,15 +239,6 @@
     </ClCompile>
     <ClCompile Include="..\..\generated\simulator\src\video\SoftwareMJPEGDecoder.cpp">
       <Filter>Source Files\generated\simulator\video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\manual_screen\ManualPresenter.cpp">
-      <Filter>Source Files\gui\manual_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\manual_screen\ManualView.cpp">
-      <Filter>Source Files\gui\manual_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\manual_screen\ManualViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\manual_screen</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gui\src\semi_screen\SemiPresenter.cpp">
       <Filter>Source Files\gui\semi_screen</Filter>
@@ -726,15 +705,6 @@
     </ClInclude>
     <ClInclude Include="..\..\generated\simulator\include\simulator\video\SoftwareMJPEGDecoder.hpp">
       <Filter>Header Files\generated\simulator\include\simulator\video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\manual_screen\ManualPresenter.hpp">
-      <Filter>Header Files\gui\manual_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\manual_screen\ManualView.hpp">
-      <Filter>Header Files\gui\manual_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\manual_screen\ManualViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\manual_screen</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\semi_screen\SemiPresenter.hpp">
       <Filter>Header Files\gui\semi_screen</Filter>

@@ -58,10 +58,10 @@
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:98:10:void touchgfx::TextAreaWithOneWildcard::setWildcard(const touchgfx::Unicode::UnicodeChar*)	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/Container.hpp:40:7:touchgfx::Container::~Container()	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/Container.hpp:40:7:virtual touchgfx::Container::~Container()	16	static
-../TouchGFX/generated/gui_generated/src/containers/containerTeleBase.cpp:9:1:containerTeleBase::containerTeleBase()	160	static
-../TouchGFX/generated/gui_generated/src/containers/containerTeleBase.cpp:43:1:containerTeleBase::~containerTeleBase()	16	static
-../TouchGFX/generated/gui_generated/src/containers/containerTeleBase.cpp:43:1:virtual containerTeleBase::~containerTeleBase()	16	static
-../TouchGFX/generated/gui_generated/src/containers/containerTeleBase.cpp:48:6:virtual void containerTeleBase::initialize()	16	static
+../TouchGFX/generated/gui_generated/src/containers/containerTeleBase.cpp:9:1:containerTeleBase::containerTeleBase()	224	static
+../TouchGFX/generated/gui_generated/src/containers/containerTeleBase.cpp:55:1:containerTeleBase::~containerTeleBase()	16	static
+../TouchGFX/generated/gui_generated/src/containers/containerTeleBase.cpp:55:1:virtual containerTeleBase::~containerTeleBase()	16	static
+../TouchGFX/generated/gui_generated/src/containers/containerTeleBase.cpp:60:6:virtual void containerTeleBase::initialize()	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:62:7:touchgfx::TextAreaWithOneWildcard::~TextAreaWithOneWildcard()	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:62:7:virtual touchgfx::TextAreaWithOneWildcard::~TextAreaWithOneWildcard()	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp:37:7:touchgfx::AbstractProgressIndicator::~AbstractProgressIndicator()	16	static

@@ -164,7 +164,16 @@ int main(void)
     XPT2046_Init();
 
     HAL_UART_Receive_DMA(&huart1, dma_rx_buf, DMA_RX_BUF_SIZE);
-
+    HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(Verde_GPIO_Port, Verde_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Rojo_GPIO_Port, Rojo_Pin, GPIO_PIN_SET);
+    uint16_t packet_size = 0;
+    static uint8_t tx_buffer[20];
+    uint8_t payload[1] = {(uint8_t)(0)};
+        packet_size = build_packet(tx_buffer, CMD_ACK_NACK, payload, 1);
+        if (huart1.gState == HAL_UART_STATE_READY) {
+            HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
+        }
   /* USER CODE END 2 */
 
   /* Init scheduler */

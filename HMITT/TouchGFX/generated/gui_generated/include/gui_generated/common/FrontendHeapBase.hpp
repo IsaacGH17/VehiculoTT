@@ -14,8 +14,6 @@
 
 #include <gui/home_screen/homeView.hpp>
 #include <gui/home_screen/homePresenter.hpp>
-#include <gui/manual_screen/ManualView.hpp>
-#include <gui/manual_screen/ManualPresenter.hpp>
 #include <gui/semi_screen/SemiView.hpp>
 #include <gui/semi_screen/SemiPresenter.hpp>
 
@@ -41,9 +39,8 @@ public:
      * @note All view types used in the application MUST be added to this list!
      */
     typedef touchgfx::meta::TypeList< homeView,
-            touchgfx::meta::TypeList< ManualView,
             touchgfx::meta::TypeList< SemiView,
-            touchgfx::meta::Nil > >
+            touchgfx::meta::Nil >
             > GeneratedViewTypes;
 
     /**
@@ -56,9 +53,8 @@ public:
      * @note All presenter types used in the application MUST be added to this list!
      */
     typedef touchgfx::meta::TypeList< homePresenter,
-            touchgfx::meta::TypeList< ManualPresenter,
             touchgfx::meta::TypeList< SemiPresenter,
-            touchgfx::meta::Nil > >
+            touchgfx::meta::Nil >
             > GeneratedPresenterTypes;
 
     /**

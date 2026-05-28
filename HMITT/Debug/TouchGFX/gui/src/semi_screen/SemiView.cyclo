@@ -10,3 +10,5 @@
 ../TouchGFX/gui/src/semi_screen/SemiView.cpp:17:6:void SemiView::setBatValue(float)	1
 ../TouchGFX/gui/src/semi_screen/SemiView.cpp:22:6:void SemiView::setPWMValue(int)	1
 ../TouchGFX/gui/src/semi_screen/SemiView.cpp:27:6:void SemiView::setDistValue(int)	1
+../TouchGFX/gui/src/semi_screen/SemiView.cpp:31:6:virtual void SemiView::setRollValue(float)	1
+../TouchGFX/gui/src/semi_screen/SemiView.cpp:35:6:virtual void SemiView::setPitchValue(float)	1

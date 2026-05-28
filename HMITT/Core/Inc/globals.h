@@ -11,5 +11,7 @@
 extern volatile float vbat;
 extern volatile int pwm;
 extern volatile int dist_mm;
-extern volatile uint8_t selected_actuator;  /* 0=none, 1=Pinzas, 2=Ruedas, 3=Cremallera */
+extern volatile uint8_t selected_actuator;
+extern volatile float roll;
+extern volatile float pitch;
 #endif /* INC_GLOBALS_H_ */

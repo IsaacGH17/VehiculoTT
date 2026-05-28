@@ -71,14 +71,10 @@ TouchGFX/target/generated/TouchGFXConfiguration.o: \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithLabel.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Button.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp \
- ../TouchGFX/gui/include/gui/manual_screen/ManualView.hpp \
- ../TouchGFX/generated/gui_generated/include/gui_generated/manual_screen/ManualViewBase.hpp \
- ../TouchGFX/gui/include/gui/manual_screen/ManualPresenter.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp \
- ../Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp \
  ../TouchGFX/gui/include/gui/semi_screen/SemiView.hpp \
  ../TouchGFX/generated/gui_generated/include/gui_generated/semi_screen/SemiViewBase.hpp \
  ../TouchGFX/gui/include/gui/semi_screen/SemiPresenter.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp \
  ../TouchGFX/generated/images/include/BitmapDatabase.hpp \
  ../TouchGFX/generated/images/include/images/BitmapDatabase.hpp \
  ../Middlewares/ST/touchgfx/framework/include/platform/driver/lcd/LCD16bpp.hpp \
@@ -188,14 +184,10 @@ TouchGFX/target/generated/TouchGFXConfiguration.o: \
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithLabel.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Button.hpp:
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp:
-../TouchGFX/gui/include/gui/manual_screen/ManualView.hpp:
-../TouchGFX/generated/gui_generated/include/gui_generated/manual_screen/ManualViewBase.hpp:
-../TouchGFX/gui/include/gui/manual_screen/ManualPresenter.hpp:
-../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp:
-../Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp:
 ../TouchGFX/gui/include/gui/semi_screen/SemiView.hpp:
 ../TouchGFX/generated/gui_generated/include/gui_generated/semi_screen/SemiViewBase.hpp:
 ../TouchGFX/gui/include/gui/semi_screen/SemiPresenter.hpp:
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp:
 ../TouchGFX/generated/images/include/BitmapDatabase.hpp:
 ../TouchGFX/generated/images/include/images/BitmapDatabase.hpp:
 ../Middlewares/ST/touchgfx/framework/include/platform/driver/lcd/LCD16bpp.hpp:

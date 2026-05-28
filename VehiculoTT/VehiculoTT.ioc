@@ -1,6 +1,8 @@
 #MicroXplorer Configuration settings - do not modify
 ADC1.Channel-0\#ChannelRegularConversion=ADC_CHANNEL_0
-ADC1.IPParameters=Rank-0\#ChannelRegularConversion,master,Channel-0\#ChannelRegularConversion,SamplingTime-0\#ChannelRegularConversion,NbrOfConversionFlag
+ADC1.ContinuousConvMode=ENABLE
+ADC1.DMAContinuousRequests=ENABLE
+ADC1.IPParameters=Rank-0\#ChannelRegularConversion,master,Channel-0\#ChannelRegularConversion,SamplingTime-0\#ChannelRegularConversion,NbrOfConversionFlag,ContinuousConvMode,DMAContinuousRequests
 ADC1.NbrOfConversionFlag=1
 ADC1.Rank-0\#ChannelRegularConversion=1
 ADC1.SamplingTime-0\#ChannelRegularConversion=ADC_SAMPLETIME_3CYCLES
@@ -13,7 +15,7 @@ Dma.ADC1.2.FIFOMode=DMA_FIFOMODE_DISABLE
 Dma.ADC1.2.Instance=DMA2_Stream0
 Dma.ADC1.2.MemDataAlignment=DMA_MDATAALIGN_HALFWORD
 Dma.ADC1.2.MemInc=DMA_MINC_ENABLE
-Dma.ADC1.2.Mode=DMA_NORMAL
+Dma.ADC1.2.Mode=DMA_CIRCULAR
 Dma.ADC1.2.PeriphDataAlignment=DMA_PDATAALIGN_HALFWORD
 Dma.ADC1.2.PeriphInc=DMA_PINC_DISABLE
 Dma.ADC1.2.Priority=DMA_PRIORITY_LOW
@@ -40,7 +42,7 @@ Dma.USART1_TX.1.MemInc=DMA_MINC_ENABLE
 Dma.USART1_TX.1.Mode=DMA_NORMAL
 Dma.USART1_TX.1.PeriphDataAlignment=DMA_PDATAALIGN_BYTE
 Dma.USART1_TX.1.PeriphInc=DMA_PINC_DISABLE
-Dma.USART1_TX.1.Priority=DMA_PRIORITY_LOW
+Dma.USART1_TX.1.Priority=DMA_PRIORITY_MEDIUM
 Dma.USART1_TX.1.RequestParameters=Instance,Direction,PeriphInc,MemInc,PeriphDataAlignment,MemDataAlignment,Mode,Priority,FIFOMode
 FREERTOS.FootprintOK=true
 FREERTOS.IPParameters=Tasks01,FootprintOK,configUSE_NEWLIB_REENTRANT

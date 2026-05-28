@@ -23,15 +23,7 @@ homeViewBase::homeViewBase() :
     containerTele1.setXY(0, 0);
     add(containerTele1);
 
-    btnman.setXY(79, 95);
-    btnman.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_SMALL_ROUND_DISABLED_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_SMALL_ROUND_DISABLED_ID));
-    btnman.setLabelText(touchgfx::TypedText(T___SINGLEUSE_3AI3));
-    btnman.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    btnman.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
-    btnman.setAction(buttonCallback);
-    add(btnman);
-
-    btnsemi.setXY(79, 166);
+    btnsemi.setXY(79, 152);
     btnsemi.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_SMALL_ROUND_DISABLED_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_SMALL_ROUND_DISABLED_ID));
     btnsemi.setLabelText(touchgfx::TypedText(T___SINGLEUSE_220X));
     btnsemi.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -39,7 +31,7 @@ homeViewBase::homeViewBase() :
     btnsemi.setAction(buttonCallback);
     add(btnsemi);
 
-    textArea1.setXY(73, 63);
+    textArea1.setXY(73, 110);
     textArea1.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_81D2));
@@ -58,18 +50,15 @@ void homeViewBase::setupScreen()
 
 void homeViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
 {
-    if (&src == &btnman)
-    {
-        //Interaction1
-        //When btnman clicked change screen to Manual
-        //Go to Manual with no screen transition
-        application().gotoManualScreenNoTransition();
-    }
     if (&src == &btnsemi)
     {
         //Interaction2
         //When btnsemi clicked change screen to Semi
         //Go to Semi with no screen transition
-        application().gotoSemiScreenNoTransition();
+        application().gotoSemiScreenNoTransition();
+        //Interaction3
+        //When btnsemi clicked call virtual function
+        //Call modoSemi
+        modoSemi();
     }
 }

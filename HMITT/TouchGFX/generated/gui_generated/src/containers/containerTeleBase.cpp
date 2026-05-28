@@ -9,7 +9,7 @@
 containerTeleBase::containerTeleBase()
 {
     setWidth(320);
-    setHeight(59);
+    setHeight(120);
     imageProgress1.setXY(261, 11);
     imageProgress1.setProgressIndicatorPosition(3, 3, 36, 14);
     imageProgress1.setRange(0, 100);
@@ -38,6 +38,18 @@ containerTeleBase::containerTeleBase()
     dist.setLinespacing(0);
     dist.setTypedText(touchgfx::TypedText(T___SINGLEUSE_KA26));
     add(dist);
+
+    rollval.setPosition(11, 51, 96, 20);
+    rollval.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    rollval.setLinespacing(0);
+    rollval.setTypedText(touchgfx::TypedText(T___SINGLEUSE_RT0F));
+    add(rollval);
+
+    pitchval.setPosition(11, 71, 96, 20);
+    pitchval.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    pitchval.setLinespacing(0);
+    pitchval.setTypedText(touchgfx::TypedText(T___SINGLEUSE_VPGZ));
+    add(pitchval);
 }
 
 containerTeleBase::~containerTeleBase()

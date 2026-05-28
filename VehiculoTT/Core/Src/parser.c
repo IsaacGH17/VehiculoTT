@@ -3,6 +3,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "main.h"
+#include "globals.h"
+
+extern UART_HandleTypeDef huart1;
+
 bool parse_byte(uint8_t byte, Packet_t *pkt, ParserCtx_t *ctx) {
 
     switch (ctx->state) {
@@ -96,7 +100,17 @@ void execute_command(Packet_t *pkt) {
            }
 
             break;
-
+        case CMD_ACK_NACK:
+        {
+            uint16_t packet_size = 0;
+            uint8_t tx_buffer[20];
+            uint8_t payload[1] = { (uint8_t)percentage_pulse };
+            packet_size = build_packet(tx_buffer, RESP_SUCCESS, payload, 1);
+            if (huart1.gState == HAL_UART_STATE_READY) {
+                HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
+            }
+            break;
+        }
         case CMD_PINON:
             break;
 

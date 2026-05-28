@@ -28,3 +28,11 @@ void homeView::setDistValue(int value)
 {
     containerTele1.setDistValue(value);
 }
+void homeView::setRollValue(float value)
+{
+    containerTele1.setRollValue(value);
+}
+void homeView::setPitchValue(float value)
+{
+    containerTele1.setPitchValue(value);
+}

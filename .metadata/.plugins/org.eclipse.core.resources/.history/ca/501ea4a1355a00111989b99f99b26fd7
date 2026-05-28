@@ -1,0 +1,89 @@
+#include <gui/containers/containerTele.hpp>
+#include <touchgfx/Unicode.hpp>
+
+containerTele::containerTele()
+    : lastBatValue(-1), lastPWMValue(-1), lastDistValue(-1)
+{
+    // IMPORTANT: Disable touch on this container so it doesn't block
+    // touch events from reaching interactive widgets underneath.
+    // This container is 320x240 (full screen) and sits on top in z-order,
+    // without this it intercepts ALL touch events.
+    setTouchable(false);
+
+    touchgfx::Unicode::strncpy(batValueBuffer, "0", 10);
+    touchgfx::Unicode::strncpy(pwmValueBuffer, "0", 10);
+    touchgfx::Unicode::strncpy(distValueBuffer, "0", 10);
+    touchgfx::Unicode::strncpy(rollValueBuffer, "0", 10);
+    touchgfx::Unicode::strncpy(pitchValueBuffer, "0", 10);
+}
+
+void containerTele::initialize()
+{
+    containerTeleBase::initialize();
+
+    // Bind wildcard buffers to the TextAreas
+    baterry.setWildcard(batValueBuffer);
+    baterry.invalidate();
+
+    pwmval.setWildcard(pwmValueBuffer);
+    pwmval.invalidate();
+
+    dist.setWildcard(distValueBuffer);
+    dist.invalidate();
+    rollval.setWildcard(rolValueBuffer);
+    rollval.invalidate();
+    pitchval.setWildcard(pitchValueBuffer);
+    pitchval.invalidate();
+}
+
+void containerTele::setBatValue(float value)
+{
+    int pct = (int)value;
+    if (pct != lastBatValue)
+    {
+        lastBatValue = pct;
+        touchgfx::Unicode::snprintf(batValueBuffer, 10, "%d", pct);
+        baterry.invalidate();
+
+        imageProgress1.setValue(pct);
+        imageProgress1.invalidate();
+    }
+}
+
+void containerTele::setPWMValue(int value)
+{
+    if (value != lastPWMValue)
+    {
+        lastPWMValue = value;
+        touchgfx::Unicode::snprintf(pwmValueBuffer, 10, "%d", value);
+        pwmval.invalidate();
+    }
+}
+
+void containerTele::setDistValue(int value)
+{
+    if (value != lastDistValue)
+    {
+        lastDistValue = value;
+        touchgfx::Unicode::snprintf(distValueBuffer, 10, "%d", value);
+        dist.invalidate();
+    }
+}
+void containerTele::setRollValue(float value)
+{
+    if (value != lastRollValue)
+    {
+        lastRollValue = value;
+        touchgfx::Unicode::snprintf(rollValueBuffer, 10, "%d", value);
+        rollval.invalidate();
+    }
+}
+void containerTele::setPitchValue(float value)
+{
+    if (value != lastPitchValue)
+    {
+        lastPitchValue = value;
+        touchgfx::Unicode::snprintf(pitchValueBuffer, 10, "%d", value);
+        pitchval.invalidate();
+    }
+}

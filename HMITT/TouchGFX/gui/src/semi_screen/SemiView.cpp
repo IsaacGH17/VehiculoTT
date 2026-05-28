@@ -28,3 +28,11 @@ void SemiView::setDistValue(int value)
 {
     containerTele1.setDistValue(value);
 }
+void SemiView::setRollValue(float value)
+{
+    containerTele1.setRollValue(value);
+}
+void SemiView::setPitchValue(float value)
+{
+    containerTele1.setPitchValue(value);
+}

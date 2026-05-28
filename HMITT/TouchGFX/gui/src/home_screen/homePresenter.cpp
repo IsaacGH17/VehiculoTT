@@ -28,3 +28,11 @@ void homePresenter::updateDist(int value)
 {
     view.setDistValue(value);
 }
+void homePresenter::updateRoll(float value)
+{
+	view.setRollValue(value);
+}
+void homePresenter::updatePitch(float value)
+{
+	view.setPitchValue(value);
+}

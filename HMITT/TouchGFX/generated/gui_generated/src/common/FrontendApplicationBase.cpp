@@ -10,8 +10,6 @@
 #include <touchgfx/hal/HAL.hpp>
 #include <gui/home_screen/homeView.hpp>
 #include <gui/home_screen/homePresenter.hpp>
-#include <gui/manual_screen/ManualView.hpp>
-#include <gui/manual_screen/ManualPresenter.hpp>
 #include <gui/semi_screen/SemiView.hpp>
 #include <gui/semi_screen/SemiPresenter.hpp>
 
@@ -42,19 +40,6 @@ void FrontendApplicationBase::gotohomeScreenNoTransition()
 void FrontendApplicationBase::gotohomeScreenNoTransitionImpl()
 {
     touchgfx::makeTransition<homeView, homePresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
-// Manual
-
-void FrontendApplicationBase::gotoManualScreenNoTransition()
-{
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplicationBase::gotoManualScreenNoTransitionImpl);
-    pendingScreenTransitionCallback = &transitionCallback;
-}
-
-void FrontendApplicationBase::gotoManualScreenNoTransitionImpl()
-{
-    touchgfx::makeTransition<ManualView, ManualPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
 // Semi
