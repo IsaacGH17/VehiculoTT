@@ -1,26 +1,127 @@
-13:23:37 **** Incremental Build of configuration Debug for project VehiculoTT ****
+13:48:26 **** Incremental Build of configuration Debug for project VehiculoTT ****
 make -j16 all 
-arm-none-eabi-gcc "../Core/Src/freertos.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/freertos.d" -MT"Core/Src/freertos.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/freertos.o"
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc "../Core/Src/motor_control.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/motor_control.d" -MT"Core/Src/motor_control.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/motor_control.o"
-arm-none-eabi-gcc "../Core/Src/parser.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/parser.d" -MT"Core/Src/parser.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/parser.o"
-arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_hal_msp.d" -MT"Core/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_msp.o"
+arm-none-eabi-size  VehiculoTT.elf 
+   text	   data	    bss	    dec	    hex	filename
+  66208	    800	  22168	  89176	  15c58	VehiculoTT.elf
+Finished building: default.size.stdout
+ 
+13:50:05 **** Incremental Build of configuration Debug for project VehiculoTT ****
+make -j16 all 
 arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
-arm-none-eabi-gcc "../Core/Src/vl53l0x_platform.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/vl53l0x_platform.d" -MT"Core/Src/vl53l0x_platform.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/vl53l0x_platform.o"
-../Core/Src/parser.c: In function 'execute_command':
-../Core/Src/parser.c:119:36: warning: implicit declaration of function 'Desacoplar' [-Wimplicit-function-declaration]
-  119 |                                    Desacoplar();
-      |                                    ^~~~~~~~~~
-../Core/Src/parser.c:121:36: warning: implicit declaration of function 'Acoplar' [-Wimplicit-function-declaration]
-  121 |                                    Acoplar();
-      |                                    ^~~~~~~
 arm-none-eabi-g++ -o "VehiculoTT.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\git\VehiculoTT\VehiculoTT\STM32F411CEUX_FLASH.ld" -Wl,-Map="VehiculoTT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 Finished building target: VehiculoTT.elf
  
 arm-none-eabi-size  VehiculoTT.elf 
 arm-none-eabi-objdump -h -S VehiculoTT.elf  > "VehiculoTT.list"
    text	   data	    bss	    dec	    hex	filename
-  66032	    800	  22168	  89000	  15ba8	VehiculoTT.elf
+  66208	    800	  22168	  89176	  15c58	VehiculoTT.elf
+Finished building: default.size.stdout
+ 
+Finished building: VehiculoTT.list
+ 
+13:51:26 **** Incremental Build of configuration Debug for project VehiculoTT ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/motor_control.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/motor_control.d" -MT"Core/Src/motor_control.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/motor_control.o"
+arm-none-eabi-g++ -o "VehiculoTT.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\git\VehiculoTT\VehiculoTT\STM32F411CEUX_FLASH.ld" -Wl,-Map="VehiculoTT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: VehiculoTT.elf
+ 
+arm-none-eabi-size  VehiculoTT.elf 
+arm-none-eabi-objdump -h -S VehiculoTT.elf  > "VehiculoTT.list"
+   text	   data	    bss	    dec	    hex	filename
+  66224	    800	  22168	  89192	  15c68	VehiculoTT.elf
+Finished building: default.size.stdout
+ 
+Finished building: VehiculoTT.list
+ 
+13:52:04 **** Incremental Build of configuration Debug for project VehiculoTT ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/motor_control.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/motor_control.d" -MT"Core/Src/motor_control.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/motor_control.o"
+arm-none-eabi-g++ -o "VehiculoTT.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\git\VehiculoTT\VehiculoTT\STM32F411CEUX_FLASH.ld" -Wl,-Map="VehiculoTT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: VehiculoTT.elf
+ 
+arm-none-eabi-size  VehiculoTT.elf 
+arm-none-eabi-objdump -h -S VehiculoTT.elf  > "VehiculoTT.list"
+   text	   data	    bss	    dec	    hex	filename
+  66224	    800	  22168	  89192	  15c68	VehiculoTT.elf
+Finished building: default.size.stdout
+ 
+Finished building: VehiculoTT.list
+ 
+13:53:35 **** Incremental Build of configuration Debug for project VehiculoTT ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/motor_control.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/motor_control.d" -MT"Core/Src/motor_control.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/motor_control.o"
+arm-none-eabi-g++ -o "VehiculoTT.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\git\VehiculoTT\VehiculoTT\STM32F411CEUX_FLASH.ld" -Wl,-Map="VehiculoTT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: VehiculoTT.elf
+ 
+arm-none-eabi-size  VehiculoTT.elf 
+arm-none-eabi-objdump -h -S VehiculoTT.elf  > "VehiculoTT.list"
+   text	   data	    bss	    dec	    hex	filename
+  66208	    800	  22168	  89176	  15c58	VehiculoTT.elf
+Finished building: default.size.stdout
+ 
+Finished building: VehiculoTT.list
+ 
+13:55:50 **** Incremental Build of configuration Debug for project VehiculoTT ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/motor_control.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/motor_control.d" -MT"Core/Src/motor_control.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/motor_control.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
+arm-none-eabi-g++ -o "VehiculoTT.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\git\VehiculoTT\VehiculoTT\STM32F411CEUX_FLASH.ld" -Wl,-Map="VehiculoTT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: VehiculoTT.elf
+ 
+arm-none-eabi-size  VehiculoTT.elf 
+arm-none-eabi-objdump -h -S VehiculoTT.elf  > "VehiculoTT.list"
+   text	   data	    bss	    dec	    hex	filename
+  66208	    800	  22168	  89176	  15c58	VehiculoTT.elf
+Finished building: default.size.stdout
+ 
+Finished building: VehiculoTT.list
+ 
+13:56:23 **** Incremental Build of configuration Debug for project VehiculoTT ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/motor_control.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/motor_control.d" -MT"Core/Src/motor_control.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/motor_control.o"
+../Core/Src/motor_control.c: In function 'Motor_Init':
+../Core/Src/motor_control.c:31:5: warning: implicit declaration of function 'Acoplar' [-Wimplicit-function-declaration]
+   31 |     Acoplar();
+      |     ^~~~~~~
+../Core/Src/motor_control.c: At top level:
+../Core/Src/motor_control.c:63:6: warning: conflicting types for 'Acoplar'; have 'void(void)'
+   63 | void Acoplar(void){
+      |      ^~~~~~~
+../Core/Src/motor_control.c:31:5: note: previous implicit declaration of 'Acoplar' with type 'void(void)'
+   31 |     Acoplar();
+      |     ^~~~~~~
+arm-none-eabi-g++ -o "VehiculoTT.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\git\VehiculoTT\VehiculoTT\STM32F411CEUX_FLASH.ld" -Wl,-Map="VehiculoTT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: VehiculoTT.elf
+ 
+arm-none-eabi-size  VehiculoTT.elf 
+arm-none-eabi-objdump -h -S VehiculoTT.elf  > "VehiculoTT.list"
+   text	   data	    bss	    dec	    hex	filename
+  66192	    800	  22168	  89160	  15c48	VehiculoTT.elf
+Finished building: default.size.stdout
+ 
+Finished building: VehiculoTT.list
+ 
+13:58:25 **** Incremental Build of configuration Debug for project VehiculoTT ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/motor_control.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/motor_control.d" -MT"Core/Src/motor_control.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/motor_control.o"
+../Core/Src/motor_control.c: In function 'Motor_Init':
+../Core/Src/motor_control.c:31:5: warning: implicit declaration of function 'Desacoplar' [-Wimplicit-function-declaration]
+   31 |     Desacoplar();
+      |     ^~~~~~~~~~
+../Core/Src/motor_control.c: At top level:
+../Core/Src/motor_control.c:67:6: warning: conflicting types for 'Desacoplar'; have 'void(void)'
+   67 | void Desacoplar(void){
+      |      ^~~~~~~~~~
+../Core/Src/motor_control.c:31:5: note: previous implicit declaration of 'Desacoplar' with type 'void(void)'
+   31 |     Desacoplar();
+      |     ^~~~~~~~~~
+arm-none-eabi-g++ -o "VehiculoTT.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\git\VehiculoTT\VehiculoTT\STM32F411CEUX_FLASH.ld" -Wl,-Map="VehiculoTT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: VehiculoTT.elf
+ 
+arm-none-eabi-size  VehiculoTT.elf 
+arm-none-eabi-objdump -h -S VehiculoTT.elf  > "VehiculoTT.list"
+   text	   data	    bss	    dec	    hex	filename
+  66192	    800	  22168	  89160	  15c48	VehiculoTT.elf
 Finished building: default.size.stdout
  
 Finished building: VehiculoTT.list

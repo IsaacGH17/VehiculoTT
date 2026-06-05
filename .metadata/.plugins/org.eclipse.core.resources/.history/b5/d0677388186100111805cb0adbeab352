@@ -63,7 +63,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	    else if (GPIO_Pin == Cerrado_Pin)
 	    {
 			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-	    	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
+	    	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_SET);
 	    }
 }
 /* USER CODE END 0 */
