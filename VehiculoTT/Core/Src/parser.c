@@ -115,6 +115,11 @@ void execute_command(Packet_t *pkt) {
             break;
 
         case CMD_ACOPLE_RUEDAS:
+        	if(pkt->payload[0] == PARAM_OPEN){
+        	        	   Desacoplar();
+        	           } else if(pkt->payload[0] == PARAM_CLOSE){
+        	        	   Acoplar();
+        	           }
             break;
 
         default:

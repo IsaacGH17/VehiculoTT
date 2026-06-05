@@ -59,6 +59,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define Abierto_Pin GPIO_PIN_14
+#define Abierto_GPIO_Port GPIOC
+#define Cerrado_Pin GPIO_PIN_15
+#define Cerrado_GPIO_Port GPIOC
 #define ADC_tension_Pin GPIO_PIN_0
 #define ADC_tension_GPIO_Port GPIOA
 #define Servo2_Pin GPIO_PIN_1
@@ -81,6 +85,10 @@ void Error_Handler(void);
 #define Direccion3_GPIO_Port GPIOA
 #define Direccion4_Pin GPIO_PIN_15
 #define Direccion4_GPIO_Port GPIOA
+#define A_Dir_Pin GPIO_PIN_4
+#define A_Dir_GPIO_Port GPIOB
+#define Acople_Pin GPIO_PIN_5
+#define Acople_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

@@ -1,8 +1,10 @@
 #include "motor_control.h"
 #include "globals.h"
+#include "main.h"
 /* Handle del timer de motores (definido en main.c) */
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim3;
 /* Pulso actual global (igual para los 4 motores por defecto) */
 volatile uint16_t current_pulse = 0;
 volatile uint16_t percentage_pulse = 0;
@@ -23,8 +25,10 @@ void Motor_Init(void) {
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 500);
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 500);
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
     /* Todos los motores apagados al inicio */
     Motor_SetAllPulse(0);
 
@@ -56,7 +60,14 @@ void Motor_SpeedInc(void) {
     }
     Motor_SetAllPulse(new_pulse);
 }
-
+void Acoplar(void){
+	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_SET);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1100);
+}
+void Desacoplar(void){
+	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 100);
+}
 void Motor_SpeedDec(void) {
     uint16_t new_pulse;
     if (current_pulse < MOTOR_SPEED_STEP) {

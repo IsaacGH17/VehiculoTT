@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
+#include "motor_control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,7 +53,19 @@
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+extern TIM_HandleTypeDef htim3;
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+	if (GPIO_Pin == Abierto_Pin)
+	    {
+		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+		HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_SET);
+	    }
+	    else if (GPIO_Pin == Cerrado_Pin)
+	    {
+			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+	    	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
+	    }
+}
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
