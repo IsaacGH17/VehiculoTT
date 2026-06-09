@@ -5,6 +5,7 @@
 #include "main.h"
 #include "globals.h"
 
+volatile uint8_t ruedas_abiertas = 0;
 extern UART_HandleTypeDef huart1;
 
 bool parse_byte(uint8_t byte, Packet_t *pkt, ParserCtx_t *ctx) {
@@ -116,10 +117,16 @@ void execute_command(Packet_t *pkt) {
 
         case CMD_ACOPLE_RUEDAS:
         	if(pkt->payload[0] == PARAM_OPEN){
-        	        	   Desacoplar();
-        	           } else if(pkt->payload[0] == PARAM_CLOSE){
-        	        	   Acoplar();
-        	           }
+                if (!ruedas_abiertas) {
+        	        Desacoplar();
+                    ruedas_abiertas = 1;
+                }
+        	} else if(pkt->payload[0] == PARAM_CLOSE){
+                if (ruedas_abiertas) {
+        	        Acoplar();
+                    ruedas_abiertas = 0;
+                }
+        	}
             break;
 
         default:

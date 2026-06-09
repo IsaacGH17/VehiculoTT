@@ -129,9 +129,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         }
         else if (selected_actuator == 2)
         {
-            payload = PARAM_DECOUPLE;
-            len = build_packet(act_tx_buf, CMD_ACOPLE_RUEDAS, &payload, 1);
-            HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+            if (!ruedas_abiertas) {
+                payload = PARAM_DECOUPLE;
+                len = build_packet(act_tx_buf, CMD_ACOPLE_RUEDAS, &payload, 1);
+                HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+                ruedas_abiertas = 1;
+            }
         }
         else if (selected_actuator == 3)
         {
@@ -150,9 +153,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         }
         else if (selected_actuator == 2)
         {
-            payload = PARAM_COUPLE;
-            len = build_packet(act_tx_buf, CMD_ACOPLE_RUEDAS, &payload, 1);
-            HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+            if (ruedas_abiertas) {
+                payload = PARAM_COUPLE;
+                len = build_packet(act_tx_buf, CMD_ACOPLE_RUEDAS, &payload, 1);
+                HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+                ruedas_abiertas = 0;
+            }
         }
         else if (selected_actuator == 3)
         {
