@@ -2,7 +2,8 @@
 #include <touchgfx/Unicode.hpp>
 
 containerTele::containerTele()
-    : lastBatValue(-1), lastPWMValue(-1), lastDistValue(-1)
+    : lastBatValue(-1), lastPWMValue(-1), lastDistValue(-1),
+      lastRollValue(-9999.0f), lastPitchValue(-9999.0f)
 {
     // IMPORTANT: Disable touch on this container so it doesn't block
     // touch events from reaching interactive widgets underneath.
@@ -74,7 +75,7 @@ void containerTele::setRollValue(float value)
     if (value != lastRollValue)
     {
         lastRollValue = value;
-        touchgfx::Unicode::snprintf(rollValueBuffer, 10, "%.2f", value);
+        touchgfx::Unicode::snprintfFloat(rollValueBuffer, 10, "%.2f", value);
         rollval.invalidate();
     }
 }
@@ -83,7 +84,7 @@ void containerTele::setPitchValue(float value)
     if (value != lastPitchValue)
     {
         lastPitchValue = value;
-        touchgfx::Unicode::snprintf(pitchValueBuffer, 10, "%.2f", value);
+        touchgfx::Unicode::snprintfFloat(pitchValueBuffer, 10, "%.2f", value);
         pitchval.invalidate();
     }
 }

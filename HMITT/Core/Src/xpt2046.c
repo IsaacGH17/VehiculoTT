@@ -145,7 +145,7 @@ void XPT2046_Update(uint16_t *x, uint16_t *y)
 		data[0] = data[1] = data[2] = data[3] = 0;
 	}
 	data[4] = XPT2046_Read_AD(0x91);
-	data[5] = XPT2046_Read_AD(0xd0);
+ 	data[5] = XPT2046_Read_AD(0xd0);
 	ptime = HAL_GetTick();
 	if (z < 0) z = 0;
 	int16_t intx = besttwoavg( data[0], data[2], data[4] );

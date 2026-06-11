@@ -67,23 +67,49 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     uint8_t payload;
     uint16_t len;
 
+    /* Debounce independiente por pin para evitar que un botón bloquee a otro */
     if (GPIO_Pin != T_IRQ_Pin)
     {
-        static uint32_t last_button_time = 0;
+        static uint32_t last_pwm_inc_time   = 0;
+        static uint32_t last_pwm_dec_time   = 0;
+        static uint32_t last_pinzas_time    = 0;
+        static uint32_t last_ruedas_time    = 0;
+        static uint32_t last_cremallera_time= 0;
+        static uint32_t last_reset_time     = 0;
+        static uint32_t last_abrir_time     = 0;
+        static uint32_t last_cerrar_time    = 0;
+
         uint32_t current_time = HAL_GetTick();
-        if ((current_time - last_button_time) < 200)
+        uint32_t *last_time = NULL;
+
+        if      (GPIO_Pin == PWM_INC_Pin)    last_time = &last_pwm_inc_time;
+        else if (GPIO_Pin == PWM_DEC_Pin)    last_time = &last_pwm_dec_time;
+        else if (GPIO_Pin == Pinzas_Pin)     last_time = &last_pinzas_time;
+        else if (GPIO_Pin == Ruedas_Pin)     last_time = &last_ruedas_time;
+        else if (GPIO_Pin == Cremallera_Pin) last_time = &last_cremallera_time;
+        else if (GPIO_Pin == Reset_Pin)      last_time = &last_reset_time;
+        else if (GPIO_Pin == Abrir_Pin)      last_time = &last_abrir_time;
+        else if (GPIO_Pin == Cerrar_Pin)     last_time = &last_cerrar_time;
+
+        if (last_time != NULL)
         {
-            return;
+            if ((current_time - *last_time) < 200)
+            {
+                return;
+            }
+            *last_time = current_time;
         }
-        last_button_time = current_time;
     }
+
     if (GPIO_Pin == PWM_INC_Pin)
     {
         if (pwm < 100){
             pwm += 10;
             payload = PARAM_VEL_INC;
             len = build_packet(pwm_tx_buf, CMD_VELOCIDAD, &payload, 1);
-            HAL_UART_Transmit_DMA(&huart1, pwm_tx_buf, len);
+            if (huart1.gState == HAL_UART_STATE_READY) {
+                HAL_UART_Transmit_DMA(&huart1, pwm_tx_buf, len);
+            }
         }
     }
     else if (GPIO_Pin == PWM_DEC_Pin)
@@ -92,7 +118,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
             pwm -= 10;
             payload = PARAM_VEL_DEC;
             len = build_packet(pwm_tx_buf, CMD_VELOCIDAD, &payload, 1);
-            HAL_UART_Transmit_DMA(&huart1, pwm_tx_buf, len);
+            if (huart1.gState == HAL_UART_STATE_READY) {
+                HAL_UART_Transmit_DMA(&huart1, pwm_tx_buf, len);
+            }
         }
     }
     else if (GPIO_Pin == Pinzas_Pin)
@@ -129,12 +157,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         }
         else if (selected_actuator == 2)
         {
-            if (!ruedas_abiertas) {
+
                 payload = PARAM_DECOUPLE;
                 len = build_packet(act_tx_buf, CMD_ACOPLE_RUEDAS, &payload, 1);
                 HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
-                ruedas_abiertas = 1;
-            }
+
+
         }
         else if (selected_actuator == 3)
         {
@@ -153,12 +181,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         }
         else if (selected_actuator == 2)
         {
-            if (ruedas_abiertas) {
+
                 payload = PARAM_COUPLE;
                 len = build_packet(act_tx_buf, CMD_ACOPLE_RUEDAS, &payload, 1);
                 HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
-                ruedas_abiertas = 0;
-            }
+
+
         }
         else if (selected_actuator == 3)
         {

@@ -67,7 +67,7 @@ void execute_command(Packet_t *pkt) {
             dist_mm = mm;
 
             uint16_t vbat_mv = (uint16_t)(((uint16_t)pkt->payload[2] << 8) | pkt->payload[3]);
-            float v_volts = (float)vbat_mv / 1000.0f;
+            float v_volts = (float)vbat_mv / 100.0f;
             float porcentaje = ((v_volts - 5.6f) / (8.4f - 5.6f)) * 100.0f;
             if (porcentaje > 100.0f) porcentaje = 100.0f;
             if (porcentaje < 0.0f) porcentaje = 0.0f;
@@ -85,8 +85,9 @@ void execute_command(Packet_t *pkt) {
             pitch = atan2f(-Ax, sqrtf(Ay*Ay + Az*Az)) * 180.0f / M_PI;
         }
     } else if (pkt->command == RESP_SUCCESS) {
-        HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(Verde_GPIO_Port, Verde_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(Rojo_GPIO_Port,    Rojo_Pin,    GPIO_PIN_RESET); /* Apagar Rojo */
+        HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_RESET); /* Apagar Amarillo */
+        HAL_GPIO_WritePin(Verde_GPIO_Port,   Verde_Pin,   GPIO_PIN_SET);   /* Encender Verde */
         if (pkt->length >= 1) {
             pwm = pkt->payload[0];
         }

@@ -821,6 +821,17 @@ void ParserTask(void *argument)
   Packet_t pkt;
   ParserCtx_t ctx = {0};
 
+  /* Esperar a que la HMITT arranque y luego mandar sincronización inicial */
+  osDelay(500);
+  {
+      static uint8_t sync_tx_buf[20];
+      uint8_t sync_payload[1] = { (uint8_t)percentage_pulse };
+      uint16_t sync_size = build_packet(sync_tx_buf, RESP_SUCCESS, sync_payload, 1);
+      if (huart1.gState == HAL_UART_STATE_READY) {
+          HAL_UART_Transmit_DMA(&huart1, sync_tx_buf, sync_size);
+      }
+  }
+
   for(;;)
   {
     osSemaphoreAcquire(uartRxSemHandle, osWaitForever);
