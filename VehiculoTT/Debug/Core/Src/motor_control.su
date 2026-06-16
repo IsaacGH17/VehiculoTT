@@ -8,5 +8,6 @@
 ../Core/Src/motor_control.c:75:6:Desacoplar1	8	static
 ../Core/Src/motor_control.c:79:6:Motor_SpeedDec	16	static
 ../Core/Src/motor_control.c:91:6:Motor_Stop	8	static
-../Core/Src/motor_control.c:94:6:Servo_Pinza	4	static
-../Core/Src/motor_control.c:100:10:Motor_GetCurrentPulse	4	static
+../Core/Src/motor_control.c:94:6:Abrir_Pinza	4	static
+../Core/Src/motor_control.c:98:6:Cerrar_Pinza	4	static
+../Core/Src/motor_control.c:104:10:Motor_GetCurrentPulse	4	static

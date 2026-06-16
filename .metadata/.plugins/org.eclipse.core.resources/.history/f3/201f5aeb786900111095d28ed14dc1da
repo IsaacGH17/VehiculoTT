@@ -976,13 +976,20 @@ void StartSemiAutoTask(void *argument)
 
   for (;;)
   {
+    /* ------------------------------------------------------------------ */
+    /* FASE 0: Esperar comando de inicio semiautomático                    */
+    /* ------------------------------------------------------------------ */
     flags = osEventFlagsWait(semiAutoEvtHandle,
                              EVT_START_SEMI | EVT_STOP_SEMI,
                              osFlagsWaitAny | osFlagsNoClear,
                              osWaitForever);
     osEventFlagsClear(semiAutoEvtHandle, EVT_START_SEMI | EVT_STOP_SEMI);
 
-    if (flags & EVT_STOP_SEMI) continue;
+    if (flags & EVT_STOP_SEMI) continue;  /* cancelación antes de empezar */
+
+    /* ------------------------------------------------------------------ */
+    /* FASE 1: Verificar y cerrar las dos ruedas                           */
+    /* ------------------------------------------------------------------ */
     if (ruedas_abiertas) {
       Acoplar();
       osDelay(SEMIAUTO_DELAY_RUEDA_MS);
@@ -991,7 +998,15 @@ void StartSemiAutoTask(void *argument)
       Acoplar1();
       osDelay(SEMIAUTO_DELAY_RUEDA_MS);
     }
+
+    /* ------------------------------------------------------------------ */
+    /* FASE 2: Avanzar al 100 %                                            */
+    /* ------------------------------------------------------------------ */
     Motor_SetAllPulse(MOTOR_PWM_MAX);
+
+    /* ------------------------------------------------------------------ */
+    /* FASE 3: Esperar Obstáculo 1                                         */
+    /* ------------------------------------------------------------------ */
     flags = osEventFlagsWait(semiAutoEvtHandle,
                              EVT_OBSTACULO1 | EVT_STOP_SEMI,
                              osFlagsWaitAny | osFlagsNoClear,
@@ -999,6 +1014,10 @@ void StartSemiAutoTask(void *argument)
     osEventFlagsClear(semiAutoEvtHandle, EVT_OBSTACULO1 | EVT_STOP_SEMI);
 
     if (flags & EVT_STOP_SEMI) { Motor_Stop(); continue; }
+
+    /* ------------------------------------------------------------------ */
+    /* FASE 4: Parar, cerrar pinza, desacoplar par 1, avanzar lento        */
+    /* ------------------------------------------------------------------ */
     Motor_Stop();
     Cerrar_Pinza();
     osDelay(SEMIAUTO_DELAY_PINZA_MS);
@@ -1011,7 +1030,11 @@ void StartSemiAutoTask(void *argument)
       continue;
     }
 
-    Motor_SetAllPulse(SEMIAUTO_VEL_LENTA);
+    Motor_SetAllPulse(SEMIAUTO_VEL_LENTA);  /* 60 % */
+
+    /* ------------------------------------------------------------------ */
+    /* FASE 5: Esperar Obstáculo 2                                         */
+    /* ------------------------------------------------------------------ */
     flags = osEventFlagsWait(semiAutoEvtHandle,
                              EVT_OBSTACULO2 | EVT_STOP_SEMI,
                              osFlagsWaitAny | osFlagsNoClear,
@@ -1020,6 +1043,9 @@ void StartSemiAutoTask(void *argument)
 
     if (flags & EVT_STOP_SEMI) { Motor_Stop(); continue; }
 
+    /* ------------------------------------------------------------------ */
+    /* FASE 6: Acoplar par 1, desacoplar par 2, seguir lento               */
+    /* ------------------------------------------------------------------ */
     Acoplar();
     osDelay(SEMIAUTO_DELAY_RUEDA_MS);
 
@@ -1032,7 +1058,11 @@ void StartSemiAutoTask(void *argument)
       continue;
     }
 
-    Motor_SetAllPulse(SEMIAUTO_VEL_LENTA);
+    Motor_SetAllPulse(SEMIAUTO_VEL_LENTA);  /* sigue al 60 % */
+
+    /* ------------------------------------------------------------------ */
+    /* FASE 7: Esperar tiempo de cruce del segundo par                     */
+    /* ------------------------------------------------------------------ */
     osDelay(SEMIAUTO_CRUCE_MS);
 
     if (osEventFlagsGet(semiAutoEvtHandle) & EVT_STOP_SEMI) {
@@ -1040,14 +1070,22 @@ void StartSemiAutoTask(void *argument)
       Motor_Stop();
       continue;
     }
+
+    /* ------------------------------------------------------------------ */
+    /* FASE 8: Acoplar par 2, cerrar pinza                                 */
+    /* ------------------------------------------------------------------ */
     Acoplar1();
     osDelay(SEMIAUTO_DELAY_RUEDA_MS);
 
-    Abrir_Pinza();
+    Cerrar_Pinza();
     osDelay(SEMIAUTO_DELAY_PINZA_MS);
 
+    /* ------------------------------------------------------------------ */
+    /* FASE 9: Volver al 100 % — secuencia completa                        */
+    /* ------------------------------------------------------------------ */
     Motor_SetAllPulse(MOTOR_PWM_MAX);
 
+    /* Volver a FASE 3 para detectar el siguiente obstáculo */
   }
   /* USER CODE END StartSemiAutoTask */
 }

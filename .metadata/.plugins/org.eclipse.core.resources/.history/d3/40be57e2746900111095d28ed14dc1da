@@ -3,11 +3,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "main.h"
-#include "cmsis_os.h"
 #include "globals.h"
 
-volatile uint8_t ruedas_abiertas  = 0;
-volatile uint8_t ruedas1_abiertas = 0;  /* Estado par 2 de ruedas (A1) */
+volatile uint8_t ruedas_abiertas = 0;
 extern UART_HandleTypeDef huart1;
 
 bool parse_byte(uint8_t byte, Packet_t *pkt, ParserCtx_t *ctx) {
@@ -65,15 +63,10 @@ void execute_command(Packet_t *pkt) {
     switch (pkt->command) {
 
         case CMD_MODO_OP:
-            if (pkt->payload[0] == PARAM_MANUAL) {
+        if (pkt->payload[0] == PARAM_MANUAL) {
                 Motor_SetAllPulse(0);
-                /* Cancelar modo semiautomático si estaba activo */
-                if (semiAutoEvtHandle != NULL)
-                    osEventFlagsSet(semiAutoEvtHandle, EVT_STOP_SEMI);
             } else if (pkt->payload[0] == PARAM_SEMIAUTO) {
-                /* Iniciar tarea semiautomática */
-                if (semiAutoEvtHandle != NULL)
-                    osEventFlagsSet(semiAutoEvtHandle, EVT_START_SEMI);
+                Motor_SetAllPulse(MOTOR_SPEED_STEP);
             }
             break;
 
@@ -93,9 +86,6 @@ void execute_command(Packet_t *pkt) {
 
         case CMD_PARO_EMERG:
             Motor_Stop();
-            /* Abortar secuencia semiautomática */
-            if (semiAutoEvtHandle != NULL)
-                osEventFlagsSet(semiAutoEvtHandle, EVT_STOP_SEMI);
             break;
 
         case CMD_PARO:
@@ -103,10 +93,11 @@ void execute_command(Packet_t *pkt) {
             break;
 
         case CMD_PINZAS:
+           Servo_Pinza();
            if(pkt->payload[0] == PARAM_CLOSE){
-        	   Cerrar_Pinza();
+        	   Servo_Pinza();
            } else if(pkt->payload[0] == PARAM_OPEN){
-        	   Abrir_Pinza();
+        	   Servo_Pinza();
            }
 
             break;
@@ -125,25 +116,17 @@ void execute_command(Packet_t *pkt) {
             break;
 
         case CMD_ACOPLE_RUEDAS:
-            if (pkt->payload[0] == PARAM_OPEN) {
+        	if(pkt->payload[0] == PARAM_OPEN){
                 if (!ruedas_abiertas) {
-                    Desacoplar();
+        	        Desacoplar();
                     ruedas_abiertas = 1;
                 }
-                if (!ruedas1_abiertas) {
-                    Desacoplar1();
-                    ruedas1_abiertas = 1;
-                }
-            } else if (pkt->payload[0] == PARAM_CLOSE) {
+        	} else if(pkt->payload[0] == PARAM_CLOSE){
                 if (ruedas_abiertas) {
-                    Acoplar();
+        	        Acoplar();
                     ruedas_abiertas = 0;
                 }
-                if (ruedas1_abiertas) {
-                    Acoplar1();
-                    ruedas1_abiertas = 0;
-                }
-            }
+        	}
             break;
 
         default:
