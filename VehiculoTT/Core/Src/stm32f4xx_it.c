@@ -61,12 +61,16 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	    {
 		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
 		HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
+		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+				HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
         ruedas_abiertas = 1;
 	    }
 	    else if (GPIO_Pin == Cerrado_Pin)
 	    {
 			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
 	    	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
+	    	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+	        HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
             ruedas_abiertas = 0;
 	    }
 }
@@ -183,6 +187,34 @@ void DebugMon_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles EXTI line3 interrupt.
+  */
+void EXTI3_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI3_IRQn 0 */
+
+  /* USER CODE END EXTI3_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Abierto1_Pin);
+  /* USER CODE BEGIN EXTI3_IRQn 1 */
+
+  /* USER CODE END EXTI3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line4 interrupt.
+  */
+void EXTI4_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI4_IRQn 0 */
+
+  /* USER CODE END EXTI4_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Cerrado1_Pin);
+  /* USER CODE BEGIN EXTI4_IRQn 1 */
+
+  /* USER CODE END EXTI4_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM1 break interrupt and TIM9 global interrupt.
   */
 void TIM1_BRK_TIM9_IRQHandler(void)
@@ -225,6 +257,8 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 
   /* USER CODE END EXTI15_10_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Obstaculo2_Pin);
+  HAL_GPIO_EXTI_IRQHandler(Obstaculo1_Pin);
   HAL_GPIO_EXTI_IRQHandler(Abierto_Pin);
   HAL_GPIO_EXTI_IRQHandler(Cerrado_Pin);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */

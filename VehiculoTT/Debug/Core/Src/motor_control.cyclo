@@ -4,7 +4,9 @@
 ../Core/Src/motor_control.c:54:6:Motor_SpeedInc	2
 ../Core/Src/motor_control.c:63:6:Acoplar	1
 ../Core/Src/motor_control.c:67:6:Desacoplar	1
-../Core/Src/motor_control.c:71:6:Motor_SpeedDec	2
-../Core/Src/motor_control.c:83:6:Motor_Stop	1
-../Core/Src/motor_control.c:86:6:Servo_Pinza	1
-../Core/Src/motor_control.c:92:10:Motor_GetCurrentPulse	1
+../Core/Src/motor_control.c:71:6:Acoplar1	1
+../Core/Src/motor_control.c:75:6:Desacoplar1	1
+../Core/Src/motor_control.c:79:6:Motor_SpeedDec	2
+../Core/Src/motor_control.c:91:6:Motor_Stop	1
+../Core/Src/motor_control.c:94:6:Servo_Pinza	1
+../Core/Src/motor_control.c:100:10:Motor_GetCurrentPulse	1

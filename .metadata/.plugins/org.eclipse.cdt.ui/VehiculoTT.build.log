@@ -1,28 +1,17 @@
-13:58:25 **** Incremental Build of configuration Debug for project VehiculoTT ****
+05:07:27 **** Incremental Build of configuration Debug for project VehiculoTT ****
 make -j16 all 
-arm-none-eabi-gcc "../Core/Src/motor_control.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/motor_control.d" -MT"Core/Src/motor_control.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/motor_control.o"
-../Core/Src/motor_control.c: In function 'Motor_Init':
-../Core/Src/motor_control.c:31:5: warning: implicit declaration of function 'Desacoplar' [-Wimplicit-function-declaration]
-   31 |     Desacoplar();
-      |     ^~~~~~~~~~
-../Core/Src/motor_control.c: At top level:
-../Core/Src/motor_control.c:67:6: warning: conflicting types for 'Desacoplar'; have 'void(void)'
-   67 | void Desacoplar(void){
-      |      ^~~~~~~~~~
-../Core/Src/motor_control.c:31:5: note: previous implicit declaration of 'Desacoplar' with type 'void(void)'
-   31 |     Desacoplar();
-      |     ^~~~~~~~~~
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-g++ -o "VehiculoTT.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\git\VehiculoTT\VehiculoTT\STM32F411CEUX_FLASH.ld" -Wl,-Map="VehiculoTT.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 Finished building target: VehiculoTT.elf
  
 arm-none-eabi-size  VehiculoTT.elf 
 arm-none-eabi-objdump -h -S VehiculoTT.elf  > "VehiculoTT.list"
    text	   data	    bss	    dec	    hex	filename
-  66192	    800	  22168	  89160	  15c48	VehiculoTT.elf
+  66592	    800	  22192	  89584	  15df0	VehiculoTT.elf
 Finished building: default.size.stdout
  
 Finished building: VehiculoTT.list
  
 
-13:58:27 Build Finished. 0 errors, 2 warnings. (took 1s.750ms)
+05:07:32 Build Finished. 0 errors, 0 warnings. (took 5s.265ms)
 

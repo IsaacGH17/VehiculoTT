@@ -162,4 +162,4 @@ uint8_t XPT2046_IsReasonable(uint16_t x, uint16_t y)
 		return 1;
 	}
 	return 0;
-}
+ }

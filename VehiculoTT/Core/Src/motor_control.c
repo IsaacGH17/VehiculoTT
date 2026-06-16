@@ -26,9 +26,9 @@ void Motor_Init(void) {
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 500);
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 500);
-    Desacoplar();
     /* Todos los motores apagados al inicio */
     Motor_SetAllPulse(0);
 
@@ -67,6 +67,14 @@ void Acoplar(void){
 void Desacoplar(void){
 	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_SET);
 	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1100);
+}
+void Acoplar1(void){
+	HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 1100);
+}
+void Desacoplar1(void){
+	HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_SET);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 1100);
 }
 void Motor_SpeedDec(void) {
     uint16_t new_pulse;

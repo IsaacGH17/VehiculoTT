@@ -48,7 +48,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/vl53l0x_platform.h ../Core/Inc/vl53l0x_def.h \
  ../Core/Inc/vl53l0x_device.h ../Core/Inc/vl53l0x_types.h \
  ../Core/Inc/vl53l0x_api.h ../Core/Inc/vl53l0x_api_strings.h \
- ../Core/Inc/vl53l0x_platform.h ../Core/Inc/INA226.h
+ ../Core/Inc/vl53l0x_platform.h ../Core/Inc/INA226.h \
+ ../Core/Inc/globals.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -107,3 +108,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/vl53l0x_api_strings.h:
 ../Core/Inc/vl53l0x_platform.h:
 ../Core/Inc/INA226.h:
+../Core/Inc/globals.h:
