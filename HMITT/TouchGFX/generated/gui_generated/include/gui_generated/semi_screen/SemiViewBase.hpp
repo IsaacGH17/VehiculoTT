@@ -18,6 +18,14 @@ public:
     virtual ~SemiViewBase();
     virtual void setupScreen();
 
+    /*
+     * Virtual Action Handlers
+     */
+    virtual void modoManual()
+    {
+        // Override and implement this function in Semi
+    }
+
 protected:
     FrontendApplication& application() {
         return *static_cast<FrontendApplication*>(touchgfx::Application::getInstance());

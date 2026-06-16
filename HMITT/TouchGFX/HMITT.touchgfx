@@ -164,6 +164,17 @@
               "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "home"
             }
+          },
+          {
+            "InteractionName": "modomanual",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "back"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "modoManual"
+            }
           }
         ]
       }

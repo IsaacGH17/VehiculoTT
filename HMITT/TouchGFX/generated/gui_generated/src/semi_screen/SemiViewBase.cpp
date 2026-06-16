@@ -43,6 +43,10 @@ void SemiViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
         //Interaction1
         //When back clicked change screen to home
         //Go to home with no screen transition
-        application().gotohomeScreenNoTransition();
+        application().gotohomeScreenNoTransition();
+        //modomanual
+        //When back clicked call virtual function
+        //Call modoManual
+        modoManual();
     }
 }

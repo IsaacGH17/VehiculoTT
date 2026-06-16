@@ -14,6 +14,8 @@ public:
     }
 
     void tick();
+    void solicitarModoSemi();
+    void solicitarModoManual();
 protected:
     ModelListener* modelListener;
 };

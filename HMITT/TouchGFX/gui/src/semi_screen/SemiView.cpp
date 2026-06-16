@@ -36,3 +36,8 @@ void SemiView::setPitchValue(float value)
 {
     containerTele1.setPitchValue(value);
 }
+
+void SemiView::modoManual()
+{
+    presenter->solicitarModoManual();
+}

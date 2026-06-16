@@ -29,6 +29,7 @@ public:
     virtual void updateDist(int value);
     virtual void updatePitch(float value);
     virtual void updateRoll(float value);
+    void solicitarModoSemi();
     virtual ~homePresenter() {}
 
 private:

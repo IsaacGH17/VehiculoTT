@@ -16,7 +16,8 @@ public:
     void setPWMValue(int value);
     void setDistValue(int value);
     virtual void setPitchValue(float value);
-        virtual void setRollValue(float value);
+    virtual void setRollValue(float value);
+    virtual void modoManual();
 protected:
 };
 
