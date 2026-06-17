@@ -175,6 +175,18 @@
               "Type": "ActionCustom",
               "FunctionName": "modoManual"
             }
+          },
+          {
+            "InteractionName": "paroEmergencia",
+            "Trigger": {
+              "Type": "TriggerPhysicalButtonClicked",
+              "ButtonKey": 1
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "home"
+            }
           }
         ]
       }

@@ -155,11 +155,11 @@ protected:
      *
      * @brief Sets the frame buffer address used by the TFT controller.
      *
-     *        Sets the frame buffer address used by the TFT controller.
-     *
      * @param [in,out] adr New frame buffer address.
      */
     virtual void setTFTFrameBuffer(uint16_t* adr);
+
+    virtual bool sampleKey(uint8_t& key) override;
 };
 
 /* USER CODE END TouchGFXHAL.hpp */

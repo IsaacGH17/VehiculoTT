@@ -14,4 +14,5 @@ extern volatile int dist_mm;
 extern volatile uint8_t selected_actuator;
 extern volatile float roll;
 extern volatile float pitch;
+extern volatile uint8_t flag_paro_e;
 #endif /* INC_GLOBALS_H_ */

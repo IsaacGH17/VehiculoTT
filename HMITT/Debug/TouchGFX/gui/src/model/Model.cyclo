@@ -1,2 +1,4 @@
-../TouchGFX/gui/src/model/Model.cpp:4:1:Model::Model()	1
-../TouchGFX/gui/src/model/Model.cpp:9:6:void Model::tick()	2
+../TouchGFX/gui/src/model/Model.cpp:5:1:Model::Model()	1
+../TouchGFX/gui/src/model/Model.cpp:10:6:void Model::tick()	3
+../TouchGFX/gui/src/model/Model.cpp:38:6:void Model::solicitarModoSemi()	2
+../TouchGFX/gui/src/model/Model.cpp:53:6:void Model::solicitarModoManual()	2

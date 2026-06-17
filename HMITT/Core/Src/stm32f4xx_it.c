@@ -78,6 +78,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         static uint32_t last_reset_time     = 0;
         static uint32_t last_abrir_time     = 0;
         static uint32_t last_cerrar_time    = 0;
+        static uint32_t last_paroe_time     = 0;
+        static uint32_t last_paro_time      = 0;
 
         uint32_t current_time = HAL_GetTick();
         uint32_t *last_time = NULL;
@@ -90,6 +92,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         else if (GPIO_Pin == Reset_Pin)      last_time = &last_reset_time;
         else if (GPIO_Pin == Abrir_Pin)      last_time = &last_abrir_time;
         else if (GPIO_Pin == Cerrar_Pin)     last_time = &last_cerrar_time;
+        else if (GPIO_Pin == ParoE_Pin)      last_time = &last_paroe_time;
+        else if (GPIO_Pin == Paro_Pin)       last_time = &last_paro_time;
 
         if (last_time != NULL)
         {
@@ -194,6 +198,26 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
             len = build_packet(act_tx_buf, CMD_PINON, &payload, 1);
             HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
         }
+    }
+   else if (GPIO_Pin == ParoE_Pin)
+    {
+	   HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_SET);
+	   HAL_GPIO_WritePin(Rojo_GPIO_Port, Rojo_Pin, GPIO_PIN_SET);
+	   HAL_GPIO_WritePin(Verde_GPIO_Port, Verde_Pin, GPIO_PIN_RESET);
+    	payload = PARAM_NONE;
+    	len = build_packet(act_tx_buf, CMD_PARO_EMERG,&payload, 1);
+    	HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+        flag_paro_e = 1;
+    }
+   else if (GPIO_Pin == Paro_Pin)
+    {
+		HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_SET);
+	    HAL_GPIO_WritePin(Verde_GPIO_Port, Verde_Pin, GPIO_PIN_SET);
+	    HAL_GPIO_WritePin(Rojo_GPIO_Port, Rojo_Pin, GPIO_PIN_RESET);
+    	payload = PARAM_NONE;
+    	len = build_packet(act_tx_buf, CMD_PARO,&payload, 1);
+    	HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+        flag_paro_e = 1;
     }
 }
 

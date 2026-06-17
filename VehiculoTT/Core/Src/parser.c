@@ -96,10 +96,23 @@ void execute_command(Packet_t *pkt) {
             /* Abortar secuencia semiautomática */
             if (semiAutoEvtHandle != NULL)
                 osEventFlagsSet(semiAutoEvtHandle, EVT_STOP_SEMI);
+            /* Cierra la pinza y acopla ambas ruedas en Paro de Emergencia */
+            Cerrar_Pinza();
+            if (ruedas_abiertas) {
+                Acoplar();
+                ruedas_abiertas = 0;
+            }
+            if (ruedas1_abiertas) {
+                Acoplar1();
+                ruedas1_abiertas = 0;
+            }
             break;
 
         case CMD_PARO:
             Motor_Stop();
+            /* Abortar secuencia semiautomática */
+            if (semiAutoEvtHandle != NULL)
+                osEventFlagsSet(semiAutoEvtHandle, EVT_STOP_SEMI);
             break;
 
         case CMD_PINZAS:
@@ -113,12 +126,13 @@ void execute_command(Packet_t *pkt) {
         case CMD_ACK_NACK:
         {
             uint16_t packet_size = 0;
-            uint8_t tx_buffer[20];
+            static uint8_t tx_buffer[20];
             uint8_t payload[1] = { (uint8_t)percentage_pulse };
             packet_size = build_packet(tx_buffer, RESP_SUCCESS, payload, 1);
-            if (huart1.gState == HAL_UART_STATE_READY) {
-                HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
+            while (huart1.gState != HAL_UART_STATE_READY) {
+                osDelay(1);
             }
+            HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
             break;
         }
         case CMD_PINON:

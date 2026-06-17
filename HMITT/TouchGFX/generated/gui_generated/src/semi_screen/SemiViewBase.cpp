@@ -50,3 +50,15 @@ void SemiViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
         modoManual();
     }
 }
+
+void SemiViewBase::handleKeyEvent(uint8_t key)
+{
+    if(1 == key)
+    {
+        //paroEmergencia
+        //When hardware button 1 clicked change screen to home
+        //Go to home with no screen transition
+        application().gotohomeScreenNoTransition();
+    
+    }
+}

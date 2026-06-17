@@ -24,6 +24,10 @@
 
 /* USER CODE BEGIN TouchGFXHAL.cpp */
 
+extern "C" {
+    extern volatile uint8_t flag_paro_e;
+}
+
 using namespace touchgfx;
 
 /* ******************************************************
@@ -171,6 +175,11 @@ bool TouchGFXHAL::beginFrame()
 void TouchGFXHAL::endFrame()
 {
     TouchGFXGeneratedHAL::endFrame();
+}
+
+bool TouchGFXHAL::sampleKey(uint8_t& key)
+{
+    return false;
 }
 
 /* USER CODE END TouchGFXHAL.cpp */

@@ -45,7 +45,8 @@
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp:80:10:void touchgfx::ButtonWithIcon::setIconX(int16_t)	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp:95:10:void touchgfx::ButtonWithIcon::setIconY(int16_t)	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp:112:10:void touchgfx::ButtonWithIcon::setIconXY(int16_t, int16_t)	16	static
-../TouchGFX/generated/gui_generated/include/gui_generated/semi_screen/SemiViewBase.hpp:22:26:FrontendApplication& SemiViewBase::application()	16	static
+../TouchGFX/generated/gui_generated/include/gui_generated/semi_screen/SemiViewBase.hpp:25:18:virtual void SemiViewBase::modoManual()	16	static
+../TouchGFX/generated/gui_generated/include/gui_generated/semi_screen/SemiViewBase.hpp:31:26:FrontendApplication& SemiViewBase::application()	16	static
 ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:36:7:touchgfx::View<SemiPresenter>::~View()	16	static
 ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:36:7:virtual touchgfx::View<SemiPresenter>::~View()	16	static
 ../TouchGFX/generated/gui_generated/src/semi_screen/SemiViewBase.cpp:8:1:SemiViewBase::SemiViewBase()	72	static
@@ -53,6 +54,7 @@
 ../TouchGFX/generated/gui_generated/src/semi_screen/SemiViewBase.cpp:29:1:virtual SemiViewBase::~SemiViewBase()	16	static
 ../TouchGFX/generated/gui_generated/src/semi_screen/SemiViewBase.cpp:34:6:virtual void SemiViewBase::setupScreen()	16	static
 ../TouchGFX/generated/gui_generated/src/semi_screen/SemiViewBase.cpp:39:6:void SemiViewBase::buttonCallbackHandler(const touchgfx::AbstractButton&)	16	static
+../TouchGFX/generated/gui_generated/src/semi_screen/SemiViewBase.cpp:55:6:virtual void SemiViewBase::handleKeyEvent(uint8_t)	16	static
 ../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:39:5:touchgfx::View<T>::View() [with T = SemiPresenter]	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:134:7:constexpr touchgfx::GenericCallback<const touchgfx::AbstractButton&>::GenericCallback()	16	static
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:373:5:touchgfx::Callback<dest_type, T1, void, void>::Callback(dest_type*, void (dest_type::*)(T1)) [with dest_type = SemiViewBase; T1 = const touchgfx::AbstractButton&]	24	static

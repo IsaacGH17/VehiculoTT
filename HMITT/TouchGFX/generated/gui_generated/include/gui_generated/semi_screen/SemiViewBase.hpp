@@ -17,6 +17,7 @@ public:
     SemiViewBase();
     virtual ~SemiViewBase();
     virtual void setupScreen();
+    virtual void handleKeyEvent(uint8_t key);
 
     /*
      * Virtual Action Handlers

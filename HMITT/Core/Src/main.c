@@ -156,6 +156,7 @@ int main(void)
   MX_CRC_Init();
   MX_TIM2_Init();
   MX_USART1_UART_Init();
+
   /* Call PreOsInit function */
   MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
@@ -164,16 +165,9 @@ int main(void)
     XPT2046_Init();
 
     HAL_UART_Receive_DMA(&huart1, dma_rx_buf, DMA_RX_BUF_SIZE);
-    HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(Verde_GPIO_Port, Verde_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(Rojo_GPIO_Port, Rojo_Pin, GPIO_PIN_SET);
-    uint16_t packet_size = 0;
-    static uint8_t tx_buffer[20];
-    uint8_t payload[1] = {(uint8_t)(0)};
-        packet_size = build_packet(tx_buffer, CMD_ACK_NACK, payload, 1);
-        if (huart1.gState == HAL_UART_STATE_READY) {
-            HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
-        }
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -534,16 +528,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Paro_Pin ParoE_Pin */
-  GPIO_InitStruct.Pin = Paro_Pin|ParoE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : Cremallera_Pin Reset_Pin PWM_INC_Pin Cerrar_Pin
-                           Abrir_Pin */
-  GPIO_InitStruct.Pin = Cremallera_Pin|Reset_Pin|PWM_INC_Pin|Cerrar_Pin
-                          |Abrir_Pin;
+  /*Configure GPIO pins : Paro_Pin Cremallera_Pin Reset_Pin PWM_INC_Pin
+                           ParoE_Pin Cerrar_Pin Abrir_Pin */
+  GPIO_InitStruct.Pin = Paro_Pin|Cremallera_Pin|Reset_Pin|PWM_INC_Pin
+                          |ParoE_Pin|Cerrar_Pin|Abrir_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -677,6 +665,15 @@ void ParserTask(void *argument)
       __HAL_UART_CLEAR_IDLEFLAG(&huart1);
       HAL_UART_Receive_DMA(&huart1, dma_rx_buf, DMA_RX_BUF_SIZE);
       __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+
+      /* Send handshake after UART DMA is fully initialized */
+      uint16_t packet_size = 0;
+      static uint8_t tx_buffer[20];
+      uint8_t payload[1] = {(uint8_t)(0)};
+      packet_size = build_packet(tx_buffer, CMD_ACK_NACK, payload, 1);
+      if (huart1.gState == HAL_UART_STATE_READY) {
+          HAL_UART_Transmit_DMA(&huart1, tx_buffer, packet_size);
+      }
 
 	  for(;;)
 	  {

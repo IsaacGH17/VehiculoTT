@@ -2,7 +2,6 @@
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:115:18:virtual void touchgfx::Screen::tearDownScreen()	1
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:144:18:virtual void touchgfx::Screen::handleTickEvent()	1
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:154:18:virtual void touchgfx::Screen::handleKeyEvent(uint8_t)	1
-../TouchGFX/generated/gui_generated/include/gui_generated/home_screen/homeViewBase.hpp:26:18:virtual void homeViewBase::modoSemi()	1
 ../TouchGFX/gui/include/gui/home_screen/homeView.hpp:11:13:homeView::~homeView()	1
 ../TouchGFX/gui/include/gui/home_screen/homeView.hpp:11:13:virtual homeView::~homeView()	1
 ../TouchGFX/gui/src/home_screen/homeView.cpp:3:1:homeView::homeView()	1
@@ -13,3 +12,4 @@
 ../TouchGFX/gui/src/home_screen/homeView.cpp:27:6:void homeView::setDistValue(int)	1
 ../TouchGFX/gui/src/home_screen/homeView.cpp:31:6:void homeView::setRollValue(float)	1
 ../TouchGFX/gui/src/home_screen/homeView.cpp:35:6:void homeView::setPitchValue(float)	1
+../TouchGFX/gui/src/home_screen/homeView.cpp:40:6:virtual void homeView::modoSemi()	1
