@@ -19,6 +19,10 @@ extern volatile uint8_t ruedas_abiertas;
 /* Estado de acople del par 2 de ruedas (A1 / Cerrado1_Pin) */
 extern volatile uint8_t ruedas1_abiertas;
 
+/* Direcciones de acople (0 = detenido, 1 = acoplando, 2 = desacoplando) */
+extern volatile uint8_t dir_acoplar;
+extern volatile uint8_t dir_acoplar1;
+
 /* Handle de event flags para la tarea semiautomática */
 extern osEventFlagsId_t semiAutoEvtHandle;
 

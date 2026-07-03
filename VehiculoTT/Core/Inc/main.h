@@ -59,12 +59,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define Abierto_Pin GPIO_PIN_14
-#define Abierto_GPIO_Port GPIOC
-#define Abierto_EXTI_IRQn EXTI15_10_IRQn
-#define Cerrado_Pin GPIO_PIN_15
+#define Cerrado_Pin GPIO_PIN_14
 #define Cerrado_GPIO_Port GPIOC
 #define Cerrado_EXTI_IRQn EXTI15_10_IRQn
+#define Abierto_Pin GPIO_PIN_15
+#define Abierto_GPIO_Port GPIOC
+#define Abierto_EXTI_IRQn EXTI15_10_IRQn
 #define ADC_tension_Pin GPIO_PIN_0
 #define ADC_tension_GPIO_Port GPIOA
 #define Servo2_Pin GPIO_PIN_1

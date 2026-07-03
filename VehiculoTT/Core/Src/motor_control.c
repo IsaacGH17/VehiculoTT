@@ -9,6 +9,8 @@ extern TIM_HandleTypeDef htim3;
 volatile uint16_t current_pulse = 0;
 volatile uint16_t percentage_pulse = 0;
 int i = 0;
+volatile uint8_t dir_acoplar = 0;
+volatile uint8_t dir_acoplar1 = 0;
 /* Mapeo de MotorId_t a canal de TIM */
 static const uint32_t motor_channel[MOTOR_COUNT] = {
     TIM_CHANNEL_1,
@@ -61,20 +63,24 @@ void Motor_SpeedInc(void) {
     Motor_SetAllPulse(new_pulse);
 }
 void Acoplar(void){
+    dir_acoplar = 1;
 	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1100);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1700);
 }
 void Desacoplar(void){
+    dir_acoplar = 2;
 	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_SET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1100);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 600);
 }
 void Acoplar1(void){
+    dir_acoplar1 = 1;
 	HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 1100);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 1700);
 }
 void Desacoplar1(void){
+    dir_acoplar1 = 2;
 	HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_SET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 1100);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 600);
 }
 void Motor_SpeedDec(void) {
     uint16_t new_pulse;

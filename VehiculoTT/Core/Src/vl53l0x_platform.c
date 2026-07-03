@@ -80,7 +80,7 @@ VL53L0X_Error VL53L0X_UpdateByte(VL53L0X_DEV Dev, uint8_t index,
 {
     uint8_t data;
     VL53L0X_Error err = VL53L0X_RdByte(Dev, index, &data);
-    if (err != VL53L0X_ERROR_NONE) return err;
+     if (err != VL53L0X_ERROR_NONE) return err;
     data = (data & AndData) | OrData;
     return VL53L0X_WrByte(Dev, index, data);
 }

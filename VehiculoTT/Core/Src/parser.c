@@ -136,6 +136,19 @@ void execute_command(Packet_t *pkt) {
             break;
         }
         case CMD_PINON:
+        	if (pkt->payload[0] == PARAM_EXTEND) {
+        	                if (!ruedas1_abiertas) {
+        	                    Desacoplar1();
+        	                    ruedas1_abiertas = 1;
+        	                }
+
+        	                }
+        	else if (pkt->payload[0] == PARAM_RETRACT) {
+        		if (ruedas1_abiertas) {
+        		                    Acoplar1();
+        		                    ruedas1_abiertas = 0;
+        		                }
+        	}
             break;
 
         case CMD_ACOPLE_RUEDAS:
@@ -144,19 +157,13 @@ void execute_command(Packet_t *pkt) {
                     Desacoplar();
                     ruedas_abiertas = 1;
                 }
-                if (!ruedas1_abiertas) {
-                    Desacoplar1();
-                    ruedas1_abiertas = 1;
-                }
+
             } else if (pkt->payload[0] == PARAM_CLOSE) {
                 if (ruedas_abiertas) {
                     Acoplar();
                     ruedas_abiertas = 0;
                 }
-                if (ruedas1_abiertas) {
-                    Acoplar1();
-                    ruedas1_abiertas = 0;
-                }
+
             }
             break;
 

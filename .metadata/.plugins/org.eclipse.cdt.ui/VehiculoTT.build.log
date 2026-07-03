@@ -1,10 +1,10 @@
-21:45:01 **** Incremental Build of configuration Debug for project VehiculoTT ****
+17:22:14 **** Incremental Build of configuration Debug for project VehiculoTT ****
 make -j16 all 
 arm-none-eabi-size  VehiculoTT.elf 
    text	   data	    bss	    dec	    hex	filename
-  70000	    800	  22240	  93040	  16b70	VehiculoTT.elf
+  70128	    800	  22240	  93168	  16bf0	VehiculoTT.elf
 Finished building: default.size.stdout
  
 
-21:45:02 Build Finished. 0 errors, 0 warnings. (took 889ms)
+17:22:15 Build Finished. 0 errors, 0 warnings. (took 880ms)
 

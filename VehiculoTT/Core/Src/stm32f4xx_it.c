@@ -83,25 +83,37 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
     /* --- Fines de carrera de ruedas (par 1) --- */
     if (GPIO_Pin == Abierto_Pin) {
-        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-        HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
-        ruedas_abiertas = 1;
+        if (dir_acoplar == 2) { // 2 = desacoplando (hacia abierto)
+            __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+            HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
+            ruedas_abiertas = 1;
+            dir_acoplar = 0;
+        }
     }
     else if (GPIO_Pin == Cerrado_Pin) {
-        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-        HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
-        ruedas_abiertas = 0;
+        if (dir_acoplar == 1) { // 1 = acoplando (hacia cerrado)
+            __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+            HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
+            ruedas_abiertas = 0;
+            dir_acoplar = 0;
+        }
     }
     /* --- Fines de carrera de ruedas (par 2) --- */
     else if (GPIO_Pin == Abierto1_Pin) {
-        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-        HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
-        ruedas1_abiertas = 1;
+        if (dir_acoplar1 == 2) { // 2 = desacoplando (hacia abierto)
+            __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+            HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
+            ruedas1_abiertas = 1;
+            dir_acoplar1 = 0;
+        }
     }
     else if (GPIO_Pin == Cerrado1_Pin) {
-        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-        HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
-        ruedas1_abiertas = 0;
+        if (dir_acoplar1 == 1) { // 1 = acoplando (hacia cerrado)
+            __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+            HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
+            ruedas1_abiertas = 0;
+            dir_acoplar1 = 0;
+        }
     }
     /* --- Sensores de obstáculo: señalizar tarea semiautomática --- */
     else if (GPIO_Pin == Obstaculo1_Pin) {
@@ -298,8 +310,8 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE END EXTI15_10_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(Obstaculo2_Pin);
   HAL_GPIO_EXTI_IRQHandler(Obstaculo1_Pin);
-  HAL_GPIO_EXTI_IRQHandler(Abierto_Pin);
   HAL_GPIO_EXTI_IRQHandler(Cerrado_Pin);
+  HAL_GPIO_EXTI_IRQHandler(Abierto_Pin);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
   /* USER CODE END EXTI15_10_IRQn 1 */
