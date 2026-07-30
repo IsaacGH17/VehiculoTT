@@ -991,13 +991,24 @@ void StartSemiAutoTask(void *argument)
       osDelay(SEMIAUTO_DELAY_RUEDA_MS);
     }
     Motor_SetAllPulse(MOTOR_PWM_MAX);
-    flags = osEventFlagsWait(semiAutoEvtHandle,
-                             EVT_OBSTACULO1 | EVT_STOP_SEMI,
-                             osFlagsWaitAny | osFlagsNoClear,
-                             osWaitForever);
-    osEventFlagsClear(semiAutoEvtHandle, EVT_OBSTACULO1 | EVT_STOP_SEMI);
+    /* Detección del primer par de ruedas mediante el sensor de distancia VL53L0X (umbral < 35 mm) */
+    uint8_t stop_requested = 0;
+    while (1) {
+      if (distancia_mm > 0 && distancia_mm < 35) {
+        break;
+      }
+      flags = osEventFlagsWait(semiAutoEvtHandle,
+                               EVT_STOP_SEMI,
+                               osFlagsWaitAny | osFlagsNoClear,
+                               50);
+      if (flags & EVT_STOP_SEMI) {
+        osEventFlagsClear(semiAutoEvtHandle, EVT_STOP_SEMI);
+        stop_requested = 1;
+        break;
+      }
+    }
 
-    if (flags & EVT_STOP_SEMI) { Motor_Stop(); continue; }
+    if (stop_requested) { Motor_Stop(); continue; }
     Motor_Stop();
     Cerrar_Pinza();
     osDelay(SEMIAUTO_DELAY_PINZA_MS);
@@ -1010,12 +1021,16 @@ void StartSemiAutoTask(void *argument)
       continue;
     }
 
+    /* Limpiar EVT_OBSTACULO1 previo antes de avanzar al segundo par de ruedas */
+    osEventFlagsClear(semiAutoEvtHandle, EVT_OBSTACULO1);
+
+    /* Detección del segundo par de ruedas mediante el final de carrera de obstáculo 1 */
     Motor_SetAllPulse(SEMIAUTO_VEL_LENTA);
     flags = osEventFlagsWait(semiAutoEvtHandle,
-                             EVT_OBSTACULO2 | EVT_STOP_SEMI,
+                             EVT_OBSTACULO1 | EVT_STOP_SEMI,
                              osFlagsWaitAny | osFlagsNoClear,
                              osWaitForever);
-    osEventFlagsClear(semiAutoEvtHandle, EVT_OBSTACULO2 | EVT_STOP_SEMI);
+    osEventFlagsClear(semiAutoEvtHandle, EVT_OBSTACULO1 | EVT_STOP_SEMI);
 
     if (flags & EVT_STOP_SEMI) { Motor_Stop(); continue; }
 

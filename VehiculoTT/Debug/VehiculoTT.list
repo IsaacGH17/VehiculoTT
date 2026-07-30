@@ -3088,15 +3088,15 @@ void Motor_Init(void) {
  800166c:	2100      	movs	r1, #0
  800166e:	480b      	ldr	r0, [pc, #44]	@ (800169c <Motor_Init+0x6c>)
  8001670:	f009 fabc 	bl	800abec <HAL_TIM_PWM_Start>
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 500);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 620);
  8001674:	4b08      	ldr	r3, [pc, #32]	@ (8001698 <Motor_Init+0x68>)
  8001676:	681b      	ldr	r3, [r3, #0]
- 8001678:	f44f 72fa 	mov.w	r2, #500	@ 0x1f4
+ 8001678:	f44f 721b 	mov.w	r2, #620	@ 0x26c
  800167c:	635a      	str	r2, [r3, #52]	@ 0x34
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 500);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 620);
  800167e:	4b06      	ldr	r3, [pc, #24]	@ (8001698 <Motor_Init+0x68>)
  8001680:	681b      	ldr	r3, [r3, #0]
- 8001682:	f44f 72fa 	mov.w	r2, #500	@ 0x1f4
+ 8001682:	f44f 721b 	mov.w	r2, #620	@ 0x26c
  8001686:	639a      	str	r2, [r3, #56]	@ 0x38
     /* Todos los motores apagados al inicio */
     Motor_SetAllPulse(0);
@@ -3407,15 +3407,15 @@ void Motor_Stop(void) {
 void Abrir_Pinza(void){
  80018a0:	b480      	push	{r7}
  80018a2:	af00      	add	r7, sp, #0
-	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 500);
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 620);
  80018a4:	4b07      	ldr	r3, [pc, #28]	@ (80018c4 <Abrir_Pinza+0x24>)
  80018a6:	681b      	ldr	r3, [r3, #0]
- 80018a8:	f44f 72fa 	mov.w	r2, #500	@ 0x1f4
+ 80018a8:	f44f 721b 	mov.w	r2, #620	@ 0x26c
  80018ac:	635a      	str	r2, [r3, #52]	@ 0x34
-	    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 500);
+	    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 620);
  80018ae:	4b05      	ldr	r3, [pc, #20]	@ (80018c4 <Abrir_Pinza+0x24>)
  80018b0:	681b      	ldr	r3, [r3, #0]
- 80018b2:	f44f 72fa 	mov.w	r2, #500	@ 0x1f4
+ 80018b2:	f44f 721b 	mov.w	r2, #620	@ 0x26c
  80018b6:	639a      	str	r2, [r3, #56]	@ 0x38
 }
  80018b8:	bf00      	nop
