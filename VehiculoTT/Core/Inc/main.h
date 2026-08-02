@@ -59,16 +59,19 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define Cerrado_Pin GPIO_PIN_14
-#define Cerrado_GPIO_Port GPIOC
-#define Cerrado_EXTI_IRQn EXTI15_10_IRQn
-#define Abierto_Pin GPIO_PIN_15
+#define Abierto_Pin GPIO_PIN_14
 #define Abierto_GPIO_Port GPIOC
 #define Abierto_EXTI_IRQn EXTI15_10_IRQn
+#define Cerrado_Pin GPIO_PIN_15
+#define Cerrado_GPIO_Port GPIOC
+#define Cerrado_EXTI_IRQn EXTI15_10_IRQn
 #define ADC_tension_Pin GPIO_PIN_0
 #define ADC_tension_GPIO_Port GPIOA
 #define Servo2_Pin GPIO_PIN_1
 #define Servo2_GPIO_Port GPIOA
+#define Obstaculo1_Pin GPIO_PIN_2
+#define Obstaculo1_GPIO_Port GPIOA
+#define Obstaculo1_EXTI_IRQn EXTI2_IRQn
 #define Abierto1_Pin GPIO_PIN_3
 #define Abierto1_GPIO_Port GPIOA
 #define Abierto1_EXTI_IRQn EXTI3_IRQn
@@ -86,9 +89,6 @@ void Error_Handler(void);
 #define Obstaculo2_Pin GPIO_PIN_12
 #define Obstaculo2_GPIO_Port GPIOB
 #define Obstaculo2_EXTI_IRQn EXTI15_10_IRQn
-#define Obstaculo1_Pin GPIO_PIN_13
-#define Obstaculo1_GPIO_Port GPIOB
-#define Obstaculo1_EXTI_IRQn EXTI15_10_IRQn
 #define A1_Dir_Pin GPIO_PIN_15
 #define A1_Dir_GPIO_Port GPIOB
 #define Motor1_Pin GPIO_PIN_8

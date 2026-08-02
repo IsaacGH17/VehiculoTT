@@ -1,17 +1,14 @@
 #include "motor_control.h"
 #include "globals.h"
 #include "main.h"
-/* Handle del timer de motores (definido en main.c) */
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
-/* Pulso actual global (igual para los 4 motores por defecto) */
 volatile uint16_t current_pulse = 0;
 volatile uint16_t percentage_pulse = 0;
 int i = 0;
 volatile uint8_t dir_acoplar = 0;
 volatile uint8_t dir_acoplar1 = 0;
-/* Mapeo de MotorId_t a canal de TIM */
 static const uint32_t motor_channel[MOTOR_COUNT] = {
     TIM_CHANNEL_1,
     TIM_CHANNEL_2,
@@ -20,7 +17,6 @@ static const uint32_t motor_channel[MOTOR_COUNT] = {
 };
 
 void Motor_Init(void) {
-    /* Iniciar PWM en los 4 canales de TIM1 */
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
@@ -29,9 +25,8 @@ void Motor_Init(void) {
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 620);
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 620);
-    /* Todos los motores apagados al inicio */
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 1290);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 1290);
     Motor_SetAllPulse(0);
 
 
@@ -64,13 +59,13 @@ void Motor_SpeedInc(void) {
 }
 void Acoplar(void){
     dir_acoplar = 1;
-	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1700);
+	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_SET);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 600);
 }
 void Desacoplar(void){
     dir_acoplar = 2;
-	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_SET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 600);
+	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1700);
 }
 void Acoplar1(void){
     dir_acoplar1 = 1;
@@ -98,13 +93,14 @@ void Motor_Stop(void) {
     Motor_SetAllPulse(0);
 }
 void Abrir_Pinza(void){
-	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 620);
-	    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 620);
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 1290);
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 1290);
 }
 void Cerrar_Pinza(void){
 
-	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 1290);
-	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 1290);
+
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 620);
+		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 620);
 }
 
 uint16_t Motor_GetCurrentPulse(void) {

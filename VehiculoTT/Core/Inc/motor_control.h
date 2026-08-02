@@ -1,19 +1,13 @@
 #ifndef __MOTOR_CONTROL_H__
 #define __MOTOR_CONTROL_H__
-
 #include "main.h"
 #include <stdint.h>
-
 #define MOTOR_PWM_MAX    2099
 #define MOTOR_SPEED_STEP 210
-
-/* Velocidad lenta semiautomático: 60% de MOTOR_PWM_MAX */
-#define SEMIAUTO_VEL_LENTA      1259
-
-/* Tiempos de espera entre actuaciones (ms) — ajusta SEMIAUTO_CRUCE_MS en banco */
-#define SEMIAUTO_DELAY_PINZA_MS  600   /* cierre/apertura de pinza          */
-#define SEMIAUTO_DELAY_RUEDA_MS  600   /* acople/desacople de rueda         */
-#define SEMIAUTO_CRUCE_MS       1500   /* tiempo estimado para cruzar obs.  */
+#define SEMIAUTO_VEL_LENTA      1900
+#define SEMIAUTO_DELAY_PINZA_MS  1500
+#define SEMIAUTO_DELAY_RUEDA_MS  10000
+#define SEMIAUTO_CRUCE_MS       3500
 
 typedef enum {
     MOTOR_1 = 0,

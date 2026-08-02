@@ -67,11 +67,9 @@ void execute_command(Packet_t *pkt) {
         case CMD_MODO_OP:
             if (pkt->payload[0] == PARAM_MANUAL) {
                 Motor_SetAllPulse(0);
-                /* Cancelar modo semiautomático si estaba activo */
                 if (semiAutoEvtHandle != NULL)
                     osEventFlagsSet(semiAutoEvtHandle, EVT_STOP_SEMI);
             } else if (pkt->payload[0] == PARAM_SEMIAUTO) {
-                /* Iniciar tarea semiautomática */
                 if (semiAutoEvtHandle != NULL)
                     osEventFlagsSet(semiAutoEvtHandle, EVT_START_SEMI);
             }
@@ -93,10 +91,8 @@ void execute_command(Packet_t *pkt) {
 
         case CMD_PARO_EMERG:
             Motor_Stop();
-            /* Abortar secuencia semiautomática */
             if (semiAutoEvtHandle != NULL)
                 osEventFlagsSet(semiAutoEvtHandle, EVT_STOP_SEMI);
-            /* Cierra la pinza y acopla ambas ruedas en Paro de Emergencia */
             Cerrar_Pinza();
             if (ruedas_abiertas) {
                 Acoplar();
@@ -110,7 +106,6 @@ void execute_command(Packet_t *pkt) {
 
         case CMD_PARO:
             Motor_Stop();
-            /* Abortar secuencia semiautomática */
             if (semiAutoEvtHandle != NULL)
                 osEventFlagsSet(semiAutoEvtHandle, EVT_STOP_SEMI);
             break;

@@ -58,7 +58,6 @@ extern TIM_HandleTypeDef htim3;
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-    /* --- Debounce independiente por pin (200 ms), igual que en HMITT --- */
     static uint32_t last_abierto_time    = 0;
     static uint32_t last_cerrado_time    = 0;
     static uint32_t last_abierto1_time   = 0;
@@ -77,13 +76,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     else if (GPIO_Pin == Obstaculo2_Pin)last_time = &last_obstaculo2_time;
 
     if (last_time != NULL) {
-        if ((now - *last_time) < 200) return;   /* rebote, ignorar */
+        if ((now - *last_time) < 200) return;
         *last_time = now;
     }
-
-    /* --- Fines de carrera de ruedas (par 1) --- */
     if (GPIO_Pin == Abierto_Pin) {
-        if (dir_acoplar == 2) { // 2 = desacoplando (hacia abierto)
+        if (dir_acoplar == 2) {
             __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
             HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
             ruedas_abiertas = 1;
@@ -91,16 +88,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         }
     }
     else if (GPIO_Pin == Cerrado_Pin) {
-        if (dir_acoplar == 1) { // 1 = acoplando (hacia cerrado)
+        if (dir_acoplar == 1) {
             __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
             HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
             ruedas_abiertas = 0;
             dir_acoplar = 0;
         }
     }
-    /* --- Fines de carrera de ruedas (par 2) --- */
     else if (GPIO_Pin == Abierto1_Pin) {
-        if (dir_acoplar1 == 2) { // 2 = desacoplando (hacia abierto)
+        if (dir_acoplar1 == 2) {
             __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
             HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
             ruedas1_abiertas = 1;
@@ -108,15 +104,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         }
     }
     else if (GPIO_Pin == Cerrado1_Pin) {
-        if (dir_acoplar1 == 1) { // 1 = acoplando (hacia cerrado)
+        if (dir_acoplar1 == 1) {
             __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
             HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
             ruedas1_abiertas = 0;
             dir_acoplar1 = 0;
         }
     }
-    /* --- Sensores de obstáculo: señalizar tarea semiautomática --- */
     else if (GPIO_Pin == Obstaculo1_Pin) {
+
         if (semiAutoEvtHandle != NULL)
             osEventFlagsSet(semiAutoEvtHandle, EVT_OBSTACULO1);
     }
@@ -238,6 +234,20 @@ void DebugMon_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles EXTI line2 interrupt.
+  */
+void EXTI2_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI2_IRQn 0 */
+
+  /* USER CODE END EXTI2_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(Obstaculo1_Pin);
+  /* USER CODE BEGIN EXTI2_IRQn 1 */
+
+  /* USER CODE END EXTI2_IRQn 1 */
+}
+
+/**
   * @brief This function handles EXTI line3 interrupt.
   */
 void EXTI3_IRQHandler(void)
@@ -309,9 +319,8 @@ void EXTI15_10_IRQHandler(void)
 
   /* USER CODE END EXTI15_10_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(Obstaculo2_Pin);
-  HAL_GPIO_EXTI_IRQHandler(Obstaculo1_Pin);
-  HAL_GPIO_EXTI_IRQHandler(Cerrado_Pin);
   HAL_GPIO_EXTI_IRQHandler(Abierto_Pin);
+  HAL_GPIO_EXTI_IRQHandler(Cerrado_Pin);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
   /* USER CODE END EXTI15_10_IRQn 1 */

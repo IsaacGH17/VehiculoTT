@@ -133,30 +133,7 @@ void StartSemiAutoTask(void *argument);
 
 
 
-char* I2C_Scan(void)
-{
-    static char msg[1024]; // Buffer estático grande para evitar desbordamiento
-    uint8_t count = 0;
-    char *ptr = msg;       // Puntero para ir escribiendo en el buffer
 
-    for (uint8_t i = 1; i < 128; i++)
-    {
-        if (HAL_I2C_IsDeviceReady(&hi2c1, (i << 1), 1, 20) == HAL_OK)
-        {
-            if (count > 0) {
-                ptr += sprintf(ptr, ", "); // Agrega coma y espacio entre direcciones
-            }
-            ptr += sprintf(ptr, "0x%02X", i); // Escribe la dirección
-            count++;
-        }
-    }
-
-    if (count == 0) {
-        sprintf(msg, "No se encontraron dispositivos I2C");
-    }
-
-    return msg;
-}
 
 
 /* USER CODE END PFP */
@@ -204,8 +181,6 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  /*LCD_init();
-    MPU9250_Init();*/
   MPU6050_Init();
   Motor_Init();
   HAL_ADC_Start_DMA(&hadc1,(uint32_t*)adc_buffer, ADC_BUF_LEN);
@@ -226,11 +201,9 @@ int main(void)
     uint8_t  isApertureSpads;
     uint8_t  VhvSettings, PhaseCal;
     VL53L0X_Error vl_status = -7;
-
     vl53l0x_dev.I2cDevAddr      = VL53L0X_DEFAULT_ADDR;
     vl53l0x_dev.comms_speed_khz = 100;
     vl53l0x_dev.comms_type      = 1;
-
     vl_status = VL53L0X_DataInit(&vl53l0x_dev);
     vl53_init_status = vl_status;
     if (vl_status != VL53L0X_ERROR_NONE) goto vl53_init_fail;
@@ -246,7 +219,6 @@ int main(void)
     vl_status = VL53L0X_SetDeviceMode(&vl53l0x_dev, VL53L0X_DEVICEMODE_SINGLE_RANGING);
     vl53_init_status = vl_status;
     vl53_init_fail:;
-
   }
 
   /* USER CODE END 2 */
@@ -305,43 +277,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  /*Packet_t pkt;
-	   ParserCtx_t ctx = {0};
-	  uint16_t dma_write_idx =
-	          (DMA_RX_BUF_SIZE - __HAL_DMA_GET_COUNTER(huart1.hdmarx))
-	          % DMA_RX_BUF_SIZE;
 
-	      while (dma_read_idx != dma_write_idx)
-	      {
-	          uint8_t byte = dma_rx_buf[dma_read_idx];
-
-	          dma_read_idx = (dma_read_idx + 1) % DMA_RX_BUF_SIZE;
-
-	          // breakpoint here
-	          // or printf("%c", byte);
-
-	          parse_byte(byte, &pkt, &ctx);
-	      }*/
-/*
-	  MPU9250_Read(&ax, &ay, &az, &gx, &gy, &gz);
-	  	   Ax = ax / 16384.0;
-	  	   Ay = ay / 16384.0;
-	  	   Az = az / 16384.0;
-	  	   roll = atan2(Ay, Az) * 180 / M_PI;
-	  	   pitch = atan2(-Ax, sqrt(Ay*Ay + Az*Az)) * 180 / M_PI;
-	  	       LCD_CLEAR();
-	  	       char buf[18];
-	  	       char buf2[20];
-	  	       int roll_i = (int)(roll * 100);
-	  	       int pitch_i = (int)(pitch * 100);
-	  	       LCD_CLEAR();
-	  	       LCD_CURSOR(0, 0);
-	  	       sprintf(buf, "Roll:%d.%02d", roll_i/100, abs(roll_i%100));
-	  	       LCD_CADENA(buf);
-	  	       LCD_CURSOR(1, 0);
-	  	       sprintf(buf2, "Pitch :%d.%02d", pitch_i/100, abs(pitch_i%100));
-	  	       LCD_CADENA(buf2);
-	  	       HAL_Delay(1000);*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -782,14 +718,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Cerrado_Pin Abierto_Pin */
-  GPIO_InitStruct.Pin = Cerrado_Pin|Abierto_Pin;
+  /*Configure GPIO pins : Abierto_Pin Cerrado_Pin */
+  GPIO_InitStruct.Pin = Abierto_Pin|Cerrado_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Abierto1_Pin Cerrado1_Pin */
-  GPIO_InitStruct.Pin = Abierto1_Pin|Cerrado1_Pin;
+  /*Configure GPIO pins : Obstaculo1_Pin Abierto1_Pin Cerrado1_Pin */
+  GPIO_InitStruct.Pin = Obstaculo1_Pin|Abierto1_Pin|Cerrado1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -808,13 +744,16 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Obstaculo2_Pin Obstaculo1_Pin */
-  GPIO_InitStruct.Pin = Obstaculo2_Pin|Obstaculo1_Pin;
+  /*Configure GPIO pin : Obstaculo2_Pin */
+  GPIO_InitStruct.Pin = Obstaculo2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(Obstaculo2_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+
   HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 
@@ -862,8 +801,6 @@ void ParserTask(void *argument)
   /* USER CODE BEGIN ParserTask */
   Packet_t pkt;
   ParserCtx_t ctx = {0};
-
-  /* Esperar a que la HMITT arranque y luego mandar sincronización inicial */
   osDelay(500);
   {
       static uint8_t sync_tx_buf[20];
@@ -916,9 +853,6 @@ void StartTelemetriaTask(void *argument)
       Ax = ax / 16384.0f;
       Ay = ay / 16384.0f;
       Az = az / 16384.0f;
-      /*roll  = atan2f(Ay, Az) * 180.0f / M_PI;
-      pitch = atan2f(-Ax, sqrtf(Ay*Ay + Az*Az)) * 180.0f / M_PI;*/
-      /* --- Leer y procesar Voltaje de Batería --- */
             uint32_t sum = 0;
             for(int i = 0; i < ADC_BUF_LEN; i++)
             {
@@ -926,10 +860,7 @@ void StartTelemetriaTask(void *argument)
             }
             vbat1 = (float)sum / ADC_BUF_LEN;
             vbat1 = (vbat1 / 4095.0f) * 16.5f;
-
             uint16_t vbat_send = (uint16_t)(vbat1 * 100.0f);
-
-            /* --- Leer distancia del VL53L0X --- */
             vl53_meas_status = VL53L0X_PerformSingleRangingMeasurement(&vl53l0x_dev, &vl53l0x_meas);
             vl53_range_status = vl53l0x_meas.RangeStatus;
 
@@ -968,6 +899,15 @@ void StartTelemetriaTask(void *argument)
 * @retval None
 */
 /* USER CODE END Header_StartSemiAutoTask */
+#define WAIT_FOR_ACOPLE(dir_var) \
+    do { \
+        uint32_t t_start = HAL_GetTick(); \
+        while ((dir_var) != 0 && (HAL_GetTick() - t_start) < SEMIAUTO_DELAY_RUEDA_MS) { \
+            if (osEventFlagsGet(semiAutoEvtHandle) & EVT_STOP_SEMI) break; \
+            osDelay(20); \
+        } \
+    } while (0)
+
 void StartSemiAutoTask(void *argument)
 {
   /* USER CODE BEGIN StartSemiAutoTask */
@@ -982,26 +922,25 @@ void StartSemiAutoTask(void *argument)
     osEventFlagsClear(semiAutoEvtHandle, EVT_START_SEMI | EVT_STOP_SEMI);
 
     if (flags & EVT_STOP_SEMI) continue;
-    if (ruedas_abiertas) {
+    if (HAL_GPIO_ReadPin(Cerrado_GPIO_Port, Cerrado_Pin) == GPIO_PIN_RESET) {
       Acoplar();
-      osDelay(SEMIAUTO_DELAY_RUEDA_MS);
+      WAIT_FOR_ACOPLE(dir_acoplar);
     }
-    if (ruedas1_abiertas) {
+    if (HAL_GPIO_ReadPin(Cerrado1_GPIO_Port, Cerrado1_Pin) == GPIO_PIN_RESET) {
       Acoplar1();
-      osDelay(SEMIAUTO_DELAY_RUEDA_MS);
+      WAIT_FOR_ACOPLE(dir_acoplar1);
     }
     Motor_SetAllPulse(MOTOR_PWM_MAX);
-    /* Detección del primer par de ruedas mediante el sensor de distancia VL53L0X (umbral < 35 mm) */
     uint8_t stop_requested = 0;
     while (1) {
-      if (distancia_mm > 0 && distancia_mm < 35) {
+      if (distancia_mm > 0 && distancia_mm < 43) {
         break;
       }
       flags = osEventFlagsWait(semiAutoEvtHandle,
                                EVT_STOP_SEMI,
                                osFlagsWaitAny | osFlagsNoClear,
                                50);
-      if (flags & EVT_STOP_SEMI) {
+      if (!(flags & osFlagsError) && (flags & EVT_STOP_SEMI)) {
         osEventFlagsClear(semiAutoEvtHandle, EVT_STOP_SEMI);
         stop_requested = 1;
         break;
@@ -1012,54 +951,56 @@ void StartSemiAutoTask(void *argument)
     Motor_Stop();
     Cerrar_Pinza();
     osDelay(SEMIAUTO_DELAY_PINZA_MS);
-
     Desacoplar();
-    osDelay(SEMIAUTO_DELAY_RUEDA_MS);
-
+    WAIT_FOR_ACOPLE(dir_acoplar);
     if (osEventFlagsGet(semiAutoEvtHandle) & EVT_STOP_SEMI) {
       osEventFlagsClear(semiAutoEvtHandle, EVT_STOP_SEMI);
       continue;
     }
-
-    /* Limpiar EVT_OBSTACULO1 previo antes de avanzar al segundo par de ruedas */
-    osEventFlagsClear(semiAutoEvtHandle, EVT_OBSTACULO1);
-
-    /* Detección del segundo par de ruedas mediante el final de carrera de obstáculo 1 */
     Motor_SetAllPulse(SEMIAUTO_VEL_LENTA);
-    flags = osEventFlagsWait(semiAutoEvtHandle,
-                             EVT_OBSTACULO1 | EVT_STOP_SEMI,
-                             osFlagsWaitAny | osFlagsNoClear,
-                             osWaitForever);
-    osEventFlagsClear(semiAutoEvtHandle, EVT_OBSTACULO1 | EVT_STOP_SEMI);
-
+    uint32_t press_start = 0;
+    while (1) {
+        if (osEventFlagsGet(semiAutoEvtHandle) & EVT_STOP_SEMI) {
+            flags = EVT_STOP_SEMI;
+            osEventFlagsClear(semiAutoEvtHandle, EVT_STOP_SEMI);
+            break;
+        }
+        if (HAL_GPIO_ReadPin(Obstaculo1_GPIO_Port, Obstaculo1_Pin) == GPIO_PIN_SET) {
+            if (press_start == 0) {
+                press_start = HAL_GetTick();
+            } else if ((HAL_GetTick() - press_start) > 150) {
+                flags = EVT_OBSTACULO1;
+                break;
+            }
+        } else {
+            press_start = 0;
+        }
+        osDelay(10);
+    }
+    osEventFlagsClear(semiAutoEvtHandle, EVT_OBSTACULO1);
     if (flags & EVT_STOP_SEMI) { Motor_Stop(); continue; }
-
+    Motor_Stop();
     Acoplar();
-    osDelay(SEMIAUTO_DELAY_RUEDA_MS);
-
+    WAIT_FOR_ACOPLE(dir_acoplar);
     Desacoplar1();
-    osDelay(SEMIAUTO_DELAY_RUEDA_MS);
-
+    WAIT_FOR_ACOPLE(dir_acoplar1);
     if (osEventFlagsGet(semiAutoEvtHandle) & EVT_STOP_SEMI) {
       osEventFlagsClear(semiAutoEvtHandle, EVT_STOP_SEMI);
       Motor_Stop();
       continue;
     }
-
     Motor_SetAllPulse(SEMIAUTO_VEL_LENTA);
     osDelay(SEMIAUTO_CRUCE_MS);
-
     if (osEventFlagsGet(semiAutoEvtHandle) & EVT_STOP_SEMI) {
       osEventFlagsClear(semiAutoEvtHandle, EVT_STOP_SEMI);
       Motor_Stop();
       continue;
     }
+    Motor_Stop();
     Acoplar1();
-    osDelay(SEMIAUTO_DELAY_RUEDA_MS);
-
+    WAIT_FOR_ACOPLE(dir_acoplar1);
     Abrir_Pinza();
     osDelay(SEMIAUTO_DELAY_PINZA_MS);
-
     Motor_SetAllPulse(MOTOR_PWM_MAX);
 
   }

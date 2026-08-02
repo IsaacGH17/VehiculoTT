@@ -29,7 +29,7 @@ VL53L0X_Error VL53L0X_ReadMulti(VL53L0X_DEV Dev, uint8_t index, uint8_t *pdata, 
 }
 VL53L0X_Error VL53L0X_WrByte(VL53L0X_DEV Dev, uint8_t index, uint8_t data){
     return VL53L0X_WriteMulti(Dev, index, &data, 1);
-}
+ }
 
 VL53L0X_Error VL53L0X_WrWord(VL53L0X_DEV Dev, uint8_t index, uint16_t data){
     uint8_t buf[2] = {
@@ -82,5 +82,5 @@ VL53L0X_Error VL53L0X_UpdateByte(VL53L0X_DEV Dev, uint8_t index,
     VL53L0X_Error err = VL53L0X_RdByte(Dev, index, &data);
      if (err != VL53L0X_ERROR_NONE) return err;
     data = (data & AndData) | OrData;
-    return VL53L0X_WrByte(Dev, index, data);
+     return VL53L0X_WrByte(Dev, index, data);
 }
