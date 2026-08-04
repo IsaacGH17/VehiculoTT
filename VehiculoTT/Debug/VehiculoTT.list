@@ -3525,10 +3525,10 @@ void Acoplar1(void){
  80019f0:	f44f 4100 	mov.w	r1, #32768	@ 0x8000
  80019f4:	4805      	ldr	r0, [pc, #20]	@ (8001a0c <Acoplar1+0x28>)
  80019f6:	f006 ffa5 	bl	8008944 <HAL_GPIO_WritePin>
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 1700);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 2000);
  80019fa:	4b05      	ldr	r3, [pc, #20]	@ (8001a10 <Acoplar1+0x2c>)
  80019fc:	681b      	ldr	r3, [r3, #0]
- 80019fe:	f240 62a4 	movw	r2, #1700	@ 0x6a4
+ 80019fe:	f44f 62fa 	mov.w	r2, #2000	@ 0x7d0
  8001a02:	635a      	str	r2, [r3, #52]	@ 0x34
 }
  8001a04:	bf00      	nop
@@ -3550,14 +3550,15 @@ void Desacoplar1(void){
  8001a20:	f44f 4100 	mov.w	r1, #32768	@ 0x8000
  8001a24:	4805      	ldr	r0, [pc, #20]	@ (8001a3c <Desacoplar1+0x28>)
  8001a26:	f006 ff8d 	bl	8008944 <HAL_GPIO_WritePin>
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 600);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 100);
  8001a2a:	4b05      	ldr	r3, [pc, #20]	@ (8001a40 <Desacoplar1+0x2c>)
  8001a2c:	681b      	ldr	r3, [r3, #0]
- 8001a2e:	f44f 7216 	mov.w	r2, #600	@ 0x258
- 8001a32:	635a      	str	r2, [r3, #52]	@ 0x34
+ 8001a2e:	2264      	movs	r2, #100	@ 0x64
+ 8001a30:	635a      	str	r2, [r3, #52]	@ 0x34
 }
- 8001a34:	bf00      	nop
- 8001a36:	bd80      	pop	{r7, pc}
+ 8001a32:	bf00      	nop
+ 8001a34:	bd80      	pop	{r7, pc}
+ 8001a36:	bf00      	nop
  8001a38:	2000085d 	.word	0x2000085d
  8001a3c:	40020400 	.word	0x40020400
  8001a40:	200004cc 	.word	0x200004cc

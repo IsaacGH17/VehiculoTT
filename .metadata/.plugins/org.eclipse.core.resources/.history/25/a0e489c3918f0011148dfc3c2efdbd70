@@ -70,12 +70,12 @@ void Desacoplar(void){
 void Acoplar1(void){
     dir_acoplar1 = 1;
 	HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 2000);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 1700);
 }
 void Desacoplar1(void){
     dir_acoplar1 = 2;
 	HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_SET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 100);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 600);
 }
 void Motor_SpeedDec(void) {
     uint16_t new_pulse;
