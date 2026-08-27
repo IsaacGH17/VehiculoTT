@@ -222,7 +222,7 @@ int main(void)
   }
 
   /* USER CODE END 2 */
-
+  //Prueba
   /* Init scheduler */
   osKernelInitialize();
 
