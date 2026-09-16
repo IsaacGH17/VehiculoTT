@@ -11,7 +11,7 @@ volatile uint16_t percentage_pulse = 0;
 int i = 0;
 volatile uint8_t dir_acoplar = 0;
 volatile uint8_t dir_acoplar1 = 0;
-volatile uint8_t pinzas_abiertas = 1; /* 1 = abiertas, 0 = cerradas. Inicia abierta (Motor_Init pone 1290) */
+volatile uint8_t pinzas_abiertas = 0; /* 1 = abiertas, 0 = cerradas. Inicia cerrada (Motor_Init pone 620) */
 
 static const uint32_t motor_channel[MOTOR_COUNT] = {
     TIM_CHANNEL_1,
@@ -29,8 +29,8 @@ void Motor_Init(void) {
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 1290);
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 1290);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 620);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 620);
     Motor_SetAllPulse(0);
 }
 
