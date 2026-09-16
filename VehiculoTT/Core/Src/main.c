@@ -949,7 +949,10 @@ void StartSemiAutoTask(void *argument)
 
     if (stop_requested) { Motor_Stop(); continue; }
     Motor_Stop();
-    Cerrar_Pinza();
+    if (pinzas_abiertas) {
+        Cerrar_Pinza();
+        pinzas_abiertas = 0;
+    }
     osDelay(SEMIAUTO_DELAY_PINZA_MS);
     Desacoplar();
     WAIT_FOR_ACOPLE(dir_acoplar);
@@ -999,7 +1002,14 @@ void StartSemiAutoTask(void *argument)
     Motor_Stop();
     Acoplar1();
     WAIT_FOR_ACOPLE(dir_acoplar1);
-    Abrir_Pinza();
+    if (osEventFlagsGet(semiAutoEvtHandle) & EVT_STOP_SEMI) {
+      osEventFlagsClear(semiAutoEvtHandle, EVT_STOP_SEMI);
+      continue;
+    }
+    if (!pinzas_abiertas) {
+        Abrir_Pinza();
+        pinzas_abiertas = 1;
+    }
     osDelay(SEMIAUTO_DELAY_PINZA_MS);
     Motor_SetAllPulse(MOTOR_PWM_MAX);
 

@@ -14,6 +14,7 @@ extern volatile uint8_t ruedas_abiertas;
 extern volatile uint8_t ruedas1_abiertas;
 extern volatile uint8_t dir_acoplar;
 extern volatile uint8_t dir_acoplar1;
+extern volatile uint8_t pinzas_abiertas;
 extern osEventFlagsId_t semiAutoEvtHandle;
 #define EVT_OBSTACULO1   (1U << 0)
 #define EVT_OBSTACULO2   (1U << 1)

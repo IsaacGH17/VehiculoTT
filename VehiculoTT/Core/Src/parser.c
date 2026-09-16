@@ -93,7 +93,10 @@ void execute_command(Packet_t *pkt) {
             Motor_Stop();
             if (semiAutoEvtHandle != NULL)
                 osEventFlagsSet(semiAutoEvtHandle, EVT_STOP_SEMI);
-            Cerrar_Pinza();
+            if (pinzas_abiertas) {
+                Cerrar_Pinza();
+                pinzas_abiertas = 0;
+            }
             if (ruedas_abiertas) {
                 Acoplar();
                 ruedas_abiertas = 0;
@@ -111,12 +114,17 @@ void execute_command(Packet_t *pkt) {
             break;
 
         case CMD_PINZAS:
-           if(pkt->payload[0] == PARAM_CLOSE){
-        	   Cerrar_Pinza();
-           } else if(pkt->payload[0] == PARAM_OPEN){
-        	   Abrir_Pinza();
-           }
-
+            if (pkt->payload[0] == PARAM_CLOSE) {
+                if (pinzas_abiertas) {
+                    Cerrar_Pinza();
+                    pinzas_abiertas = 0;
+                }
+            } else if (pkt->payload[0] == PARAM_OPEN) {
+                if (!pinzas_abiertas) {
+                    Abrir_Pinza();
+                    pinzas_abiertas = 1;
+                }
+            }
             break;
         case CMD_ACK_NACK:
         {

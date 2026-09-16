@@ -1,14 +1,18 @@
 #include "motor_control.h"
 #include "globals.h"
 #include "main.h"
+
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
+
 volatile uint16_t current_pulse = 0;
 volatile uint16_t percentage_pulse = 0;
 int i = 0;
 volatile uint8_t dir_acoplar = 0;
 volatile uint8_t dir_acoplar1 = 0;
+volatile uint8_t pinzas_abiertas = 1; /* 1 = abiertas, 0 = cerradas. Inicia abierta (Motor_Init pone 1290) */
+
 static const uint32_t motor_channel[MOTOR_COUNT] = {
     TIM_CHANNEL_1,
     TIM_CHANNEL_2,
@@ -28,8 +32,6 @@ void Motor_Init(void) {
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 1290);
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 1290);
     Motor_SetAllPulse(0);
-
-
 }
 
 void Motor_SetPulse(MotorId_t motor, uint16_t pulse) {
@@ -52,31 +54,36 @@ void Motor_SpeedInc(void) {
     uint16_t new_pulse = current_pulse + MOTOR_SPEED_STEP;
     percentage_pulse = percentage_pulse + 10;
     if (new_pulse > MOTOR_PWM_MAX){
-    	new_pulse = MOTOR_PWM_MAX;
-    	percentage_pulse = 100;
+        new_pulse = MOTOR_PWM_MAX;
+        percentage_pulse = 100;
     }
     Motor_SetAllPulse(new_pulse);
 }
+
 void Acoplar(void){
     dir_acoplar = 1;
-	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_SET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 600);
+    HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_SET);
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 600);
 }
+
 void Desacoplar(void){
     dir_acoplar = 2;
-	HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1700);
+    HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1700);
 }
+
 void Acoplar1(void){
     dir_acoplar1 = 1;
-	HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 2000);
+    HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 2000);
 }
+
 void Desacoplar1(void){
     dir_acoplar1 = 2;
-	HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_SET);
-	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 100);
+    HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_SET);
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 100);
 }
+
 void Motor_SpeedDec(void) {
     uint16_t new_pulse;
     if (current_pulse < MOTOR_SPEED_STEP) {
@@ -92,15 +99,15 @@ void Motor_SpeedDec(void) {
 void Motor_Stop(void) {
     Motor_SetAllPulse(0);
 }
+
 void Abrir_Pinza(void){
-	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 1290);
-	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 1290);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 1290);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 1290);
 }
+
 void Cerrar_Pinza(void){
-
-
-	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 620);
-		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 620);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 620);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 620);
 }
 
 uint16_t Motor_GetCurrentPulse(void) {
