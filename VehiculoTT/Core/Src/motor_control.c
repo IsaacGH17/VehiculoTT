@@ -29,19 +29,31 @@ void Motor_SetDirection(uint8_t reverse) {
 }
 
 void Motor_ApplySpeed(void) {
-    if (percentage_pulse > 0) {
-        Motor_SetDirection(0);
-        uint16_t pulse = (percentage_pulse >= 100) ? MOTOR_PWM_MAX : (uint16_t)(percentage_pulse * MOTOR_SPEED_STEP);
-        Motor_SetAllPulse(pulse);
-    } else if (percentage_pulse < 0) {
-        Motor_SetDirection(1);
-        int16_t abs_pct = -percentage_pulse;
-        uint16_t pulse = (abs_pct >= 100) ? MOTOR_PWM_MAX : (uint16_t)(abs_pct * MOTOR_SPEED_STEP);
-        Motor_SetAllPulse(pulse);
-    } else {
+    int16_t speed = percentage_pulse;
+    uint16_t pulse;
+
+    if (speed > 100) {
+        speed = 100;
+    } else if (speed < -100) {
+        speed = -100;
+    }
+
+    if (speed == 0) {
         Motor_SetAllPulse(0);
         Motor_SetDirection(0);
+        return;
     }
+
+    uint8_t reverse = (speed < 0) ? 1U : 0U;
+    if (reverse) {
+        speed = (int16_t)(-speed);
+    }
+
+    pulse = (uint16_t)(((uint32_t)speed * MOTOR_PWM_MAX) / 100U);
+
+    Motor_SetAllPulse(0);
+    Motor_SetDirection(reverse);
+    Motor_SetAllPulse(pulse);
 }
 
 void Motor_SetSpeedPercentage(int16_t percentage) {
