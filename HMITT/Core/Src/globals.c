@@ -12,3 +12,4 @@ volatile int dist_mm = 0;
 volatile float roll = 0.0;
 volatile float pitch = 0.0;
 volatile uint8_t flag_paro_e = 0;
+volatile char act[3] = "NA";

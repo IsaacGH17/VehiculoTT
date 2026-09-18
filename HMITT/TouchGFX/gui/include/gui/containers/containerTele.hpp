@@ -2,7 +2,7 @@
 #define CONTAINERTELE_HPP
 
 #include <gui_generated/containers/containerTeleBase.hpp>
-
+#include <cstring>
 class containerTele : public containerTeleBase
 {
 public:
@@ -16,18 +16,20 @@ public:
     void setDistValue(int value);
     void setRollValue(float value);
     void setPitchValue(float value);
-
+    void setActValue(char value[3]);
 protected:
     touchgfx::Unicode::UnicodeChar batValueBuffer[10];
     touchgfx::Unicode::UnicodeChar pwmValueBuffer[10];
     touchgfx::Unicode::UnicodeChar distValueBuffer[10];
     touchgfx::Unicode::UnicodeChar rollValueBuffer[10];
     touchgfx::Unicode::UnicodeChar pitchValueBuffer[10];
+    touchgfx::Unicode::UnicodeChar actValueBuffer[10];
     float lastBatValue;
     int lastPWMValue;
     int lastDistValue;
     float lastRollValue;
     float lastPitchValue;
+    char lastActValue[10];
 };
 
 #endif // CONTAINERTELE_HPP

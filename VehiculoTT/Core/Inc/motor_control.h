@@ -30,6 +30,12 @@ void Desacoplar1(void);
 void Motor_Stop(void);
 void Abrir_Pinza(void);
 void Cerrar_Pinza(void);
+void Abrir_Pinza1(void);
+void Cerrar_Pinza1(void);
+void Motor_SetDirection(uint8_t reverse);
+void Motor_ApplySpeed(void);
+void Motor_SetSpeedPercentage(int16_t percentage);
+int16_t Motor_GetSpeedPercentage(void);
 uint16_t Motor_GetCurrentPulse(void);
 
 #endif /* __MOTOR_CONTROL_H__ */

@@ -55,7 +55,7 @@
             "Type": "TextArea",
             "Name": "textArea1",
             "X": 73,
-            "Y": 110,
+            "Y": 119,
             "Width": 186,
             "Height": 20,
             "TextId": "__SingleUse_81D2",
@@ -289,6 +289,22 @@
             "Width": 96,
             "Height": 20,
             "TextId": "__SingleUse_VPGZ",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "actval",
+            "X": 11,
+            "Y": 91,
+            "Width": 115,
+            "Height": 19,
+            "TextId": "__SingleUse_87HO",
             "TextRotation": "0",
             "Color": {
               "Red": 255,

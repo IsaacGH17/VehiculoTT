@@ -36,7 +36,10 @@ void SemiPresenter::updatePitch(float value)
 {
 	view.setPitchValue(value);
 }
-
+void SemiPresenter::updateAct(char value[3])
+{
+	view.setActValue(value);
+}
 void SemiPresenter::solicitarModoManual()
 {
     model->solicitarModoManual();

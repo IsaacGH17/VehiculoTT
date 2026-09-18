@@ -89,7 +89,7 @@ void execute_command(Packet_t *pkt) {
         HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_SET); /* Encender Amarillo */
         HAL_GPIO_WritePin(Verde_GPIO_Port,   Verde_Pin,   GPIO_PIN_SET);   /* Encender Verde */
         if (pkt->length >= 1) {
-            pwm = pkt->payload[0];
+            pwm = (int8_t)pkt->payload[0];
         }
     }
 }

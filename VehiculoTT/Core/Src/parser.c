@@ -76,10 +76,14 @@ void execute_command(Packet_t *pkt) {
             break;
 
         case CMD_VELOCIDAD:
-            if (pkt->payload[0] == PARAM_VEL_INC) {
-                Motor_SpeedInc();
-            } else if (pkt->payload[0] == PARAM_VEL_DEC) {
-                Motor_SpeedDec();
+            if (pkt->length >= 2) {
+                Motor_SetSpeedPercentage((int8_t)pkt->payload[1]);
+            } else {
+                if (pkt->payload[0] == PARAM_VEL_INC) {
+                    Motor_SpeedInc();
+                } else if (pkt->payload[0] == PARAM_VEL_DEC) {
+                    Motor_SpeedDec();
+                }
             }
             break;
 
@@ -93,10 +97,14 @@ void execute_command(Packet_t *pkt) {
             Motor_Stop();
             if (semiAutoEvtHandle != NULL)
                 osEventFlagsSet(semiAutoEvtHandle, EVT_STOP_SEMI);
-            if (pinzas_abiertas) {
+            if (pinza_abierta) {
                 Cerrar_Pinza();
-                pinzas_abiertas = 0;
+                pinza_abierta = 0;
             }
+            if (pinza_abierta1) {
+				Cerrar_Pinza1();
+				pinza_abierta1 = 0;
+			}
             if (ruedas_abiertas) {
                 Acoplar();
                 ruedas_abiertas = 0;
@@ -114,15 +122,40 @@ void execute_command(Packet_t *pkt) {
             break;
 
         case CMD_PINZAS:
-            if (pkt->payload[0] == PARAM_CLOSE) {
-                if (pinzas_abiertas) {
-                    Cerrar_Pinza();
-                    pinzas_abiertas = 0;
+            if (pkt->length >= 2) {
+                if (pkt->payload[0] == PARAM_CLOSE) {
+                    if (pkt->payload[1] == 0x01) {
+                        if (pinza_abierta) {
+                            Cerrar_Pinza();
+                            pinza_abierta = 0;
+                        }
+                    } else if (pkt->payload[1] == 0x02) {
+                        if (pinza_abierta1) {
+                            Cerrar_Pinza1();
+                            pinza_abierta1 = 0;
+                        }
+                    }
+                } else if (pkt->payload[0] == PARAM_OPEN) {
+                    if (pkt->payload[1] == 0x01) {
+                        if (!pinza_abierta) {
+                            Abrir_Pinza();
+                            pinza_abierta = 1;
+                        }
+                    } else if (pkt->payload[1] == 0x02) {
+                        if (!pinza_abierta1) {
+                            Abrir_Pinza1();
+                            pinza_abierta1 = 1;
+                        }
+                    }
                 }
-            } else if (pkt->payload[0] == PARAM_OPEN) {
-                if (!pinzas_abiertas) {
-                    Abrir_Pinza();
-                    pinzas_abiertas = 1;
+            } else if (pkt->length == 1) {
+                /* Retrocompatibilidad: Si solo se envía la acción, aplica a ambas pinzas */
+                if (pkt->payload[0] == PARAM_CLOSE) {
+                    if (pinza_abierta)  { Cerrar_Pinza();  pinza_abierta  = 0; }
+                    if (pinza_abierta1) { Cerrar_Pinza1(); pinza_abierta1 = 0; }
+                } else if (pkt->payload[0] == PARAM_OPEN) {
+                    if (!pinza_abierta)  { Abrir_Pinza();  pinza_abierta  = 1; }
+                    if (!pinza_abierta1) { Abrir_Pinza1(); pinza_abierta1 = 1; }
                 }
             }
             break;
@@ -130,7 +163,7 @@ void execute_command(Packet_t *pkt) {
         {
             uint16_t packet_size = 0;
             static uint8_t tx_buffer[20];
-            uint8_t payload[1] = { (uint8_t)percentage_pulse };
+            uint8_t payload[1] = { (uint8_t)(int8_t)percentage_pulse };
             packet_size = build_packet(tx_buffer, RESP_SUCCESS, payload, 1);
             while (huart1.gState != HAL_UART_STATE_READY) {
                 osDelay(1);

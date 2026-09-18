@@ -804,7 +804,7 @@ void ParserTask(void *argument)
   osDelay(500);
   {
       static uint8_t sync_tx_buf[20];
-      uint8_t sync_payload[1] = { (uint8_t)percentage_pulse };
+      uint8_t sync_payload[1] = { (uint8_t)(int8_t)percentage_pulse };
       uint16_t sync_size = build_packet(sync_tx_buf, RESP_SUCCESS, sync_payload, 1);
       if (huart1.gState == HAL_UART_STATE_READY) {
           HAL_UART_Transmit_DMA(&huart1, sync_tx_buf, sync_size);
@@ -949,10 +949,14 @@ void StartSemiAutoTask(void *argument)
 
     if (stop_requested) { Motor_Stop(); continue; }
     Motor_Stop();
-    if (pinzas_abiertas) {
+    if (pinza_abierta) {
         Cerrar_Pinza();
-        pinzas_abiertas = 0;
+        pinza_abierta = 0;
     }
+    if (pinza_abierta1) {
+            Cerrar_Pinza1();
+            pinza_abierta1 = 0;
+        }
     osDelay(SEMIAUTO_DELAY_PINZA_MS);
     Desacoplar();
     WAIT_FOR_ACOPLE(dir_acoplar);
@@ -1006,10 +1010,14 @@ void StartSemiAutoTask(void *argument)
       osEventFlagsClear(semiAutoEvtHandle, EVT_STOP_SEMI);
       continue;
     }
-    if (!pinzas_abiertas) {
+    if (!pinza_abierta) {
         Abrir_Pinza();
-        pinzas_abiertas = 1;
+        pinza_abierta = 1;
     }
+    if (!pinza_abierta1) {
+            Abrir_Pinza1();
+            pinza_abierta1 = 1;
+        }
     osDelay(SEMIAUTO_DELAY_PINZA_MS);
     Motor_SetAllPulse(MOTOR_PWM_MAX);
 

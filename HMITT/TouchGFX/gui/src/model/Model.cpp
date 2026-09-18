@@ -22,6 +22,7 @@ void Model::tick()
 		modelListener->updateDist(dist_mm);
 		modelListener->updateRoll(roll);
 		modelListener->updatePitch(pitch);
+		modelListener->updateAct((char*)act);
 	}
 
 }

@@ -9,12 +9,13 @@
 #define INC_GLOBALS_H_
 #include <stdint.h>
 #include "cmsis_os.h"
-extern volatile uint16_t percentage_pulse;
+extern volatile int16_t percentage_pulse;
 extern volatile uint8_t ruedas_abiertas;
 extern volatile uint8_t ruedas1_abiertas;
 extern volatile uint8_t dir_acoplar;
 extern volatile uint8_t dir_acoplar1;
-extern volatile uint8_t pinzas_abiertas;
+extern volatile uint8_t pinza_abierta;
+extern volatile uint8_t pinza_abierta1;
 extern osEventFlagsId_t semiAutoEvtHandle;
 #define EVT_OBSTACULO1   (1U << 0)
 #define EVT_OBSTACULO2   (1U << 1)

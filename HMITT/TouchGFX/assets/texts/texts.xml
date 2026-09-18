@@ -10,6 +10,9 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_87HO" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">actuador:&lt;value&gt;</Translation>
+      </Text>
       <Text Id="__SingleUse_VPGZ" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">pitch:&lt;value&gt;°</Translation>
       </Text>

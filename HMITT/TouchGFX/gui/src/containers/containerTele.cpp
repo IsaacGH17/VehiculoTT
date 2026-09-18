@@ -16,6 +16,8 @@ containerTele::containerTele()
     touchgfx::Unicode::strncpy(distValueBuffer, "0", 10);
     touchgfx::Unicode::strncpy(rollValueBuffer, "0", 10);
     touchgfx::Unicode::strncpy(pitchValueBuffer, "0", 10);
+    touchgfx::Unicode::strncpy(actValueBuffer, "NA", 10);
+    lastActValue[0] = '\0';
 }
 
 void containerTele::initialize()
@@ -35,6 +37,8 @@ void containerTele::initialize()
     rollval.invalidate();
     pitchval.setWildcard(pitchValueBuffer);
     pitchval.invalidate();
+    actval.setWildcard(actValueBuffer);
+    actval.invalidate();
 }
 
 void containerTele::setBatValue(float value)
@@ -86,5 +90,15 @@ void containerTele::setPitchValue(float value)
         lastPitchValue = value;
         touchgfx::Unicode::snprintfFloat(pitchValueBuffer, 10, "%.2f", value);
         pitchval.invalidate();
+    }
+}
+void containerTele::setActValue(char value[3])
+{
+    if (strncmp(value, lastActValue, sizeof(lastActValue)) != 0)
+    {
+        strncpy(lastActValue, value, sizeof(lastActValue) - 1);
+        lastActValue[sizeof(lastActValue) - 1] = '\0';
+        touchgfx::Unicode::strncpy(actValueBuffer, value, 10);
+        actval.invalidate();
     }
 }

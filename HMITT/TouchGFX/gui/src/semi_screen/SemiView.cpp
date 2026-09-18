@@ -36,7 +36,9 @@ void SemiView::setPitchValue(float value)
 {
     containerTele1.setPitchValue(value);
 }
-
+void SemiView::setActValue(char value[3]){
+	containerTele1.setActValue(value);
+}
 void SemiView::modoManual()
 {
     presenter->solicitarModoManual();

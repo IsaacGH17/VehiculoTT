@@ -50,6 +50,12 @@ containerTeleBase::containerTeleBase()
     pitchval.setLinespacing(0);
     pitchval.setTypedText(touchgfx::TypedText(T___SINGLEUSE_VPGZ));
     add(pitchval);
+
+    actval.setPosition(11, 91, 115, 19);
+    actval.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
+    actval.setLinespacing(0);
+    actval.setTypedText(touchgfx::TypedText(T___SINGLEUSE_87HO));
+    add(actval);
 }
 
 containerTeleBase::~containerTeleBase()

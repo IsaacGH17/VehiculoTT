@@ -7,18 +7,53 @@ extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
 
 volatile uint16_t current_pulse = 0;
-volatile uint16_t percentage_pulse = 0;
+volatile int16_t percentage_pulse = 0;
 int i = 0;
 volatile uint8_t dir_acoplar = 0;
 volatile uint8_t dir_acoplar1 = 0;
-volatile uint8_t pinzas_abiertas = 0; /* 1 = abiertas, 0 = cerradas. Inicia cerrada (Motor_Init pone 620) */
-
+volatile uint8_t pinza_abierta = 0;
+volatile uint8_t pinza_abierta1 = 0;
 static const uint32_t motor_channel[MOTOR_COUNT] = {
     TIM_CHANNEL_1,
     TIM_CHANNEL_2,
     TIM_CHANNEL_3,
     TIM_CHANNEL_4
 };
+
+void Motor_SetDirection(uint8_t reverse) {
+    GPIO_PinState state = reverse ? GPIO_PIN_SET : GPIO_PIN_RESET;
+    HAL_GPIO_WritePin(Direccion1_GPIO_Port, Direccion1_Pin, state);
+    HAL_GPIO_WritePin(Direccion2_GPIO_Port, Direccion2_Pin, state);
+    HAL_GPIO_WritePin(Direccion3_GPIO_Port, Direccion3_Pin, state);
+    HAL_GPIO_WritePin(Direccion4_GPIO_Port, Direccion4_Pin, state);
+}
+
+void Motor_ApplySpeed(void) {
+    if (percentage_pulse > 0) {
+        Motor_SetDirection(0);
+        uint16_t pulse = (percentage_pulse >= 100) ? MOTOR_PWM_MAX : (uint16_t)(percentage_pulse * MOTOR_SPEED_STEP);
+        Motor_SetAllPulse(pulse);
+    } else if (percentage_pulse < 0) {
+        Motor_SetDirection(1);
+        int16_t abs_pct = -percentage_pulse;
+        uint16_t pulse = (abs_pct >= 100) ? MOTOR_PWM_MAX : (uint16_t)(abs_pct * MOTOR_SPEED_STEP);
+        Motor_SetAllPulse(pulse);
+    } else {
+        Motor_SetAllPulse(0);
+        Motor_SetDirection(0);
+    }
+}
+
+void Motor_SetSpeedPercentage(int16_t percentage) {
+    if (percentage > 100) percentage = 100;
+    if (percentage < -100) percentage = -100;
+    percentage_pulse = percentage;
+    Motor_ApplySpeed();
+}
+
+int16_t Motor_GetSpeedPercentage(void) {
+    return percentage_pulse;
+}
 
 void Motor_Init(void) {
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
@@ -31,6 +66,7 @@ void Motor_Init(void) {
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 620);
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 620);
+    Motor_SetDirection(0);
     Motor_SetAllPulse(0);
 }
 
@@ -51,13 +87,11 @@ void Motor_SetAllPulse(uint16_t pulse) {
 }
 
 void Motor_SpeedInc(void) {
-    uint16_t new_pulse = current_pulse + MOTOR_SPEED_STEP;
-    percentage_pulse = percentage_pulse + 10;
-    if (new_pulse > MOTOR_PWM_MAX){
-        new_pulse = MOTOR_PWM_MAX;
-        percentage_pulse = 100;
+    if (percentage_pulse < 100) {
+        percentage_pulse += 10;
+        if (percentage_pulse > 100) percentage_pulse = 100;
     }
-    Motor_SetAllPulse(new_pulse);
+    Motor_ApplySpeed();
 }
 
 void Acoplar(void){
@@ -85,28 +119,31 @@ void Desacoplar1(void){
 }
 
 void Motor_SpeedDec(void) {
-    uint16_t new_pulse;
-    if (current_pulse < MOTOR_SPEED_STEP) {
-        new_pulse = 0;
-        percentage_pulse = 0;
-    } else {
-        new_pulse = current_pulse - MOTOR_SPEED_STEP;
-        percentage_pulse = percentage_pulse - 10;
+    if (percentage_pulse > -100) {
+        percentage_pulse -= 10;
+        if (percentage_pulse < -100) percentage_pulse = -100;
     }
-    Motor_SetAllPulse(new_pulse);
+    Motor_ApplySpeed();
 }
 
 void Motor_Stop(void) {
+    percentage_pulse = 0;
     Motor_SetAllPulse(0);
+    Motor_SetDirection(0);
 }
 
 void Abrir_Pinza(void){
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 1290);
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 1290);
 }
 
 void Cerrar_Pinza(void){
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 620);
+}
+void Abrir_Pinza1(void){
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 1290);
+}
+
+void Cerrar_Pinza1(void){
     __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, 620);
 }
 

@@ -12,4 +12,5 @@
 ../TouchGFX/gui/src/home_screen/homeView.cpp:27:6:void homeView::setDistValue(int)	1
 ../TouchGFX/gui/src/home_screen/homeView.cpp:31:6:void homeView::setRollValue(float)	1
 ../TouchGFX/gui/src/home_screen/homeView.cpp:35:6:void homeView::setPitchValue(float)	1
-../TouchGFX/gui/src/home_screen/homeView.cpp:40:6:virtual void homeView::modoSemi()	1
+../TouchGFX/gui/src/home_screen/homeView.cpp:39:6:void homeView::setActValue(char*)	1
+../TouchGFX/gui/src/home_screen/homeView.cpp:42:6:virtual void homeView::modoSemi()	1

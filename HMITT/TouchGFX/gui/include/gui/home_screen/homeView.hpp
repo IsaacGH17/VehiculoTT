@@ -17,6 +17,7 @@ public:
     void setDistValue(int value);
     void setRollValue(float value);
     void setPitchValue(float value);
+    void setActValue(char value[3]);
     virtual void modoSemi();
 protected:
 };

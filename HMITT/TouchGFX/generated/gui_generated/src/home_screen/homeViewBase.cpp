@@ -31,7 +31,7 @@ homeViewBase::homeViewBase() :
     btnsemi.setAction(buttonCallback);
     add(btnsemi);
 
-    textArea1.setXY(73, 110);
+    textArea1.setXY(73, 119);
     textArea1.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(touchgfx::TypedText(T___SINGLEUSE_81D2));

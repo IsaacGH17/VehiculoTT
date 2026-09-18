@@ -30,6 +30,7 @@ protected:
     touchgfx::TextAreaWithOneWildcard dist;
     touchgfx::TextAreaWithOneWildcard rollval;
     touchgfx::TextAreaWithOneWildcard pitchval;
+    touchgfx::TextAreaWithOneWildcard actval;
 
 private:
 

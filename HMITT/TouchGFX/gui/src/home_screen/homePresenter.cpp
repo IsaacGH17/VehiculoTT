@@ -36,7 +36,10 @@ void homePresenter::updatePitch(float value)
 {
 	view.setPitchValue(value);
 }
-
+void homePresenter::updateAct(char value[3])
+{
+	view.setActValue(value);
+}
 void homePresenter::solicitarModoSemi()
 {
     model->solicitarModoSemi();

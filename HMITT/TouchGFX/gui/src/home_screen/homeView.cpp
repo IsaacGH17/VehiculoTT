@@ -36,7 +36,9 @@ void homeView::setPitchValue(float value)
 {
     containerTele1.setPitchValue(value);
 }
-
+void homeView::setActValue(char value[3]){
+	containerTele1.setActValue(value);
+}
 void homeView::modoSemi()
 {
     presenter->solicitarModoSemi();

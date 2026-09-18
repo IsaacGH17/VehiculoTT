@@ -30,6 +30,7 @@ public:
     virtual void updateDist(int value);
     virtual void updatePitch(float value);
     virtual void updateRoll(float value);
+    virtual void updateAct(char value[3]);
     void solicitarModoManual();
     virtual ~SemiPresenter() {}
 

@@ -17,6 +17,7 @@ public:
     void setDistValue(int value);
     virtual void setPitchValue(float value);
     virtual void setRollValue(float value);
+    virtual void setActValue(char value[3]);
     virtual void modoManual();
 protected:
 };

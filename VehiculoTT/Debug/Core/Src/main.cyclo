@@ -19,6 +19,6 @@
 ../Core/Src/main.c:781:6:StartDefaultTask	1
 ../Core/Src/main.c:799:6:ParserTask	4
 ../Core/Src/main.c:837:6:StartTelemetriaTask	5
-../Core/Src/main.c:911:6:StartSemiAutoTask	35
-../Core/Src/main.c:1018:6:HAL_TIM_PeriodElapsedCallback	2
-../Core/Src/main.c:1035:6:Error_Handler	1
+../Core/Src/main.c:911:6:StartSemiAutoTask	40
+../Core/Src/main.c:1036:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/main.c:1053:6:Error_Handler	1

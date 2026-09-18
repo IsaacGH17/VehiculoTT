@@ -25,6 +25,7 @@
 #include "protocolo.h"
 #include "globals.h"
 #include "cmsis_os.h"
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -109,8 +110,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     {
         if (pwm < 100){
             pwm += 10;
-            payload = PARAM_VEL_INC;
-            len = build_packet(pwm_tx_buf, CMD_VELOCIDAD, &payload, 1);
+            uint8_t payload2[2] = { PARAM_VEL_INC, (uint8_t)(int8_t)pwm };
+            len = build_packet(pwm_tx_buf, CMD_VELOCIDAD, payload2, 2);
             if (huart1.gState == HAL_UART_STATE_READY) {
                 HAL_UART_Transmit_DMA(&huart1, pwm_tx_buf, len);
             }
@@ -118,10 +119,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     }
     else if (GPIO_Pin == PWM_DEC_Pin)
     {
-        if (pwm > 0){
+        if (pwm > -100){
             pwm -= 10;
-            payload = PARAM_VEL_DEC;
-            len = build_packet(pwm_tx_buf, CMD_VELOCIDAD, &payload, 1);
+            uint8_t payload2[2] = { PARAM_VEL_DEC, (uint8_t)(int8_t)pwm };
+            len = build_packet(pwm_tx_buf, CMD_VELOCIDAD, payload2, 2);
             if (huart1.gState == HAL_UART_STATE_READY) {
                 HAL_UART_Transmit_DMA(&huart1, pwm_tx_buf, len);
             }
@@ -130,13 +131,21 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     else if (GPIO_Pin == Pinzas_Pin)
     {
         selected_actuator = 1;
+        if(strcmp((const char*)act, "P1") == 0){
+        	strcpy((char*)act, "P2");
+        }else{
+        	strcpy((char*)act, "P1");
+        }
+
     }
     else if (GPIO_Pin == Ruedas_Pin)
     {
+    	strcpy((char*)act, "H1");
         selected_actuator = 2;
     }
     else if (GPIO_Pin == Cremallera_Pin)
     {
+    	strcpy((char*)act, "H2");
         selected_actuator = 3;
     }
     else if (GPIO_Pin == Reset_Pin){
@@ -155,9 +164,21 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     {
         if (selected_actuator == 1)
         {
-            payload = PARAM_OPEN;
-            len = build_packet(act_tx_buf, CMD_PINZAS, &payload, 1);
+        	if(strcmp((const char*)act, "P1") == 0){
+				uint8_t payload2[2] = {
+						PARAM_OPEN, 0x01
+					};
+				len = build_packet(act_tx_buf, CMD_PINZAS, payload2, 2);
+			}
+				else{
+					uint8_t payload2[2] = {
+								PARAM_OPEN, 0x02
+					};
+				len = build_packet(act_tx_buf, CMD_PINZAS, payload2, 2);
+			}
+
             HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
+
         }
         else if (selected_actuator == 2)
         {
@@ -179,8 +200,18 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     {
         if (selected_actuator == 1)
         {
-            payload = PARAM_CLOSE;
-            len = build_packet(act_tx_buf, CMD_PINZAS, &payload, 1);
+        	if(strcmp((const char*)act, "P1") == 0){
+				uint8_t payload2[2] = {
+						PARAM_CLOSE, 0x01
+				};
+				len = build_packet(act_tx_buf, CMD_PINZAS, payload2, 2);
+            }
+        	else{
+        		uint8_t payload2[2] = {
+        		            PARAM_CLOSE, 0x02
+        			};
+        		len = build_packet(act_tx_buf, CMD_PINZAS, payload2, 2);
+        	}
             HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
         }
         else if (selected_actuator == 2)
@@ -204,6 +235,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	   HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_SET);
 	   HAL_GPIO_WritePin(Rojo_GPIO_Port, Rojo_Pin, GPIO_PIN_SET);
 	   HAL_GPIO_WritePin(Verde_GPIO_Port, Verde_Pin, GPIO_PIN_RESET);
+       pwm = 0;
     	payload = PARAM_NONE;
     	len = build_packet(act_tx_buf, CMD_PARO_EMERG,&payload, 1);
     	HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);
@@ -214,6 +246,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_SET);
 	    HAL_GPIO_WritePin(Verde_GPIO_Port, Verde_Pin, GPIO_PIN_SET);
 	    HAL_GPIO_WritePin(Rojo_GPIO_Port, Rojo_Pin, GPIO_PIN_RESET);
+        pwm = 0;
     	payload = PARAM_NONE;
     	len = build_packet(act_tx_buf, CMD_PARO,&payload, 1);
     	HAL_UART_Transmit_DMA(&huart1, act_tx_buf, len);

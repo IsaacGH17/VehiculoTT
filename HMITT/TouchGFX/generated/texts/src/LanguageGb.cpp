@@ -10,13 +10,14 @@ KEEP extern const uint32_t indicesGb[] TEXT_LOCATION_FLASH_ATTRIBUTE;
 // Remap all strings
 TEXT_LOCATION_FLASH_PRAGMA
 KEEP extern const uint32_t indicesGb[] TEXT_LOCATION_FLASH_ATTRIBUTE = {
-    62, // T_RESOURCEID1: "New Text"
-    33, // T___SINGLEUSE_VPGZ: "pitch:<>?"
-    42, // T___SINGLEUSE_RT0F: "roll:<>?"
-    71, // T___SINGLEUSE_HIPL: "0"
-    54, // T___SINGLEUSE_SA29: "<>%"
-    50, // T___SINGLEUSE_K7SP: "PWM:<>%"
-    57, // T___SINGLEUSE_KA26: "mm:<>"
+    73, // T_RESOURCEID1: "New Text"
+    18, // T___SINGLEUSE_87HO: "actuador:<>"
+    44, // T___SINGLEUSE_VPGZ: "pitch:<>?"
+    53, // T___SINGLEUSE_RT0F: "roll:<>?"
+    82, // T___SINGLEUSE_HIPL: "0"
+    65, // T___SINGLEUSE_SA29: "<>%"
+    61, // T___SINGLEUSE_K7SP: "PWM:<>%"
+    68, // T___SINGLEUSE_KA26: "mm:<>"
     0,  // T___SINGLEUSE_81D2: "Selecci?n de modo"
-    18  // T___SINGLEUSE_220X: "Semiautom?tico"
+    29  // T___SINGLEUSE_220X: "Semiautom?tico"
 };
