@@ -601,7 +601,12 @@ void StartDefaultTask(void *argument)
   /* USER CODE BEGIN 5 */
   for(;;)
   {
-    osDelay(1000);
+    if (HAL_GetTick() - last_telemetry_time > 3000) {
+        HAL_GPIO_WritePin(Rojo_GPIO_Port,    Rojo_Pin,    GPIO_PIN_SET);
+        HAL_GPIO_WritePin(Amarillo_GPIO_Port, Amarillo_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(Verde_GPIO_Port,   Verde_Pin,   GPIO_PIN_RESET);
+    }
+    osDelay(500);
   }
   /* USER CODE END 5 */
 }

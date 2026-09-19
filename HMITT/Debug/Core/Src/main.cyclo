@@ -8,9 +8,9 @@
 ../Core/Src/main.c:462:13:MX_DMA_Init	1
 ../Core/Src/main.c:486:13:MX_GPIO_Init	1
 ../Core/Src/main.c:578:6:HAL_UART_ErrorCallback	2
-../Core/Src/main.c:599:6:StartDefaultTask	1
-../Core/Src/main.c:616:6:RefreshGUI	1
-../Core/Src/main.c:640:6:Counter_UP	1
-../Core/Src/main.c:658:6:ParserTask	4
-../Core/Src/main.c:702:6:HAL_TIM_PeriodElapsedCallback	2
-../Core/Src/main.c:719:6:Error_Handler	1
+../Core/Src/main.c:599:6:StartDefaultTask	2
+../Core/Src/main.c:621:6:RefreshGUI	1
+../Core/Src/main.c:645:6:Counter_UP	1
+../Core/Src/main.c:663:6:ParserTask	4
+../Core/Src/main.c:707:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/main.c:724:6:Error_Handler	1

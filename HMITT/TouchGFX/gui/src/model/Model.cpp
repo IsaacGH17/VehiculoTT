@@ -40,6 +40,7 @@ void Model::solicitarModoSemi()
 {
 	static uint8_t tx_buf[8];
 	uint8_t payload = PARAM_SEMIAUTO;
+	pwm = 100;
 	uint16_t len = build_packet(tx_buf, CMD_MODO_OP, &payload, 1);
 	if (huart1.gState == HAL_UART_STATE_READY)
 	{
@@ -55,6 +56,7 @@ void Model::solicitarModoManual()
 {
 	static uint8_t tx_buf[8];
 	uint8_t payload = PARAM_MANUAL;
+	pwm = 0;
 	uint16_t len = build_packet(tx_buf, CMD_MODO_OP, &payload, 1);
 	if (huart1.gState == HAL_UART_STATE_READY)
 	{

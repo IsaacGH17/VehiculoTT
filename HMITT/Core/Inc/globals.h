@@ -16,4 +16,5 @@ extern volatile float roll;
 extern volatile float pitch;
 extern volatile uint8_t flag_paro_e;
 extern volatile char act[3];
+extern volatile uint32_t last_telemetry_time;
 #endif /* INC_GLOBALS_H_ */

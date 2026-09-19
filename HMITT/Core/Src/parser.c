@@ -9,6 +9,8 @@
 #define M_PI 3.14159265358979323846f
 #endif
 
+volatile uint32_t last_telemetry_time = 0;
+
 bool parse_byte(uint8_t byte, Packet_t *pkt, ParserCtx_t *ctx) {
 
     switch (ctx->state) {
@@ -62,6 +64,7 @@ bool parse_byte(uint8_t byte, Packet_t *pkt, ParserCtx_t *ctx) {
 
 void execute_command(Packet_t *pkt) {
     if (pkt->command == CMD_TELE_SENSORS) {
+        last_telemetry_time = HAL_GetTick();
         if (pkt->length >= 10) {
             uint16_t mm = (uint16_t)(((uint16_t)pkt->payload[0] << 8) | pkt->payload[1]);
             dist_mm = mm;
