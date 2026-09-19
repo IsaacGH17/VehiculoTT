@@ -80,45 +80,56 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         *last_time = now;
     }
     if (GPIO_Pin == Abierto_Pin) {
-        if (dir_acoplar == 2) {
-            __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-            HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
-            ruedas_abiertas = 1;
-            dir_acoplar = 0;
+        if (HAL_GPIO_ReadPin(Abierto_GPIO_Port, Abierto_Pin) == GPIO_PIN_SET) {
+            if (dir_acoplar == 2) {
+                __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+                HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
+                ruedas_abiertas = 1;
+                dir_acoplar = 0;
+            }
         }
     }
     else if (GPIO_Pin == Cerrado_Pin) {
-        if (dir_acoplar == 1) {
-            __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
-            HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
-            ruedas_abiertas = 0;
-            dir_acoplar = 0;
+        if (HAL_GPIO_ReadPin(Cerrado_GPIO_Port, Cerrado_Pin) == GPIO_PIN_SET) {
+            if (dir_acoplar == 1) {
+                __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+                HAL_GPIO_WritePin(A_Dir_GPIO_Port, A_Dir_Pin, GPIO_PIN_RESET);
+                ruedas_abiertas = 0;
+                dir_acoplar = 0;
+            }
         }
     }
     else if (GPIO_Pin == Abierto1_Pin) {
-        if (dir_acoplar1 == 2) {
-            __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-            HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
-            ruedas1_abiertas = 1;
-            dir_acoplar1 = 0;
+        if (HAL_GPIO_ReadPin(Abierto1_GPIO_Port, Abierto1_Pin) == GPIO_PIN_SET) {
+            if (dir_acoplar1 == 2) {
+                __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+                HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
+                ruedas1_abiertas = 1;
+                dir_acoplar1 = 0;
+            }
         }
     }
     else if (GPIO_Pin == Cerrado1_Pin) {
-        if (dir_acoplar1 == 1) {
-            __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-            HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
-            ruedas1_abiertas = 0;
-            dir_acoplar1 = 0;
+        if (HAL_GPIO_ReadPin(Cerrado1_GPIO_Port, Cerrado1_Pin) == GPIO_PIN_SET) {
+            if (dir_acoplar1 == 1) {
+                __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+                HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
+                ruedas1_abiertas = 0;
+                dir_acoplar1 = 0;
+            }
         }
     }
     else if (GPIO_Pin == Obstaculo1_Pin) {
-
-        if (semiAutoEvtHandle != NULL)
-            osEventFlagsSet(semiAutoEvtHandle, EVT_OBSTACULO1);
+        if (HAL_GPIO_ReadPin(Obstaculo1_GPIO_Port, Obstaculo1_Pin) == GPIO_PIN_SET) {
+            if (semiAutoEvtHandle != NULL)
+                osEventFlagsSet(semiAutoEvtHandle, EVT_OBSTACULO1);
+        }
     }
     else if (GPIO_Pin == Obstaculo2_Pin) {
-        if (semiAutoEvtHandle != NULL)
-            osEventFlagsSet(semiAutoEvtHandle, EVT_OBSTACULO2);
+        if (HAL_GPIO_ReadPin(Obstaculo2_GPIO_Port, Obstaculo2_Pin) == GPIO_PIN_SET) {
+            if (semiAutoEvtHandle != NULL)
+                osEventFlagsSet(semiAutoEvtHandle, EVT_OBSTACULO2);
+        }
     }
 }
 /* USER CODE END 0 */
