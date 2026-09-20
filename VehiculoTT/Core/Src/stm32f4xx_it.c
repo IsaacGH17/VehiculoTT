@@ -55,12 +55,12 @@
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim4;
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     static uint32_t last_abierto_time    = 0;
     static uint32_t last_cerrado_time    = 0;
-    static uint32_t last_abierto1_time   = 0;
     static uint32_t last_cerrado1_time   = 0;
     static uint32_t last_obstaculo1_time = 0;
     static uint32_t last_obstaculo2_time = 0;
@@ -70,7 +70,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
     if      (GPIO_Pin == Abierto_Pin)   last_time = &last_abierto_time;
     else if (GPIO_Pin == Cerrado_Pin)   last_time = &last_cerrado_time;
-    else if (GPIO_Pin == Abierto1_Pin)  last_time = &last_abierto1_time;
     else if (GPIO_Pin == Cerrado1_Pin)  last_time = &last_cerrado1_time;
     else if (GPIO_Pin == Obstaculo1_Pin)last_time = &last_obstaculo1_time;
     else if (GPIO_Pin == Obstaculo2_Pin)last_time = &last_obstaculo2_time;
@@ -99,16 +98,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
             }
         }
     }
-    else if (GPIO_Pin == Abierto1_Pin) {
-        if (HAL_GPIO_ReadPin(Abierto1_GPIO_Port, Abierto1_Pin) == GPIO_PIN_SET) {
-            if (dir_acoplar1 == 2) {
-                __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
-                HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
-                ruedas1_abiertas = 1;
-                dir_acoplar1 = 0;
-            }
-        }
-    }
+    /* Abierto1_Pin ya no se procesa aqui: su antirrebote se hace por muestreo
+       periodico en TIM4_IRQHandler (cada 10 ms, confirmando >150 ms estable)
+       para no depender de que el rebote mecanico genere mas flancos. */
     else if (GPIO_Pin == Cerrado1_Pin) {
         if (HAL_GPIO_ReadPin(Cerrado1_GPIO_Port, Cerrado1_Pin) == GPIO_PIN_SET) {
             if (dir_acoplar1 == 1) {
@@ -299,6 +291,42 @@ void TIM1_BRK_TIM9_IRQHandler(void)
   /* USER CODE BEGIN TIM1_BRK_TIM9_IRQn 1 */
 
   /* USER CODE END TIM1_BRK_TIM9_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM4 global interrupt.
+  * @note  TIM4 esta dedicado exclusivamente al antirrebote del pin Abierto1:
+  *        se dispara cada 10 ms (ver MX_TIM4_DebounceInit en main.c) y
+  *        confirma que el pin permanece en alto de forma continua durante
+  *        mas de 150 ms antes de ejecutar la accion, igual que el filtro
+  *        usado para Obstaculo1, evitando falsos disparos por vibracion.
+  */
+void TIM4_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM4_IRQn 0 */
+  if (__HAL_TIM_GET_FLAG(&htim4, TIM_FLAG_UPDATE) &&
+      __HAL_TIM_GET_IT_SOURCE(&htim4, TIM_IT_UPDATE)) {
+    __HAL_TIM_CLEAR_IT(&htim4, TIM_IT_UPDATE);
+
+    static uint32_t abierto1_press_start = 0;
+
+    if (HAL_GPIO_ReadPin(Abierto1_GPIO_Port, Abierto1_Pin) == GPIO_PIN_SET) {
+      if (abierto1_press_start == 0) {
+        abierto1_press_start = HAL_GetTick();
+      } else if ((HAL_GetTick() - abierto1_press_start) > 150) {
+        if (dir_acoplar1 == 2) {
+          __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+          HAL_GPIO_WritePin(A1_Dir_GPIO_Port, A1_Dir_Pin, GPIO_PIN_RESET);
+          ruedas1_abiertas = 1;
+          dir_acoplar1 = 0;
+        }
+        abierto1_press_start = 0;
+      }
+    } else {
+      abierto1_press_start = 0;
+    }
+  }
+  /* USER CODE END TIM4_IRQn 0 */
 }
 
 /**

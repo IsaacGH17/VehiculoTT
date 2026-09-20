@@ -61,6 +61,7 @@ I2C_HandleTypeDef hi2c1;
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim4;
 
 UART_HandleTypeDef huart1;
 DMA_HandleTypeDef hdma_usart1_rx;
@@ -130,6 +131,7 @@ void StartTelemetriaTask(void *argument);
 void StartSemiAutoTask(void *argument);
 
 /* USER CODE BEGIN PFP */
+static void MX_TIM4_DebounceInit(void);
 
 
 
@@ -140,7 +142,32 @@ void StartSemiAutoTask(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/**
+  * @brief  Configura TIM4 como una base de tiempo dedicada que genera una
+  *         interrupcion periodica cada 10 ms, usada unicamente para el
+  *         antirrebote por muestreo del pin Abierto1 (ver TIM4_IRQHandler
+  *         en stm32f4xx_it.c). TIM4 no se usa para ningun otro proposito.
+  * @retval None
+  */
+static void MX_TIM4_DebounceInit(void)
+{
+  __HAL_RCC_TIM4_CLK_ENABLE();
 
+  htim4.Instance = TIM4;
+  htim4.Init.Prescaler = 83;                 /* 84 MHz / 84 = 1 MHz -> 1 us por cuenta */
+  htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim4.Init.Period = 9999;                  /* 10000 cuentas de 1 us = 10 ms */
+  htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  HAL_NVIC_SetPriority(TIM4_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ(TIM4_IRQn);
+  HAL_TIM_Base_Start_IT(&htim4);
+}
 /* USER CODE END 0 */
 
 /**
@@ -181,6 +208,7 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
+  MX_TIM4_DebounceInit();
   MPU6050_Init();
   Motor_Init();
   HAL_ADC_Start_DMA(&hadc1,(uint32_t*)adc_buffer, ADC_BUF_LEN);
