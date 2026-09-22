@@ -144,8 +144,14 @@ void Motor_Stop(void) {
 }
 
 void StopHusillos(void) {
+    /* Detener husillos/acoples de ruedas */
     __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
     __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
+
+    /* Actualizar flags según la dirección en la que se movían.
+       dir == 1 -> acoplando -> ruedas quedan acopladas (cerradas)
+       dir == 2 -> desacoplando -> ruedas quedan desacopladas (abiertas)
+       dir == 0 -> no se movían -> no tocar el flag */
     if (dir_acoplar == 1) {
         ruedas_abiertas = 0;
     } else if (dir_acoplar == 2) {
@@ -157,6 +163,8 @@ void StopHusillos(void) {
     } else if (dir_acoplar1 == 2) {
         ruedas1_abiertas = 1;
     }
+
+    /* Limpiar flags de dirección */
     dir_acoplar = 0;
     dir_acoplar1 = 0;
 }

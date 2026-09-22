@@ -120,8 +120,8 @@ void execute_command(Packet_t *pkt) {
 
         case CMD_PARO:
             if (modo_operacion == MODO_MANUAL) {
-                Motor_Stop();
-                StopHusillos();
+                Motor_Stop();     /* Apagar motores de tracción */
+                StopHusillos();   /* Detener husillos y ajustar flags según dirección */
             } else {
                 Motor_Stop();
                 if (semiAutoEvtHandle != NULL)

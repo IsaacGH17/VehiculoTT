@@ -22,4 +22,8 @@ extern osEventFlagsId_t semiAutoEvtHandle;
 #define EVT_STOP_SEMI    (1U << 2)
 #define EVT_START_SEMI   (1U << 3)
 
+#define MODO_MANUAL   0
+#define MODO_SEMIAUTO 1
+extern volatile uint8_t modo_operacion;
+
 #endif /* INC_GLOBALS_H_ */

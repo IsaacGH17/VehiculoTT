@@ -12,8 +12,9 @@
 ../Core/Src/motor_control.c:126:6:Desacoplar1	8	static
 ../Core/Src/motor_control.c:132:6:Motor_SpeedDec	8	static
 ../Core/Src/motor_control.c:140:6:Motor_Stop	8	static
-../Core/Src/motor_control.c:146:6:Abrir_Pinza	4	static
-../Core/Src/motor_control.c:150:6:Cerrar_Pinza	4	static
-../Core/Src/motor_control.c:153:6:Abrir_Pinza1	4	static
-../Core/Src/motor_control.c:157:6:Cerrar_Pinza1	4	static
-../Core/Src/motor_control.c:161:10:Motor_GetCurrentPulse	4	static
+../Core/Src/motor_control.c:146:6:StopHusillos	4	static
+../Core/Src/motor_control.c:164:6:Abrir_Pinza	4	static
+../Core/Src/motor_control.c:168:6:Cerrar_Pinza	4	static
+../Core/Src/motor_control.c:171:6:Abrir_Pinza1	4	static
+../Core/Src/motor_control.c:175:6:Cerrar_Pinza1	4	static
+../Core/Src/motor_control.c:179:10:Motor_GetCurrentPulse	4	static

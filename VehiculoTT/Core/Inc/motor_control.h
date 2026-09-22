@@ -37,5 +37,6 @@ void Motor_ApplySpeed(void);
 void Motor_SetSpeedPercentage(int16_t percentage);
 int16_t Motor_GetSpeedPercentage(void);
 uint16_t Motor_GetCurrentPulse(void);
+void StopHusillos(void);
 
 #endif /* __MOTOR_CONTROL_H__ */

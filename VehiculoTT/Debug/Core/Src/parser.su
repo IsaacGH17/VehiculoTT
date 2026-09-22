@@ -1,2 +1,2 @@
-../Core/Src/parser.c:13:6:parse_byte	24	static
-../Core/Src/parser.c:64:6:execute_command	24	static
+../Core/Src/parser.c:14:6:parse_byte	24	static
+../Core/Src/parser.c:65:6:execute_command	24	static
